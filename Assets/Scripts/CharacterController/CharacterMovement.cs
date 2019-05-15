@@ -2,54 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// public class CharacterMovement : MonoBehaviour
-// {
-    
-//     public float speed = 6.0f;
-//     public float jumpSpeed = 8.0f;
-//     public float gravity = 10.0f;
-//     public Vector3 moveDirection = Vector3.zero;
-
-//     // Start is called before the first frame update
-//     CharacterController controller;
-//     Animator animator;
-
-    
-//     private void Awake() {
-        
-//         animator = GetComponent<Animator>();
-//     }
-
-//     void Start()
-//     {
-//         controller = GetComponent<CharacterController>();
-//     }
-
-//     // Update is called once per frame
-//     void Update()
-//     {
-//     //     if (controller.isGrounded)
-//     //     {
-        
-//         moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-//         moveDirection = transform.TransformDirection(moveDirection);
-//         moveDirection *= speed;
-//         if (Input.GetButton("Jump"))
-//         {
-//             moveDirection.y = jumpSpeed;
-//         }
-//         moveDirection.y -= gravity * Time.deltaTime;
-//         controller.Move(moveDirection * Time.deltaTime);
-//         // }
-//     }
-
-//     //根据WeaponType选取合适的动画，利用子物体WeaponContainer下的记录来记录soldier目前的武器
-//     void SetupAnimator(){
-        
-//     }
-
-// }
-
 
 
 
@@ -68,6 +20,9 @@ public class CharacterMovement:MonoBehaviour{
         public string groudedBool = "isGrounded";
         public string runBool = "Run";
         public string jumpBool = "isJumping";
+
+        // 跳跃过程中在空中
+        public string airBool = "isAir";
     }
 
     [SerializeField]
@@ -79,8 +34,8 @@ public class CharacterMovement:MonoBehaviour{
      */
     [System.Serializable]
     public class MovementSettings{
-        public float jumpSpeed = 6.0f;
-        public float jumpTime = 0.5f;
+        public float jumpSpeed = 4.0f;
+        public float jumpTime = 1.0f;
         public float margin = 0.1f;
     }
     [SerializeField]
@@ -115,19 +70,20 @@ public class CharacterMovement:MonoBehaviour{
     }
 
     private void Update() {
-        ApplyGravity();
-        isGrounded = true; //目前人物和地面之间没有调整好，暂且人为设置为全在地面上
+        // ApplyGravity();
+        isGrounded = characterController.isGrounded; //调整CharacterController使得适配人物高度
+        // Debug.LogFormat("characterController ground : {0}", isGrounded);
     }
 
     // 控制人物移动
-    void ApplyGravity(){
+    public void ApplyGravity(float verticalAxis, float horizontalAxis){
         if(isGrounded){
             downSpeed = physicsSettings.resetDownSpeed;
         }
         else{
             downSpeed += Time.deltaTime * physicsSettings.resetDownSpeed;
         }
-        Vector3 gravityVector = new Vector3();
+        Vector3 gravityVector = new Vector3(horizontalAxis, 0, verticalAxis);
         if(!jumping){
             gravityVector.y = -downSpeed;
         }
@@ -135,6 +91,7 @@ public class CharacterMovement:MonoBehaviour{
             gravityVector.y = movementSettings.jumpSpeed - downSpeed;
         }
         characterController.Move(gravityVector * Time.deltaTime);
+        
     }
 
 

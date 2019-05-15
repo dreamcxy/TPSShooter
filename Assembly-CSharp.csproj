@@ -56,8 +56,8 @@
      <Compile Include="Assets\Scripts\CamRig\CamRig.cs" />
      <Compile Include="Assets\Scripts\CharacterController\CharacterMovement.cs" />
      <Compile Include="Assets\Scripts\Player\UserInput.cs" />
-     <Compile Include="Assets\Scripts\WeaponController\Weapon.cs" />
-     <Compile Include="Assets\Scripts\WeaponController\WeaponHandler.cs" />
+     <Compile Include="Assets\Scripts\Weapons\Weapon.cs" />
+     <Compile Include="Assets\Scripts\Weapons\WeaponHandler.cs" />
  <Reference Include="Unity.TextMeshPro.Editor">
  <HintPath>C:/Users/dreamcxy/Desktop/WangYiHomeWork/ThirdWork/TPSShooter/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
  </Reference>
