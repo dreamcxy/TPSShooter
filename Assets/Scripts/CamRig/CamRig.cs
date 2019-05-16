@@ -189,6 +189,6 @@ public class CamRig : MonoBehaviour
             case Shoulder.Right:
                 shoulder = Shoulder.Left;
                 break;
-        }
+        } 
     }
 }

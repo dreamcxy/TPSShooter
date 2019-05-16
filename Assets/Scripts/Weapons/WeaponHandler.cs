@@ -3,19 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class WeaponHandler:MonoBehaviour{
+public class WeaponHandler : MonoBehaviour
+{
     Animator animator;
 
     [System.Serializable]
-    public class UserSettings{
+    public class UserSettings
+    {
         public Transform rightHand;
     }
-    
+
     [SerializeField]
     public UserSettings userSettings;
 
 
-    public class Animations{
+    public class Animations
+    {
         public string weaponTypeInt = "WeaponType";
         public string reloadingBool = "isReloading";
         public string aimBool = "aiming";
@@ -25,26 +28,109 @@ public class WeaponHandler:MonoBehaviour{
 
     public Weapon currentWeapon;
     public List<Weapon> weaponList;
-    
-    bool aim;
-    public bool reload{get; private set;}
-    
-    int weaponType;
-    bool isSwitchingWeapon;
 
-    private void Start() {
+    bool aim;
+    public bool reload { get; private set; }
+
+    int weaponType;
+    bool isSwitchingWeapon; //是否正在切换武器
+
+    private void Start()
+    {
         animator = GetComponent<Animator>();
         weaponList = new List<Weapon>();
 
     }
 
-    private void Update() {
+    private void Update()
+    {
         if (currentWeapon)
         {
-            // currentWeapon.SetEquipped(true);
-            // currentWeapon.SetOwner(this);
+            currentWeapon.SetEquipped(true);
+            currentWeapon.SetOwner(this);
+
+            currentWeapon.ownerAiming = aim;
+            if (currentWeapon.ammo.clipAmmo <= 0)
+            {
+                // reload();
+            }
+            // 正在换弹的时候切换武器，停止换弹
+            if (reload)
+            {
+                if (isSwitchingWeapon)
+                {
+                    reload = false;
+                }
+            }
         }
+        if (weaponList.Count > 0)
+        {
+            for (int i = 0; i < weaponList.Count; i++)
+            {
+                if (weaponList[i] != currentWeapon)
+                {
+                    weaponList[i].SetEquipped(false);
+                    weaponList[i].SetOwner(this);
+                }
+
+            }
+        }
+        Animate();
     }
 
+
+    void Animate()
+    {
+
+    }
+
+
+    public void Reload()
+    {
+        if (reload || !currentWeapon) return;
+        reload = true;
+    }
+
+    IEnumerator StopReload()
+    {
+        yield return new WaitForSeconds(currentWeapon.weaponSettings.reloadDuration);
+        if (reload && currentWeapon)
+        {
+            currentWeapon.LoadClip();
+        }
+        reload = false;
+    }
+
+    public void Aim(bool aiming)
+    {
+        aim = aiming;
+    }
+
+    public void SwitchWeapons()
+    {
+        if (isSwitchingWeapon || weaponList.Count <= 0)
+        {
+            return;
+        }
+
+        if (currentWeapon)
+        {
+            if (weaponList.Count == 1)
+            {
+                return;
+            }
+            int currentWeaponIndex = weaponList.IndexOf(currentWeapon);
+            int nextWeaponIndex = (currentWeaponIndex + 1) % weaponList.Count;
+            currentWeapon = weaponList[nextWeaponIndex];
+        }else{
+            currentWeapon = weaponList[0];
+        }
+        isSwitchingWeapon = true;
+        StartCoroutine(StopSwitchingWeapon());
+    }
+    IEnumerator StopSwitchingWeapon(){
+        yield return new WaitForSeconds(0.7f);
+        isSwitchingWeapon =false;
+    }
 
 }

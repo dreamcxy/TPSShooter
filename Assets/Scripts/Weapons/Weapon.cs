@@ -18,8 +18,6 @@ public enum WeaponType
     PKM,
 }
 
-[RequireComponent(typeof(Collider))]
-[RequireComponent(typeof(Rigidbody))]
 
 public class Weapon:MonoBehaviour{
 
@@ -114,7 +112,7 @@ public class Weapon:MonoBehaviour{
                     }
                }
            }else{
-            //    Unequip(weaponType);
+               UnEquip(weaponType);
            }
         }else{
             ownerAiming = false;
@@ -200,4 +198,31 @@ public class Weapon:MonoBehaviour{
         transform.localRotation = equipRot;
     }
 
+    void UnEquip(WeaponType weaponType){
+        if(!owner)  return;
+        transform.SetParent(null);
+        transform.localPosition = weaponSettings.unequipPosition;
+        Quaternion unEquipRot = Quaternion.Euler(weaponSettings.unequipRotation);
+        transform.localRotation = unEquipRot;
+        ToglleCrosshair(false);
+    }
+
+    public void SetEquipped(bool equip){
+        equipped = equip;
+    }
+    public void SetOwner(WeaponHandler wp){
+        owner = wp;
+        if (owner == null)
+        {
+            StartCoroutine(CanBePickUp());
+        }
+    }
+    IEnumerator CanBePickUp(){
+        yield return new WaitForSeconds(2.0f);
+        colSphere.enabled = true;
+    }
+
+    public void LoadClip(){
+        
+    }
 }

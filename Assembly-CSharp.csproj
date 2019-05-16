@@ -55,6 +55,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\CamRig\CamRig.cs" />
      <Compile Include="Assets\Scripts\CharacterController\CharacterMovement.cs" />
+     <Compile Include="Assets\Scripts\Player\PlayerStates.cs" />
      <Compile Include="Assets\Scripts\Player\UserInput.cs" />
      <Compile Include="Assets\Scripts\Weapons\Weapon.cs" />
      <Compile Include="Assets\Scripts\Weapons\WeaponHandler.cs" />
