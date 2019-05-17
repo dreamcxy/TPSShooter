@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // 处理用户的按键行为
-public class UserInput:MonoBehaviour
+public class UserInput : MonoBehaviour
 {
-    public CharacterMovement characterMovement{get; protected set;}
-    public WeaponHandler weaponHandler{get; protected set;}
+    public CharacterMovement characterMovement { get; protected set; }
+    public WeaponHandler weaponHandler { get; protected set; }
 
     // 注册所有的按键
     [System.Serializable]
-    public class InputSettings{
+    public class InputSettings
+    {
 
         // 武器类的button
         public string aimButton = "Fire2";
@@ -18,7 +19,7 @@ public class UserInput:MonoBehaviour
         public string reloadButton = "Reload";
         public string swtichWeaponButton = "SwitchWeapon";
         public string dropWeaponButton = "DropWeapon";
-        
+
         // 移动类的button
         public string verticalAxis = "Vertical";
         public string horizontalAxis = "Horizontal";
@@ -30,7 +31,8 @@ public class UserInput:MonoBehaviour
     public InputSettings inputSettings;
 
     [System.Serializable]
-    public class OtherSettings{
+    public class OtherSettings
+    {
         public float lookSpeed = 5.0f;
         public float lookDistance = 10.0f;
         public bool requireInputForTurn = true;
@@ -40,13 +42,13 @@ public class UserInput:MonoBehaviour
     public OtherSettings otherSettings;
     public bool debugAim;
     public Transform spine;
-    public bool aiming{get; set;}
+    public bool aiming { get; set; }
 
 
     public Camera tpsCamera;
 
     bool canJump = true;
-    
+
     bool isFireButtonDown;
     bool isReloadButtonDown;
     bool isDropButtonDown;
@@ -61,44 +63,59 @@ public class UserInput:MonoBehaviour
 
     [HideInInspector]
     public static bool isMouseOnUI = false;
-        
 
-    private void Start() {
+
+    private void Start()
+    {
         characterMovement = GetComponent<CharacterMovement>();
+        weaponHandler = GetComponent<WeaponHandler>();
         tpsCamera = Camera.main;
         LockCursor();
     }
 
-    private void Update() {
+    private void Update()
+    {
         HandleInput();
         GetSpineTransform();
         CharacterLogic();
         CameraLookLoagic();
+        WeaponLogic();
     }
 
-    private void LateUpdate() {
-        if(aiming){
-            
-            PositionSpine(spineLookAt);
+    private void LateUpdate()
+    {
+        if (weaponHandler)
+        {
+            if (weaponHandler.currentWeapon)
+            {
+                if (aiming)
+                {   
+                    PositionSpine(spineLookAt);
+                }
+            }
         }
-        
+
+
     }
 
     #region public Methods
-        public static void LockCursor(){
-            isMouseOnUI = false;
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-        }
-        public static void UnLockCursor(){
-            isMouseOnUI = true;
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-        }
-    
+    public static void LockCursor()
+    {
+        isMouseOnUI = false;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+    public static void UnLockCursor()
+    {
+        isMouseOnUI = true;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
     #endregion
 
-    void HandleInput(){
+    void HandleInput()
+    {
         aiming = (Input.GetButton(inputSettings.aimButton) || debugAim) && !characterMovement.isRun;
         isFireButtonDown = Input.GetButton(inputSettings.fireButton);
         isReloadButtonDown = Input.GetButtonDown(inputSettings.reloadButton);
@@ -111,10 +128,12 @@ public class UserInput:MonoBehaviour
         horizontalAxis = Input.GetAxis(inputSettings.horizontalAxis);
     }
 
-    void CharacterLogic(){
-        if(!characterMovement) return;
-        if(isJumpButtonDown && canJump){
-            
+    void CharacterLogic()
+    {
+        if (!characterMovement) return;
+        if (isJumpButtonDown && canJump)
+        {
+
             characterMovement.Jump();
             canJump = false;
             StartCoroutine(CanJump());
@@ -124,7 +143,8 @@ public class UserInput:MonoBehaviour
         characterMovement.Animate(verticalAxis, horizontalAxis);
     }
 
-    void CharacterLook(){
+    void CharacterLook()
+    {
         Transform mainCamT = tpsCamera.transform;
         Transform pivotT = mainCamT.parent;
         Vector3 pivotPos = pivotT.position;
@@ -138,26 +158,32 @@ public class UserInput:MonoBehaviour
         transform.rotation = newRotation;
     }
 
-    void CameraLookLoagic(){
-        if(!tpsCamera) return;
-        if(otherSettings.requireInputForTurn){
-            if(Input.GetAxis(inputSettings.horizontalAxis) !=0 || Input.GetAxis(inputSettings.verticalAxis) != 0){
+    void CameraLookLoagic()
+    {
+        if (!tpsCamera) return;
+        if (otherSettings.requireInputForTurn)
+        {
+            if (Input.GetAxis(inputSettings.horizontalAxis) != 0 || Input.GetAxis(inputSettings.verticalAxis) != 0)
+            {
                 CharacterLook();
             }
         }
-        else{
+        else
+        {
             CharacterLook();
         }
     }
 
 
-    IEnumerator CanJump(){
+    IEnumerator CanJump()
+    {
         yield return new WaitForSeconds(characterMovement.movementSettings.jumpTime + 0.1f);
         canJump = true;
     }
 
-    void GetSpineTransform(){
-        if(!spine)  return;
+    void GetSpineTransform()
+    {
+        if (!spine || !weaponHandler.currentWeapon || !tpsCamera) return;
         Transform mainCamT = tpsCamera.transform;
         Vector3 mainCamPos = mainCamT.position;
         Vector3 dir = mainCamT.forward;
@@ -165,15 +191,32 @@ public class UserInput:MonoBehaviour
         spineLookAt = ray.GetPoint(400f);
     }
 
-    void PositionSpine(Vector3 spineLookAt){
-        if(!spine)  return;
+    void PositionSpine(Vector3 spineLookAt)
+    {
+        if (!spine || !weaponHandler.currentWeapon) return;
         spine.LookAt(spineLookAt);
         spine.localEulerAngles = spine.localEulerAngles + new Vector3(0, 0, -90f);
-        
+
         // 人物方向跟随枪管方向移动
         // Vector3 eulerAngleOffset = Vector3.zero;
         Vector3 eulerAngleOffset = weaponHandler.currentWeapon.userSettings.spineRotation;
         spine.Rotate(eulerAngleOffset);
+    }
+
+    void WeaponLogic()
+    {
+        if (!weaponHandler) return;
+        if (weaponHandler.currentWeapon)
+        {
+            weaponHandler.Aim(aiming);
+            otherSettings.requireInputForTurn = !aiming;
+
+            weaponHandler.FingerOnTrigger(isFireButtonDown);
+            if (isReloadButtonDown) weaponHandler.Reload();
+            // if(isDropButtonDown) weaponHandler.DropWeapon();
+            if (isSwitchButtonDown) weaponHandler.SwitchWeapons();
+            if (!weaponHandler.currentWeapon) return;
+        }
     }
 
 }

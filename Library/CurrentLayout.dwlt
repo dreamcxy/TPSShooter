@@ -115,7 +115,7 @@ MonoBehaviour:
   m_MinSize: {x: 713, y: 498}
   m_MaxSize: {x: 18008, y: 14048}
   vertical: 0
-  controlID: 12
+  controlID: 29
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -140,7 +140,7 @@ MonoBehaviour:
   m_MinSize: {x: 202, y: 448}
   m_MaxSize: {x: 4002, y: 8048}
   vertical: 1
-  controlID: 13
+  controlID: 116
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -218,7 +218,7 @@ MonoBehaviour:
   m_MinSize: {x: 234, y: 498}
   m_MaxSize: {x: 10004, y: 14048}
   vertical: 1
-  controlID: 89
+  controlID: 30
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -554,13 +554,13 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
   m_Rotation:
-    m_Target: {x: 0.20941707, y: 0.70803225, z: -0.23448515, w: 0.6323383}
+    m_Target: {x: 0.19357482, y: 0.7544981, z: -0.25490716, w: 0.5729606}
     speed: 2
-    m_Value: {x: 0.20941707, y: 0.70803225, z: -0.23448515, w: 0.6323383}
+    m_Value: {x: 0.19357482, y: 0.7544981, z: -0.25490716, w: 0.5729606}
   m_Size:
-    m_Target: 14.1530075
+    m_Target: 2.8434901
     speed: 2
-    m_Value: 14.1530075
+    m_Value: 2.8434901
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -600,24 +600,24 @@ MonoBehaviour:
   m_PersistentViewDataDictionary: {fileID: 0}
   m_SceneHierarchy:
     m_TreeViewState:
-      scrollPos: {x: 0, y: 69}
-      m_SelectedIDs: b4110000
-      m_LastClickedID: 4532
-      m_ExpandedIDs: 8adbffffeafafffffefaffff08fbffff0cfbffff10fbffff16fbffff1cfbffff22fbffff26fbffffbefbffffb4110000
+      scrollPos: {x: 0, y: 161}
+      m_SelectedIDs: ba110000
+      m_LastClickedID: 4538
+      m_ExpandedIDs: 20ddffffe2fafffff6faffff02fbffff04fbffff08fbffff0efbffff12fbffff18fbffff1cfbffffbefbffffba110000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: Bip001 R Hand
-        m_OriginalName: Bip001 R Hand
+        m_Name: 
+        m_OriginalName: 
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: -1258
+        m_UserData: 0
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 0
+        m_OriginalEventType: 11
         m_IsRenamingFilename: 0
         m_ClientGUIView: {fileID: 10}
       m_SearchString: 
@@ -665,20 +665,20 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Prefebs
+    - Assets/Scripts/Weapons
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Prefebs
+  - Assets/Scripts/Weapons
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Users\dreamcxy\Desktop\WangYiHomeWork\ThirdWork\TPSShooter
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: e60c0000
-    m_LastClickedID: 3302
-    m_ExpandedIDs: 0000000080090000460c0000ae0c00004e0d0000c20d0000c40d00008c0e000000ca9a3b
+    m_SelectedIDs: 580b0000
+    m_LastClickedID: 2904
+    m_ExpandedIDs: 0000000084090000c80a00004c0c0000b40c0000540d0000c80d0000ca0d0000920e000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -706,7 +706,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 172}
     m_SelectedIDs: 4cfbffff
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000080090000460c0000ae0c00004e0d0000c20d0000c40d00008c0e0000
+    m_ExpandedIDs: 00000000840900004c0c0000b40c0000540d0000c80d0000ca0d0000920e0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -737,18 +737,18 @@ MonoBehaviour:
     m_ExpandedInstanceIDs: cef2ffffd02bffff0823000000000000a828000096270000fc0e0000720a0000ce100000421000006c0b0000940a0000beaeffff220a0000ae0a0000100d0000500f0000380d00004a0d0000ae0d0000c00d0000f60e00001a1100003c0a000046100000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
+      m_Name: weapon_fal
+      m_OriginalName: weapon_fal
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 0
+      m_UserData: 2696
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 11
+      m_OriginalEventType: 0
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 11}
     m_CreateAssetUtility:

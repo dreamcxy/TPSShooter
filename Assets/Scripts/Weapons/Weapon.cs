@@ -98,12 +98,13 @@ public class Weapon:MonoBehaviour{
         {
            if (equipped)
            {
-               if(owner.userSettings.rightHand){
-                    Euiq();
+               if(owner.userSettings.weaponContainer){
+                    // Equiq();
                     if (pullingTrigger)
                     {
                         Fire(shootRay);
                     }
+                    Debug.LogFormat("ownerAiming:{0}", ownerAiming);
                     if (ownerAiming)
                     {
                         ToglleCrosshair(true);
@@ -117,7 +118,6 @@ public class Weapon:MonoBehaviour{
         }else{
             ownerAiming = false;
             ToglleCrosshair(false);
-
         }
     }
 
@@ -186,16 +186,16 @@ public class Weapon:MonoBehaviour{
     }
 
 
-    void Euiq(){
+    void Equiq(){
         if (!owner)
         {
             return;
         }
-        else if(!owner.userSettings.rightHand) return;
-        transform.SetParent(owner.userSettings.rightHand);
-        transform.localPosition = weaponSettings.equipPosition;
-        Quaternion equipRot = Quaternion.Euler(weaponSettings.equipRotation);
-        transform.localRotation = equipRot;
+        else if(!owner.userSettings.weaponContainer) return;
+        transform.SetParent(owner.userSettings.weaponContainer);
+        // transform.localPosition = weaponSettings.equipPosition;
+        // Quaternion equipRot = Quaternion.Euler(weaponSettings.equipRotation);
+        // transform.localRotation = equipRot;
     }
 
     void UnEquip(WeaponType weaponType){
@@ -224,5 +224,9 @@ public class Weapon:MonoBehaviour{
 
     public void LoadClip(){
         
+    }
+
+    public void PullTrigger(bool isPulling){
+        pullingTrigger = isPulling;
     }
 }

@@ -10,7 +10,8 @@ public class WeaponHandler : MonoBehaviour
     [System.Serializable]
     public class UserSettings
     {
-        public Transform rightHand;
+        // public Transform rightHand;
+        public Transform weaponContainer;
     }
 
     [SerializeField]
@@ -37,9 +38,15 @@ public class WeaponHandler : MonoBehaviour
 
     private void Start()
     {
-        animator = GetComponent<Animator>();
         weaponList = new List<Weapon>();
-
+        
+        currentWeapon = userSettings.weaponContainer.GetComponentInChildren<Weapon>();
+        
+        animator = GetComponent<Animator>();
+        if (currentWeapon)
+        {
+            weaponList.Add(currentWeapon);    
+        }
     }
 
     private void Update()
@@ -47,12 +54,12 @@ public class WeaponHandler : MonoBehaviour
         if (currentWeapon)
         {
             currentWeapon.SetEquipped(true);
-            currentWeapon.SetOwner(this);
+            currentWeapon.SetOwner(this.GetComponent<WeaponHandler>());
 
             currentWeapon.ownerAiming = aim;
             if (currentWeapon.ammo.clipAmmo <= 0)
             {
-                // reload();
+                Reload();
             }
             // 正在换弹的时候切换武器，停止换弹
             if (reload)
@@ -70,7 +77,7 @@ public class WeaponHandler : MonoBehaviour
                 if (weaponList[i] != currentWeapon)
                 {
                     weaponList[i].SetEquipped(false);
-                    weaponList[i].SetOwner(this);
+                    // weaponList[i].SetOwner(this);
                 }
 
             }
@@ -132,5 +139,14 @@ public class WeaponHandler : MonoBehaviour
         yield return new WaitForSeconds(0.7f);
         isSwitchingWeapon =false;
     }
+
+    public void FingerOnTrigger(bool pulling){
+        if (!currentWeapon)
+        {
+            return;
+        }
+        currentWeapon.PullTrigger(!isSwitchingWeapon && pulling && aim && !reload);
+    }
+
 
 }
