@@ -112,12 +112,13 @@ MonoBehaviour:
   weaponSettings:
     crossHairPrefeb: {fileID: 1124590980948992, guid: c7cde4a59c593fa4c8f95407faae6622,
       type: 3}
-    reloadDuration: 2
+    reloadDuration: 1
     fireRate: 0.2
     damage: 20
     bulletSpawn: {fileID: 4027908222479142589}
     bulletSpread: 2
     range: 200
+    burstShootBulletNums: 3
     muzzleFlash: {fileID: 0}
     equipPosition: {x: 0, y: 0, z: 0}
     equipRotation: {x: 0, y: 0, z: 0}
@@ -125,7 +126,7 @@ MonoBehaviour:
     unequipRotation: {x: 0, y: 0, z: 0}
   ammo:
     AmmoID: 0
-    clipAmmo: 0
+    clipAmmo: 30
     maxClipAmmo: 0
 --- !u!1 &8130679481268291305
 GameObject:

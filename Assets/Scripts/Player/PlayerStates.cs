@@ -8,6 +8,7 @@ public class PlayerStates:MonoBehaviour{
     public int ID;
     public string playerName;
 
+    public WeaponHandler weaponHandler;
 
 
     public void ApplyDamage(float number){

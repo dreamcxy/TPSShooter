@@ -24,6 +24,7 @@ public class WeaponHandler : MonoBehaviour
         public string weaponTypeInt = "WeaponTypeInt";
         public string reloadingBool = "isReloading";
         public string aimingBool = "aiming";
+        public string shootBurstBool = "isShootBurst";
 
     }
     [SerializeField]
@@ -57,7 +58,7 @@ public class WeaponHandler : MonoBehaviour
         {
             currentWeapon.SetEquipped(true);
             currentWeapon.SetOwner(this.GetComponent<WeaponHandler>());
-
+            
             currentWeapon.ownerAiming = aim;
             if (currentWeapon.ammo.clipAmmo <= 0)
             {
@@ -72,18 +73,18 @@ public class WeaponHandler : MonoBehaviour
                 }
             }
         }
-        if (weaponList.Count > 0)
-        {
-            for (int i = 0; i < weaponList.Count; i++)
-            {
-                if (weaponList[i] != currentWeapon)
-                {
-                    weaponList[i].SetEquipped(false);
-                    // weaponList[i].SetOwner(this);
-                }
+        // if (weaponList.Count > 0)
+        // {
+        //     for (int i = 0; i < weaponList.Count; i++)
+        //     {
+        //         if (weaponList[i] != currentWeapon)
+        //         {
+        //             weaponList[i].SetEquipped(false);
+        //             // weaponList[i].SetOwner(this);
+        //         }
 
-            }
-        }
+        //     }
+        // }
         Animate();
     }
 
@@ -94,13 +95,9 @@ public class WeaponHandler : MonoBehaviour
         {
             return;
         }
-        
-        
         animator.SetBool(animations.reloadingBool, reload);
-
+        Debug.LogFormat("reload:{0}", reload);
         animator.SetBool(animations.aimingBool, aim);
-
-
         if (!currentWeapon)
         {
             weaponType = 0;
@@ -118,6 +115,7 @@ public class WeaponHandler : MonoBehaviour
     {
         if (reload || !currentWeapon) return;
         reload = true;
+        StartCoroutine(StopReload());
     }
 
     IEnumerator StopReload()
@@ -165,13 +163,13 @@ public class WeaponHandler : MonoBehaviour
         isSwitchingWeapon = false;
     }
 
-    public void FingerOnTrigger(bool pulling)
+    public void FingerOnTrigger(bool pulling, bool isShootBurst)
     {
         if (!currentWeapon)
         {
             return;
         }
-        currentWeapon.PullTrigger(!isSwitchingWeapon && pulling && aim && !reload);
+        currentWeapon.PullTrigger(!isSwitchingWeapon && pulling && aim && !reload, isShootBurst);
     }
 
 

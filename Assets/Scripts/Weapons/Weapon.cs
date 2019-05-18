@@ -37,7 +37,7 @@ public class Weapon:MonoBehaviour{
     public class WeaponSettings{
         [Header("Other")]
         public GameObject crossHairPrefeb;
-        public float reloadDuration = 2.0f;
+        public float reloadDuration = 1.0f;
         
         [Header("Bullet Options")]
         public float fireRate = 0.2f;
@@ -75,6 +75,7 @@ public class Weapon:MonoBehaviour{
     WeaponHandler owner;
     bool equipped;  // 武器是否在被装备
     bool pullingTrigger;
+    bool shootingBurst;
     
     bool resettingCartridge;  // 切换武器
 
@@ -107,7 +108,7 @@ public class Weapon:MonoBehaviour{
                     // Equiq();
                     if (pullingTrigger)
                     {
-                        Fire(shootRay);
+                        Fire(shootRay, isShootBurst:shootingBurst);
                     }
                     
                     if (ownerAiming)
@@ -128,7 +129,7 @@ public class Weapon:MonoBehaviour{
 
 
     // 开枪 
-    void Fire(Ray ray){
+    void Fire(Ray ray, bool isShootBurst){
         if (ammo.clipAmmo <= 0 || resettingCartridge || owner.reload)
         {
             return;
@@ -231,9 +232,9 @@ public class Weapon:MonoBehaviour{
         
     }
 
-    public void PullTrigger(bool isPulling){
+    public void PullTrigger(bool isPulling, bool isShootBurst){
         pullingTrigger = isPulling;
-           
+        shootingBurst = isShootBurst;
     }
 
     
