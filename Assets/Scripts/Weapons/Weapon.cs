@@ -4,17 +4,18 @@ using UnityEngine;
 
 public enum WeaponType
 {
-    //Infantry
+    //Infantry, weaponType = 1
+
     Fal,
     AK47,
     AKsu,
     G36,
-    //Handgun
+    //Handgun, weaponType = 2
     Deserteagle,
     Glock,
-    //Knife
+    //Knife, weaponType = 3
     Knife,
-    //Heavy
+    //Heavy, weapontType = 4
     PKM,
 }
 
@@ -44,6 +45,10 @@ public class Weapon:MonoBehaviour{
         public Transform bulletSpawn;   //枪口位置
         public float bulletSpread = 2.0f;   //枪口晃动
         public float range = 200.0f;    //射程
+
+        public int burstShootBulletNums = 3;
+        
+
 
         [Header("Effects")]
         public GameObject muzzleFlash;  // 枪口火花
@@ -104,7 +109,7 @@ public class Weapon:MonoBehaviour{
                     {
                         Fire(shootRay);
                     }
-                    Debug.LogFormat("ownerAiming:{0}", ownerAiming);
+                    
                     if (ownerAiming)
                     {
                         ToglleCrosshair(true);
@@ -142,7 +147,7 @@ public class Weapon:MonoBehaviour{
         if (Physics.Raycast(bSpawnPoint, dir, out hit, weaponSettings.range))
         {
             // 伤害判定
-            HitEffect(hit);
+            HitEffect(hit, weaponSettings.burstShootBulletNums);
         }
 
         GunEffects();
@@ -165,7 +170,7 @@ public class Weapon:MonoBehaviour{
     }
 
     // 对敌人造成伤害
-    void HitEffect(RaycastHit hit){
+    void HitEffect(RaycastHit hit, int bulletShootNums){
 
     }
 
@@ -228,5 +233,8 @@ public class Weapon:MonoBehaviour{
 
     public void PullTrigger(bool isPulling){
         pullingTrigger = isPulling;
+           
     }
+
+    
 }

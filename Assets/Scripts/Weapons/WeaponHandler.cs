@@ -17,12 +17,14 @@ public class WeaponHandler : MonoBehaviour
     [SerializeField]
     public UserSettings userSettings;
 
-
+    [System.Serializable]
     public class Animations
     {
-        public string weaponTypeInt = "WeaponType";
+
+        public string weaponTypeInt = "WeaponTypeInt";
         public string reloadingBool = "isReloading";
-        public string aimBool = "aiming";
+        public string aimingBool = "aiming";
+
     }
     [SerializeField]
     public Animations animations;
@@ -39,13 +41,13 @@ public class WeaponHandler : MonoBehaviour
     private void Start()
     {
         weaponList = new List<Weapon>();
-        
+
         currentWeapon = userSettings.weaponContainer.GetComponentInChildren<Weapon>();
-        
+
         animator = GetComponent<Animator>();
         if (currentWeapon)
         {
-            weaponList.Add(currentWeapon);    
+            weaponList.Add(currentWeapon);
         }
     }
 
@@ -88,7 +90,27 @@ public class WeaponHandler : MonoBehaviour
 
     void Animate()
     {
+        if (!animator)
+        {
+            return;
+        }
+        
+        
+        animator.SetBool(animations.reloadingBool, reload);
 
+        animator.SetBool(animations.aimingBool, aim);
+
+
+        if (!currentWeapon)
+        {
+            weaponType = 0;
+        }
+        if (currentWeapon.weaponType == WeaponType.AK47 || currentWeapon.weaponType == WeaponType.AKsu ||
+        currentWeapon.weaponType == WeaponType.Fal || currentWeapon.weaponType == WeaponType.G36) weaponType = 1;
+        else if (currentWeapon.weaponType == WeaponType.Deserteagle || currentWeapon.weaponType == WeaponType.Glock) weaponType = 2;
+        else if (currentWeapon.weaponType == WeaponType.Knife) weaponType = 3;
+        else weaponType = 4;
+        animator.SetInteger(animations.weaponTypeInt, weaponType);
     }
 
 
@@ -129,18 +151,22 @@ public class WeaponHandler : MonoBehaviour
             int currentWeaponIndex = weaponList.IndexOf(currentWeapon);
             int nextWeaponIndex = (currentWeaponIndex + 1) % weaponList.Count;
             currentWeapon = weaponList[nextWeaponIndex];
-        }else{
+        }
+        else
+        {
             currentWeapon = weaponList[0];
         }
         isSwitchingWeapon = true;
         StartCoroutine(StopSwitchingWeapon());
     }
-    IEnumerator StopSwitchingWeapon(){
+    IEnumerator StopSwitchingWeapon()
+    {
         yield return new WaitForSeconds(0.7f);
-        isSwitchingWeapon =false;
+        isSwitchingWeapon = false;
     }
 
-    public void FingerOnTrigger(bool pulling){
+    public void FingerOnTrigger(bool pulling)
+    {
         if (!currentWeapon)
         {
             return;

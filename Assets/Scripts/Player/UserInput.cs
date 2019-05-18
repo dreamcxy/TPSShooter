@@ -19,6 +19,8 @@ public class UserInput : MonoBehaviour
         public string reloadButton = "Reload";
         public string swtichWeaponButton = "SwitchWeapon";
         public string dropWeaponButton = "DropWeapon";
+        
+
 
         // 移动类的button
         public string verticalAxis = "Vertical";
@@ -53,6 +55,7 @@ public class UserInput : MonoBehaviour
     bool isReloadButtonDown;
     bool isDropButtonDown;
     bool isSwitchButtonDown;
+    
     Quaternion newRotation;
     Vector3 spineLookAt;
 
@@ -89,7 +92,7 @@ public class UserInput : MonoBehaviour
             if (weaponHandler.currentWeapon)
             {
                 if (aiming)
-                {   
+                {
                     PositionSpine(spineLookAt);
                 }
             }
@@ -121,6 +124,7 @@ public class UserInput : MonoBehaviour
         isReloadButtonDown = Input.GetButtonDown(inputSettings.reloadButton);
         isDropButtonDown = Input.GetButtonDown(inputSettings.dropWeaponButton);
         isSwitchButtonDown = Input.GetButtonDown(inputSettings.swtichWeaponButton);
+               
 
         isJumpButtonDown = Input.GetButtonDown(inputSettings.jumpButton);
         isRunButtonDown = Input.GetButton(inputSettings.runButton);
@@ -210,7 +214,7 @@ public class UserInput : MonoBehaviour
         {
             weaponHandler.Aim(aiming);
             otherSettings.requireInputForTurn = !aiming;
-
+            Debug.LogFormat("isFireButtonDown:{0}", isFireButtonDown);
             weaponHandler.FingerOnTrigger(isFireButtonDown);
             if (isReloadButtonDown) weaponHandler.Reload();
             // if(isDropButtonDown) weaponHandler.DropWeapon();
