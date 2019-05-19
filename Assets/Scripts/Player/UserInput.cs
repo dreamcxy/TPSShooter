@@ -66,7 +66,7 @@ public class UserInput : MonoBehaviour
     float horizontalAxis;
     bool isRunButtonDown;
     
-    bool isBurstShootButtonDown;
+    
 
     [HideInInspector]
     public static bool isMouseOnUI = false;
@@ -124,12 +124,11 @@ public class UserInput : MonoBehaviour
     void HandleInput()
     {
         aiming = (Input.GetButton(inputSettings.aimButton) || debugAim) && !characterMovement.isRun;
-        isFireButtonDown = Input.GetButton(inputSettings.fireButton);
+        isFireButtonDown = Input.GetButtonDown(inputSettings.fireButton);
         isReloadButtonDown = Input.GetButtonDown(inputSettings.reloadButton);
         isDropButtonDown = Input.GetButtonDown(inputSettings.dropWeaponButton);
         isSwitchButtonDown = Input.GetButtonDown(inputSettings.swtichWeaponButton);
-        isBurstShootButtonDown = Input.GetButtonDown(inputSettings.burstShootButton); // 按键连续射击
-
+        
         isJumpButtonDown = Input.GetButtonDown(inputSettings.jumpButton);
         isRunButtonDown = Input.GetButton(inputSettings.runButton);
         verticalAxis = Input.GetAxis(inputSettings.verticalAxis);
@@ -196,7 +195,7 @@ public class UserInput : MonoBehaviour
         Vector3 mainCamPos = mainCamT.position;
         Vector3 dir = mainCamT.forward;
         Ray ray = new Ray(mainCamPos, dir);
-        spineLookAt = ray.GetPoint(400f);
+        spineLookAt = ray.GetPoint(100f);
     }
 
     void PositionSpine(Vector3 spineLookAt)
@@ -218,8 +217,8 @@ public class UserInput : MonoBehaviour
         {
             weaponHandler.Aim(aiming);
             otherSettings.requireInputForTurn = !aiming;
-            Debug.LogFormat("isFireButtonDown:{0}", isFireButtonDown);
-            weaponHandler.FingerOnTrigger(isFireButtonDown, isShootBurst:isBurstShootButtonDown);
+            
+            weaponHandler.FingerOnTrigger(isFireButtonDown);
             
             if (isReloadButtonDown) weaponHandler.Reload();
             // if(isDropButtonDown) weaponHandler.DropWeapon();

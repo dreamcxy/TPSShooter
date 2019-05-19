@@ -75,7 +75,7 @@ public class Weapon:MonoBehaviour{
     WeaponHandler owner;
     bool equipped;  // 武器是否在被装备
     bool pullingTrigger;
-    bool shootingBurst;
+    
     
     bool resettingCartridge;  // 切换武器
 
@@ -84,9 +84,11 @@ public class Weapon:MonoBehaviour{
     Rigidbody rgbody;
     Animator animator;
 
-
+    
 
     private void Start() {
+        
+
         colBox = GetComponent<BoxCollider>();
         colSphere = GetComponent<SphereCollider>();
         rgbody = GetComponent<Rigidbody>();
@@ -108,7 +110,7 @@ public class Weapon:MonoBehaviour{
                     // Equiq();
                     if (pullingTrigger)
                     {
-                        Fire(shootRay, isShootBurst:shootingBurst);
+                        Fire(shootRay);
                     }
                     
                     if (ownerAiming)
@@ -129,16 +131,16 @@ public class Weapon:MonoBehaviour{
 
 
     // 开枪 
-    void Fire(Ray ray, bool isShootBurst){
+    void Fire(Ray ray){
         if (ammo.clipAmmo <= 0 || resettingCartridge || owner.reload)
         {
             return;
         }
+        Debug.Log("weapon fire");
         RaycastHit aimHit;
         Vector3 startPos = ray.origin;
         Vector3 aimDir = ray.direction;
         Physics.Raycast(startPos, aimDir, out aimHit);
-
         RaycastHit hit;
         Transform bSpawn = weaponSettings.bulletSpawn;
         Vector3 bSpawnPoint = bSpawn.position;
@@ -147,6 +149,7 @@ public class Weapon:MonoBehaviour{
         dir += (Vector3)Random.insideUnitCircle * weaponSettings.bulletSpread;
         if (Physics.Raycast(bSpawnPoint, dir, out hit, weaponSettings.range))
         {
+            
             // 伤害判定
             HitEffect(hit, weaponSettings.burstShootBulletNums);
         }
@@ -172,7 +175,11 @@ public class Weapon:MonoBehaviour{
 
     // 对敌人造成伤害
     void HitEffect(RaycastHit hit, int bulletShootNums){
-
+        Debug.LogFormat("hit.transform.gameObject.tag:{0}", hit.transform.gameObject.tag);
+        if (hit.transform.gameObject.tag == "Enemy")
+        {
+            Debug.Log("hit enemy...");
+        }
     }
 
     // 攻击的一些效果
@@ -232,9 +239,9 @@ public class Weapon:MonoBehaviour{
         
     }
 
-    public void PullTrigger(bool isPulling, bool isShootBurst){
+    public void PullTrigger(bool isPulling){
         pullingTrigger = isPulling;
-        shootingBurst = isShootBurst;
+        
     }
 
     

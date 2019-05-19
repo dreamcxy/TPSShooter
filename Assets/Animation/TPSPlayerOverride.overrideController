@@ -6,8 +6,6 @@ AnimatorOverrideController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PlayerMovementOverride
+  m_Name: TPSPlayerOverride
   m_Controller: {fileID: 9100000, guid: 6441bb1b67c0d3d4195b7d7ce703fa6a, type: 2}
-  m_Clips:
-  - m_OriginalClip: {fileID: 7400000, guid: 0b9c2e3885c637e46b6910aa579c85ab, type: 3}
-    m_OverrideClip: {fileID: 7400000, guid: 0b9c2e3885c637e46b6910aa579c85ab, type: 3}
+  m_Clips: []

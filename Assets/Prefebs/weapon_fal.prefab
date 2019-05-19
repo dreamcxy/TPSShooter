@@ -108,7 +108,7 @@ MonoBehaviour:
   weaponType: 0
   userSettings:
     leftHandIKTarget: {fileID: 0}
-    spineRotation: {x: 0, y: 0, z: 0}
+    spineRotation: {x: 10, y: 0, z: 0}
   weaponSettings:
     crossHairPrefeb: {fileID: 1124590980948992, guid: c7cde4a59c593fa4c8f95407faae6622,
       type: 3}
@@ -119,7 +119,8 @@ MonoBehaviour:
     bulletSpread: 2
     range: 200
     burstShootBulletNums: 3
-    muzzleFlash: {fileID: 0}
+    muzzleFlash: {fileID: 7445403133407206845, guid: 8126bd5bba5ee394a8cbc7b60a9388a8,
+      type: 3}
     equipPosition: {x: 0, y: 0, z: 0}
     equipRotation: {x: 0, y: 0, z: 0}
     unequipPosition: {x: 0, y: 0, z: 0}

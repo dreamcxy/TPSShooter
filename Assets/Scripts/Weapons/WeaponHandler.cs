@@ -24,7 +24,10 @@ public class WeaponHandler : MonoBehaviour
         public string weaponTypeInt = "WeaponTypeInt";
         public string reloadingBool = "isReloading";
         public string aimingBool = "aiming";
-        public string shootBurstBool = "isShootBurst";
+
+        public string singleShootBool = "isShoot";
+        public string burstShootBool = "isShootBurst";
+
 
     }
     [SerializeField]
@@ -34,6 +37,9 @@ public class WeaponHandler : MonoBehaviour
     public List<Weapon> weaponList;
 
     bool aim;
+    bool shootSingle;
+
+
     public bool reload { get; private set; }
 
     int weaponType;
@@ -58,7 +64,7 @@ public class WeaponHandler : MonoBehaviour
         {
             currentWeapon.SetEquipped(true);
             currentWeapon.SetOwner(this.GetComponent<WeaponHandler>());
-            
+
             currentWeapon.ownerAiming = aim;
             if (currentWeapon.ammo.clipAmmo <= 0)
             {
@@ -96,8 +102,9 @@ public class WeaponHandler : MonoBehaviour
             return;
         }
         animator.SetBool(animations.reloadingBool, reload);
-        Debug.LogFormat("reload:{0}", reload);
         animator.SetBool(animations.aimingBool, aim);
+        animator.SetBool(animations.singleShootBool, shootSingle);
+        Debug.LogFormat("shootSingle:{0}", shootSingle);
         if (!currentWeapon)
         {
             weaponType = 0;
@@ -163,14 +170,28 @@ public class WeaponHandler : MonoBehaviour
         isSwitchingWeapon = false;
     }
 
-    public void FingerOnTrigger(bool pulling, bool isShootBurst)
+    public void FingerOnTrigger(bool pulling)
     {
         if (!currentWeapon)
         {
             return;
         }
-        currentWeapon.PullTrigger(!isSwitchingWeapon && pulling && aim && !reload, isShootBurst);
+        currentWeapon.PullTrigger(!isSwitchingWeapon && pulling && aim && !reload);
+
+        if (!isSwitchingWeapon && pulling && aim && !reload)
+        {
+            shootSingle = true;
+            StartCoroutine(StopShoot());
+        }
+        else
+        {
+            shootSingle = false;
+        }
     }
 
-
+    IEnumerator StopShoot()
+    {
+        yield return new WaitForSeconds(0.1f);
+        shootSingle = false;
+    }
 }
