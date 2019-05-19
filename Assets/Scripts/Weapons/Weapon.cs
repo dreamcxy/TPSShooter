@@ -48,7 +48,10 @@ public class Weapon:MonoBehaviour{
 
         public int burstShootBulletNums = 3;
         
-
+        [Header("AnimationClips")]
+        public AnimationClip reloadAnimation;
+        public AnimationClip shootAnimation;
+        public AnimationClip shootBurstAnimation;
 
         [Header("Effects")]
         public GameObject muzzleFlash;  // 枪口火花

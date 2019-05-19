@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657838, g: 0.49641234, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -679,6 +679,9 @@ MonoBehaviour:
     bulletSpread: 2
     range: 200
     burstShootBulletNums: 2
+    reloadAnimation: {fileID: 0}
+    shootAnimation: {fileID: 0}
+    shootBurstAnimation: {fileID: 0}
     muzzleFlash: {fileID: 0}
     equipPosition: {x: 0, y: 0, z: 0}
     equipRotation: {x: 0, y: 0, z: 0}
@@ -735,6 +738,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: weapon_fal (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4360033676904407741, guid: 9c13337297ef0d44a9f603fdd267ee0e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3656840362528646031, guid: 9c13337297ef0d44a9f603fdd267ee0e,
         type: 3}
@@ -811,6 +819,16 @@ PrefabInstance:
         type: 3}
       propertyPath: ammo.maxClipAmmo
       value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1250601883805331431, guid: 9c13337297ef0d44a9f603fdd267ee0e,
+        type: 3}
+      propertyPath: weaponType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1250601883805331431, guid: 9c13337297ef0d44a9f603fdd267ee0e,
+        type: 3}
+      propertyPath: weaponSettings.reloadAnimation
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3033496610377359170, guid: 9c13337297ef0d44a9f603fdd267ee0e,
         type: 3}
@@ -1104,6 +1122,87 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1604850963}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1673831494
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2103126199}
+    m_Modifications:
+    - target: {fileID: 8460401670627684294, guid: 091b826ab82bf4de3b1a8c7bc1cfe0c6,
+        type: 3}
+      propertyPath: m_Name
+      value: weapon_glock
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087865280370839588, guid: 091b826ab82bf4de3b1a8c7bc1cfe0c6,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087865280370839588, guid: 091b826ab82bf4de3b1a8c7bc1cfe0c6,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087865280370839588, guid: 091b826ab82bf4de3b1a8c7bc1cfe0c6,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087865280370839588, guid: 091b826ab82bf4de3b1a8c7bc1cfe0c6,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071067
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087865280370839588, guid: 091b826ab82bf4de3b1a8c7bc1cfe0c6,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.00000016197237
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087865280370839588, guid: 091b826ab82bf4de3b1a8c7bc1cfe0c6,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.00000006229704
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087865280370839588, guid: 091b826ab82bf4de3b1a8c7bc1cfe0c6,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071069
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087865280370839588, guid: 091b826ab82bf4de3b1a8c7bc1cfe0c6,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087865280370839588, guid: 091b826ab82bf4de3b1a8c7bc1cfe0c6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087865280370839588, guid: 091b826ab82bf4de3b1a8c7bc1cfe0c6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087865280370839588, guid: 091b826ab82bf4de3b1a8c7bc1cfe0c6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8410199451798716237, guid: 091b826ab82bf4de3b1a8c7bc1cfe0c6,
+        type: 3}
+      propertyPath: weaponSettings.muzzleFlash
+      value: 
+      objectReference: {fileID: 7445403133407206845, guid: 8126bd5bba5ee394a8cbc7b60a9388a8,
+        type: 3}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 091b826ab82bf4de3b1a8c7bc1cfe0c6, type: 3}
+--- !u!4 &1673831495 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9087865280370839588, guid: 091b826ab82bf4de3b1a8c7bc1cfe0c6,
+    type: 3}
+  m_PrefabInstance: {fileID: 1673831494}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1730575267 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3656840362528646031, guid: 9c13337297ef0d44a9f603fdd267ee0e,
@@ -1175,6 +1274,80 @@ MonoBehaviour:
     movementLerpSpeed: 5
   shoulder: 0
   target: {fileID: 1899901053}
+--- !u!1001 &1794779267
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 66131484}
+    m_Modifications:
+    - target: {fileID: 8460401670627684294, guid: 091b826ab82bf4de3b1a8c7bc1cfe0c6,
+        type: 3}
+      propertyPath: m_Name
+      value: weapon_glock
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087865280370839588, guid: 091b826ab82bf4de3b1a8c7bc1cfe0c6,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087865280370839588, guid: 091b826ab82bf4de3b1a8c7bc1cfe0c6,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087865280370839588, guid: 091b826ab82bf4de3b1a8c7bc1cfe0c6,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087865280370839588, guid: 091b826ab82bf4de3b1a8c7bc1cfe0c6,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071067
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087865280370839588, guid: 091b826ab82bf4de3b1a8c7bc1cfe0c6,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.00000016197237
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087865280370839588, guid: 091b826ab82bf4de3b1a8c7bc1cfe0c6,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.00000006229704
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087865280370839588, guid: 091b826ab82bf4de3b1a8c7bc1cfe0c6,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071069
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087865280370839588, guid: 091b826ab82bf4de3b1a8c7bc1cfe0c6,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087865280370839588, guid: 091b826ab82bf4de3b1a8c7bc1cfe0c6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087865280370839588, guid: 091b826ab82bf4de3b1a8c7bc1cfe0c6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087865280370839588, guid: 091b826ab82bf4de3b1a8c7bc1cfe0c6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 941470227238672384, guid: 091b826ab82bf4de3b1a8c7bc1cfe0c6,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 091b826ab82bf4de3b1a8c7bc1cfe0c6, type: 3}
 --- !u!1 &1899901052
 GameObject:
   m_ObjectHideFlags: 0
@@ -1267,7 +1440,7 @@ Animator:
   m_GameObject: {fileID: 1899901052}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 60e3152f06c30ab4b97fa503f8639b68, type: 3}
-  m_Controller: {fileID: 9100000, guid: 6441bb1b67c0d3d4195b7d7ce703fa6a, type: 2}
+  m_Controller: {fileID: 22100000, guid: 11d40f4c36bf2534daeb15509716d14f, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -1294,7 +1467,8 @@ MonoBehaviour:
     weaponTypeInt: WeaponTypeInt
     reloadingBool: isReloading
     aimingBool: aiming
-    shootBurstBool: isShootBurst
+    singleShootBool: isShoot
+    burstShootBool: isShootBurst
   currentWeapon: {fileID: 0}
   weaponList: []
 --- !u!114 &1899901058
@@ -1375,6 +1549,7 @@ Transform:
   m_Children:
   - {fileID: 1730575267}
   - {fileID: 1064233789}
+  - {fileID: 1673831495}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

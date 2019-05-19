@@ -2,10 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public class AnimationClipOverrides : List<KeyValuePair<AnimationClip, AnimationClip>>
+{
+    public AnimationClipOverrides(int capacity) : base(capacity) {}
 
+    public AnimationClip this[string name]
+    {
+        get { return this.Find(x => x.Key.name.Equals(name)).Value; }
+        set
+        {
+            int index = this.FindIndex(x => x.Key.name.Equals(name));
+            if (index != -1)
+                this[index] = new KeyValuePair<AnimationClip, AnimationClip>(this[index].Key, value);
+        }
+    }
+}
 public class WeaponHandler : MonoBehaviour
 {
     Animator animator;
+    AnimatorOverrideController animatorOverrideController;
+    AnimationClipOverrides clipOverrides;
 
     [System.Serializable]
     public class UserSettings
@@ -48,10 +64,12 @@ public class WeaponHandler : MonoBehaviour
     private void Start()
     {
         weaponList = new List<Weapon>();
-
         currentWeapon = userSettings.weaponContainer.GetComponentInChildren<Weapon>();
-
         animator = GetComponent<Animator>();
+        animatorOverrideController = new AnimatorOverrideController(animator.runtimeAnimatorController);
+        animator.runtimeAnimatorController = animatorOverrideController;
+        clipOverrides = new AnimationClipOverrides(animatorOverrideController.overridesCount);
+        animatorOverrideController.GetOverrides(clipOverrides);
         if (currentWeapon)
         {
             weaponList.Add(currentWeapon);
@@ -62,6 +80,10 @@ public class WeaponHandler : MonoBehaviour
     {
         if (currentWeapon)
         {
+            if(currentWeapon.weaponType == WeaponType.Glock){
+                Debug.Log("glock...");
+                clipOverrides["infantry_combat_reload"] = currentWeapon.weaponSettings.reloadAnimation;
+            }
             currentWeapon.SetEquipped(true);
             currentWeapon.SetOwner(this.GetComponent<WeaponHandler>());
 
