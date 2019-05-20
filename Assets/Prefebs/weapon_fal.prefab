@@ -135,9 +135,9 @@ MonoBehaviour:
     unequipPosition: {x: 0.02, y: 0.32, z: 1.28}
     unequipRotation: {x: 90, y: -45, z: 0}
   ammo:
-    AmmoID: 0
+    AmmoID: 101
     clipAmmo: 30
-    maxClipAmmo: 60
+    maxClipAmmo: 30
 --- !u!1 &8130679481268291305
 GameObject:
   m_ObjectHideFlags: 0

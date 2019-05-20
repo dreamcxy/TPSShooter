@@ -54,6 +54,8 @@ public class WeaponHandler : MonoBehaviour
 
     public Weapon currentWeapon;
     public List<Weapon> weaponList;
+    public Container container;
+    
 
     bool aim;
     bool shootSingle;
@@ -67,11 +69,15 @@ public class WeaponHandler : MonoBehaviour
     private void Start()
     {
         currentWeapon = userSettings.weaponContainer.GetComponentInChildren<Weapon>();
+        container = GetComponentInChildren<Container>();
         animator = GetComponent<Animator>();
         animatorOverrideController = new AnimatorOverrideController(animator.runtimeAnimatorController);
         animator.runtimeAnimatorController = animatorOverrideController;
         clipOverrides = new AnimationClipOverrides(animatorOverrideController.overridesCount);
         animatorOverrideController.GetOverrides(clipOverrides);
+        if(!container){
+            Debug.LogError("<Color=Red><a>Missing Container</a></Color>");
+        }
     }
 
     // 初始的时候是两把武器，一把手枪，一把步枪
@@ -105,11 +111,12 @@ public class WeaponHandler : MonoBehaviour
                 {
                     weaponList[i].SetEquipped(false);
                     weaponList[i].SetOwner(this);
-
                     weaponList[i].gameObject.SetActive(true);
                 }
             }
         }
+        Debug.LogFormat("currentWeapon.weaponType:{0}, currentWeapon.ammo.AmmoID:{1}, currentWeapon.ammo.clipAmmo:{2}, container.GetContainerItem(currentWeapon.ammo.AmmoID):{3}", currentWeapon.weaponType, currentWeapon.ammo.AmmoID, currentWeapon.ammo.clipAmmo, container.GetContainerItem(currentWeapon.ammo.AmmoID));
+
         Animate();
     }
 
@@ -129,7 +136,7 @@ public class WeaponHandler : MonoBehaviour
         else if (currentWeapon.weaponType == WeaponType.Deserteagle || currentWeapon.weaponType == WeaponType.Glock) weaponTypeInt = 2;
         else if (currentWeapon.weaponType == WeaponType.Knife) weaponTypeInt = 3;
         else weaponTypeInt = 4;
-        Debug.LogFormat("weaponTypeInt:{0}", weaponTypeInt);
+        // Debug.LogFormat("weaponTypeInt:{0}", weaponTypeInt);
         clipOverrides["infantry_combat_idle"] = currentWeapon.weaponSettings.idleAnimation;
         clipOverrides["infantry_combat_walk"] = currentWeapon.weaponSettings.walkAnimation;
         clipOverrides["infantry_combat_walk_back"] = currentWeapon.weaponSettings.walkBackAnimation;
@@ -144,12 +151,14 @@ public class WeaponHandler : MonoBehaviour
         animator.SetBool(animations.reloadingBool, reload);
         animator.SetBool(animations.aimingBool, aim);
         animator.SetBool(animations.singleShootBool, shootSingle);
+        
     }
 
 
     public void Reload()
     {
         if (reload || !currentWeapon) return;
+        if(container.GetAmountRemaining(currentWeapon.ammo.AmmoID) <= 0 || currentWeapon.ammo.clipAmmo == currentWeapon.ammo.maxClipAmmo)   return;
         reload = true;
         StartCoroutine(StopReload());
     }

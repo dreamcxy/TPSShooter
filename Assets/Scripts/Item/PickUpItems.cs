@@ -6,10 +6,12 @@ using UnityEngine;
 
 public class PickUpItems : MonoBehaviour
 {
+    [SerializeField]
     public ContainerItem itemInfo;
 
     // Player碰到物品
     void OnTriggerEnter(Collider other) {
+        Debug.LogFormat("other.tag:{0}",other.tag);
         if (other.tag != "Player")
         {
             return;

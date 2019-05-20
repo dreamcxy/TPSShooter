@@ -96,8 +96,6 @@ public class Weapon:MonoBehaviour{
     
 
     private void Start() {
-        
-
         colBox = GetComponent<BoxCollider>();
         colSphere = GetComponent<SphereCollider>();
         rgbody = GetComponent<Rigidbody>();
@@ -251,7 +249,9 @@ public class Weapon:MonoBehaviour{
     }
 
     public void LoadClip(){
-        ammo.clipAmmo += ammo.maxClipAmmo;
+        var container = owner.container;
+        int ammoNeeded = ammo.maxClipAmmo - ammo.clipAmmo;
+        ammo.clipAmmo += container.TakeFromContainer(ammo.AmmoID, ammoNeeded);
     }
 
     public void PullTrigger(bool isPulling){

@@ -182,6 +182,6 @@ MonoBehaviour:
     unequipPosition: {x: 0.15, y: 0.1, z: 0.8}
     unequipRotation: {x: 180, y: 90, z: 0}
   ammo:
-    AmmoID: 0
-    clipAmmo: 10
-    maxClipAmmo: 20
+    AmmoID: 102
+    clipAmmo: 0
+    maxClipAmmo: 10
