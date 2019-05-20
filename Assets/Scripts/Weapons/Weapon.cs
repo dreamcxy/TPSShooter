@@ -27,7 +27,7 @@ public class Weapon:MonoBehaviour{
 
     [System.Serializable]
     public class UserSettings{
-        public Transform leftHandIKTarget;
+        // public Transform leftHandIKTarget;
         public Vector3 spineRotation;
     }
     [SerializeField]
@@ -49,9 +49,15 @@ public class Weapon:MonoBehaviour{
         public int burstShootBulletNums = 3;
         
         [Header("AnimationClips")]
-        public AnimationClip reloadAnimation;
-        public AnimationClip shootAnimation;
-        public AnimationClip shootBurstAnimation;
+        public AnimationClip idleAnimation;
+        public AnimationClip walkAnimation;
+        public AnimationClip walkBackAnimation;
+        public AnimationClip walkLeftAnimation;
+        public AnimationClip walkRightAnimation;
+        public AnimationClip runAnimation;
+        public AnimationClip runBackAnimation;
+        public AnimationClip runLeftAnimation;
+        public AnimationClip runRightAnimation; 
 
         [Header("Effects")]
         public GameObject muzzleFlash;  // 枪口火花
@@ -110,7 +116,7 @@ public class Weapon:MonoBehaviour{
            if (equipped)
            {
                if(owner.userSettings.weaponContainer){
-                    // Equiq();
+                    Equiq();
                     if (pullingTrigger)
                     {
                         Fire(shootRay);
@@ -197,9 +203,9 @@ public class Weapon:MonoBehaviour{
             muzzleT.SetParent(weaponSettings.bulletSpawn);
             Destroy(muzzleFlash, 1.0f);
         }
-
         #endregion
     }
+
 
 
     void Equiq(){
@@ -209,14 +215,20 @@ public class Weapon:MonoBehaviour{
         }
         else if(!owner.userSettings.weaponContainer) return;
         transform.SetParent(owner.userSettings.weaponContainer);
-        // transform.localPosition = weaponSettings.equipPosition;
-        // Quaternion equipRot = Quaternion.Euler(weaponSettings.equipRotation);
-        // transform.localRotation = equipRot;
+        transform.localPosition = weaponSettings.equipPosition;
+        Quaternion equipRot = Quaternion.Euler(weaponSettings.equipRotation);
+        transform.localRotation = equipRot;
     }
 
     void UnEquip(WeaponType weaponType){
         if(!owner)  return;
-        transform.SetParent(null);
+
+        if (weaponType == WeaponType.Glock || weaponType == WeaponType.Deserteagle)
+        {
+            transform.SetParent(owner.userSettings.handgunUnequipSpot);
+        }else if(weaponType == WeaponType.Fal || weaponType == WeaponType.AK47 || weaponType == WeaponType.AKsu || weaponType == WeaponType.G36){
+            transform.SetParent(owner.userSettings.infantryUnequipSpot);
+        }
         transform.localPosition = weaponSettings.unequipPosition;
         Quaternion unEquipRot = Quaternion.Euler(weaponSettings.unequipRotation);
         transform.localRotation = unEquipRot;
@@ -239,7 +251,7 @@ public class Weapon:MonoBehaviour{
     }
 
     public void LoadClip(){
-        
+        ammo.clipAmmo += ammo.maxClipAmmo;
     }
 
     public void PullTrigger(bool isPulling){

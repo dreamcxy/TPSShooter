@@ -58,7 +58,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8460401670627684294}
-  m_LocalRotation: {x: -0.7071067, y: -0.00000016197237, z: -0.00000006229704, w: 0.7071069}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 0.42284146, y: 0.42284158, z: 0.42284134}
   m_Children:
@@ -154,7 +154,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponType: 5
   userSettings:
-    leftHandIKTarget: {fileID: 0}
     spineRotation: {x: 0, y: 0, z: 0}
   weaponSettings:
     crossHairPrefeb: {fileID: 1124590980948992, guid: c7cde4a59c593fa4c8f95407faae6622,
@@ -166,16 +165,22 @@ MonoBehaviour:
     bulletSpread: 2
     range: 200
     burstShootBulletNums: 3
-    reloadAnimation: {fileID: 7400000, guid: 590ccfba2034bfb4cae0b89508db7140, type: 3}
-    shootAnimation: {fileID: 7400000, guid: 93e4f93945bc6b74eb09c322e07311a5, type: 3}
-    shootBurstAnimation: {fileID: 7400000, guid: cc1ce8dcf114fbb4c80149d1ad11c1c0,
+    idleAnimation: {fileID: 7400000, guid: 61ee5c52da19edb4b8051f8edd051e7b, type: 3}
+    walkAnimation: {fileID: 7400000, guid: 4fcd0b8397034604b829e8d17a787f50, type: 3}
+    walkBackAnimation: {fileID: 7400000, guid: 9e22f044c5760424eb7079e7e0c8b3c9, type: 3}
+    walkLeftAnimation: {fileID: 7400000, guid: ee1844c9a0eb59c408e3a25ecc402bc3, type: 3}
+    walkRightAnimation: {fileID: 7400000, guid: 31872c93d88f58d49bfafd3e6bb3ad39,
       type: 3}
+    runAnimation: {fileID: 7400000, guid: 988d6c5c1d650bf4e8f38a8d94f8f25c, type: 3}
+    runBackAnimation: {fileID: 7400000, guid: d368f98db75e91548af0c5e3882df80f, type: 3}
+    runLeftAnimation: {fileID: 7400000, guid: 85d4bc0f6d0d63a4e9cd9c170524f818, type: 3}
+    runRightAnimation: {fileID: 7400000, guid: 6c5e6d666b74a1f42aaa0b79b8467d6f, type: 3}
     muzzleFlash: {fileID: 7445403133407206845, guid: 8126bd5bba5ee394a8cbc7b60a9388a8,
       type: 3}
     equipPosition: {x: 0, y: 0, z: 0}
     equipRotation: {x: 0, y: 0, z: 0}
-    unequipPosition: {x: 0, y: 0, z: 0}
-    unequipRotation: {x: 0, y: 0, z: 0}
+    unequipPosition: {x: 0.15, y: 0.1, z: 0.8}
+    unequipRotation: {x: 180, y: 90, z: 0}
   ammo:
     AmmoID: 0
     clipAmmo: 10

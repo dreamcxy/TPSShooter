@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AnimationClipOverrides : List<KeyValuePair<AnimationClip, AnimationClip>>
 {
-    public AnimationClipOverrides(int capacity) : base(capacity) {}
+    public AnimationClipOverrides(int capacity) : base(capacity) { }
 
     public AnimationClip this[string name]
     {
@@ -26,8 +26,11 @@ public class WeaponHandler : MonoBehaviour
     [System.Serializable]
     public class UserSettings
     {
-        // public Transform rightHand;
+
         public Transform weaponContainer;
+        // 手枪和步枪不装备的位置
+        public Transform handgunUnequipSpot;
+        public Transform infantryUnequipSpot;
     }
 
     [SerializeField]
@@ -58,32 +61,25 @@ public class WeaponHandler : MonoBehaviour
 
     public bool reload { get; private set; }
 
-    int weaponType;
+    int weaponTypeInt;
     bool isSwitchingWeapon; //是否正在切换武器
 
     private void Start()
     {
-        weaponList = new List<Weapon>();
         currentWeapon = userSettings.weaponContainer.GetComponentInChildren<Weapon>();
         animator = GetComponent<Animator>();
         animatorOverrideController = new AnimatorOverrideController(animator.runtimeAnimatorController);
         animator.runtimeAnimatorController = animatorOverrideController;
         clipOverrides = new AnimationClipOverrides(animatorOverrideController.overridesCount);
         animatorOverrideController.GetOverrides(clipOverrides);
-        if (currentWeapon)
-        {
-            weaponList.Add(currentWeapon);
-        }
     }
 
+    // 初始的时候是两把武器，一把手枪，一把步枪
     private void Update()
     {
         if (currentWeapon)
         {
-            if(currentWeapon.weaponType == WeaponType.Glock){
-                Debug.Log("glock...");
-                clipOverrides["infantry_combat_reload"] = currentWeapon.weaponSettings.reloadAnimation;
-            }
+
             currentWeapon.SetEquipped(true);
             currentWeapon.SetOwner(this.GetComponent<WeaponHandler>());
 
@@ -101,18 +97,19 @@ public class WeaponHandler : MonoBehaviour
                 }
             }
         }
-        // if (weaponList.Count > 0)
-        // {
-        //     for (int i = 0; i < weaponList.Count; i++)
-        //     {
-        //         if (weaponList[i] != currentWeapon)
-        //         {
-        //             weaponList[i].SetEquipped(false);
-        //             // weaponList[i].SetOwner(this);
-        //         }
+        if (weaponList.Count > 0)
+        {
+            for (int i = 0; i < weaponList.Count; i++)
+            {
+                if (weaponList[i] != currentWeapon)
+                {
+                    weaponList[i].SetEquipped(false);
+                    weaponList[i].SetOwner(this);
 
-        //     }
-        // }
+                    weaponList[i].gameObject.SetActive(true);
+                }
+            }
+        }
         Animate();
     }
 
@@ -123,20 +120,30 @@ public class WeaponHandler : MonoBehaviour
         {
             return;
         }
+        if (!currentWeapon)
+        {
+            weaponTypeInt = 0;
+        }
+        if (currentWeapon.weaponType == WeaponType.AK47 || currentWeapon.weaponType == WeaponType.AKsu ||
+            currentWeapon.weaponType == WeaponType.Fal || currentWeapon.weaponType == WeaponType.G36) weaponTypeInt = 1;
+        else if (currentWeapon.weaponType == WeaponType.Deserteagle || currentWeapon.weaponType == WeaponType.Glock) weaponTypeInt = 2;
+        else if (currentWeapon.weaponType == WeaponType.Knife) weaponTypeInt = 3;
+        else weaponTypeInt = 4;
+        Debug.LogFormat("weaponTypeInt:{0}", weaponTypeInt);
+        clipOverrides["infantry_combat_idle"] = currentWeapon.weaponSettings.idleAnimation;
+        clipOverrides["infantry_combat_walk"] = currentWeapon.weaponSettings.walkAnimation;
+        clipOverrides["infantry_combat_walk_back"] = currentWeapon.weaponSettings.walkBackAnimation;
+        clipOverrides["infantry_combat_walk_left"] = currentWeapon.weaponSettings.walkLeftAnimation;
+        clipOverrides["infantry_combat_walk_right"] = currentWeapon.weaponSettings.walkRightAnimation;
+        clipOverrides["infantry_combat_run"] = currentWeapon.weaponSettings.runAnimation;
+        clipOverrides["infantry_combat_run_back"] = currentWeapon.weaponSettings.runBackAnimation;
+        clipOverrides["infantry_combat_run_left"] = currentWeapon.weaponSettings.runLeftAnimation;
+        clipOverrides["infantry_combat_run_right"] = currentWeapon.weaponSettings.runRightAnimation;
+        animatorOverrideController.ApplyOverrides(clipOverrides);
+        animator.SetInteger(animations.weaponTypeInt, weaponTypeInt);
         animator.SetBool(animations.reloadingBool, reload);
         animator.SetBool(animations.aimingBool, aim);
         animator.SetBool(animations.singleShootBool, shootSingle);
-        Debug.LogFormat("shootSingle:{0}", shootSingle);
-        if (!currentWeapon)
-        {
-            weaponType = 0;
-        }
-        if (currentWeapon.weaponType == WeaponType.AK47 || currentWeapon.weaponType == WeaponType.AKsu ||
-        currentWeapon.weaponType == WeaponType.Fal || currentWeapon.weaponType == WeaponType.G36) weaponType = 1;
-        else if (currentWeapon.weaponType == WeaponType.Deserteagle || currentWeapon.weaponType == WeaponType.Glock) weaponType = 2;
-        else if (currentWeapon.weaponType == WeaponType.Knife) weaponType = 3;
-        else weaponType = 4;
-        animator.SetInteger(animations.weaponTypeInt, weaponType);
     }
 
 
@@ -178,12 +185,14 @@ public class WeaponHandler : MonoBehaviour
             int currentWeaponIndex = weaponList.IndexOf(currentWeapon);
             int nextWeaponIndex = (currentWeaponIndex + 1) % weaponList.Count;
             currentWeapon = weaponList[nextWeaponIndex];
+
         }
         else
         {
             currentWeapon = weaponList[0];
         }
         isSwitchingWeapon = true;
+        currentWeapon.transform.gameObject.SetActive(true);
         StartCoroutine(StopSwitchingWeapon());
     }
     IEnumerator StopSwitchingWeapon()

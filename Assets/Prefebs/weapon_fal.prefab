@@ -107,7 +107,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponType: 0
   userSettings:
-    leftHandIKTarget: {fileID: 0}
     spineRotation: {x: 10, y: 0, z: 0}
   weaponSettings:
     crossHairPrefeb: {fileID: 1124590980948992, guid: c7cde4a59c593fa4c8f95407faae6622,
@@ -119,16 +118,26 @@ MonoBehaviour:
     bulletSpread: 2
     range: 200
     burstShootBulletNums: 3
+    idleAnimation: {fileID: 7400000, guid: 0b9c2e3885c637e46b6910aa579c85ab, type: 3}
+    walkAnimation: {fileID: 7400000, guid: 501728c30c145c24fb454579be7b318d, type: 3}
+    walkBackAnimation: {fileID: 7400000, guid: 94e6a5b4487aae1478bbf2ec3d3f2e38, type: 3}
+    walkLeftAnimation: {fileID: 7400000, guid: 2a8647d9777055d468164540e131d0bd, type: 3}
+    walkRightAnimation: {fileID: 7400000, guid: da96f4b6502c62d4e97fcf1e0c4c1395,
+      type: 3}
+    runAnimation: {fileID: 7400000, guid: b2a3e32322d0a264ab42b0b9f01e4ea6, type: 3}
+    runBackAnimation: {fileID: 7400000, guid: 9e1cb1c7f62d5d44192efdb58cf83152, type: 3}
+    runLeftAnimation: {fileID: 7400000, guid: 6660bc9151d060743bdcc101625a1132, type: 3}
+    runRightAnimation: {fileID: 7400000, guid: 77855e4d6b6df6a4dac9e178c481108a, type: 3}
     muzzleFlash: {fileID: 7445403133407206845, guid: 8126bd5bba5ee394a8cbc7b60a9388a8,
       type: 3}
     equipPosition: {x: 0, y: 0, z: 0}
     equipRotation: {x: 0, y: 0, z: 0}
-    unequipPosition: {x: 0, y: 0, z: 0}
-    unequipRotation: {x: 0, y: 0, z: 0}
+    unequipPosition: {x: 0.02, y: 0.32, z: 1.28}
+    unequipRotation: {x: 90, y: -45, z: 0}
   ammo:
     AmmoID: 0
     clipAmmo: 30
-    maxClipAmmo: 0
+    maxClipAmmo: 60
 --- !u!1 &8130679481268291305
 GameObject:
   m_ObjectHideFlags: 0

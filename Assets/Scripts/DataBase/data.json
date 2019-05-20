@@ -1,0 +1,24 @@
+
+{
+    "playerName":"name",
+    "password":"pass",
+    "weapons":[
+        {
+            "Infantry":"Ak47||Fal||AkSu||G36",
+            "InfantryBulletCurrent":25,
+            "InfantryBulletAll":60
+        },
+        {
+            "Handgun":"Deserteagle||Glock",
+            "HandgunBulletCurrent":8,
+            "HandgunBulletAll":20
+        }
+
+    ],
+    "playerState":{
+        "health":90,
+        "experience":90,
+        "currentLevel":3
+    }
+
+}
