@@ -146,7 +146,8 @@ public class UserInput : MonoBehaviour
             StartCoroutine(CanJump());
         }
         characterMovement.isRun = isRunButtonDown;
-        characterMovement.ApplyGravity(verticalAxis, horizontalAxis);
+        // characterMovement.ApplyGravity(verticalAxis, horizontalAxis);
+        characterMovement.AnimateAndMove(verticalAxis, horizontalAxis);
         characterMovement.Animate(verticalAxis, horizontalAxis);
     }
 
