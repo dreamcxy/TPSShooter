@@ -234,4 +234,9 @@ public class WeaponHandler : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         shootSingle = false;
     }
+
+    public void AddWeaponToList(Weapon weapon){
+        if(weaponList.Contains(weapon)) return;
+        weaponList.Add(weapon);
+    }
 }
