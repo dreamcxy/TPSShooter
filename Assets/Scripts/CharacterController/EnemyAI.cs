@@ -93,8 +93,20 @@ public class EnemyAI : MonoBehaviour
         get { return GetComponent<Animator>(); }
         set { animator = value; }
     }
-    
 
+    private EnemyStates enemyStates
+    {
+        get { return GetComponent<EnemyStates>(); }
+        set { enemyStates = value; }
+
+    }
+
+    private Transform currentLookTransform;
+    private Vector3 targetLastKnownPosition;
+    private PlayerStates[] allPlayers;
+
+    private EnemyAIState enemyState;
+ 
     #endregion
 
 }

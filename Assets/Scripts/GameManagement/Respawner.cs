@@ -30,7 +30,10 @@ public class Respawner : MonoBehaviour
 
     private void Update()
     {
-
+        if (Time.time - lastRespawnTime > respawnSettings.respawnRate)
+        {
+            RespawnEnemy();
+        }
     }
     void RespawnEnemy()
     {
@@ -43,7 +46,16 @@ public class Respawner : MonoBehaviour
                 enemyAI.guardSettings.wayPoints[i] = respawnSettings.wanpoints[(i + zoffets) % respawnSettings.wanpoints.Length];
             }
             EnemyStates enemyStates = newEnemy.GetComponent<EnemyStates>();
-            
+
+        }
+    }
+
+    public void AmountOne()
+    {
+        enemyCurrentAmount--;
+        if (enemyCurrentAmount < 0)
+        {
+            enemyCurrentAmount = 0;
         }
     }
 }
