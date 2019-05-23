@@ -21,6 +21,8 @@ public class EnemyMovement:MonoBehaviour{
     [System.Serializable]
     public class MovementSettings{
         public float moveSpeed = 1f;
+        public float runSpeed = 2f;
+
         
     }
 
@@ -59,6 +61,7 @@ public class EnemyMovement:MonoBehaviour{
     }
 
     public void AnimateAndMove(float forward, float strafe){
+        Debug.LogFormat("forward:{0}", forward);
         animator.SetFloat(animationSettings.verticalVelocityFloat, forward);
         Vector3 direction = new Vector3(0, 0, forward);
         direction = transform.TransformDirection(direction);
@@ -68,6 +71,10 @@ public class EnemyMovement:MonoBehaviour{
 
     public void JustAnimate(float forward, float strafe){
         animator.SetFloat(animationSettings.verticalVelocityFloat, forward);
+        // Vector3 direction = new Vector3(0, 0, forward);
+        // direction = transform.TransformDirection(direction);
+        // direction *= movementSettings.runSpeed * Time.deltaTime;
+        // characterController.Move(direction);
     }
 
     public void ApplyGravity(){

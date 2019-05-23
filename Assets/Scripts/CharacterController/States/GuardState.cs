@@ -17,15 +17,18 @@ public class GuardState:EnemyAIState
         currentWaitTime = 5f;
     }
 
+    // AI 巡逻
     public override void AIBehavior(){
         if (!enemyAI.navMeshAgent.isOnNavMesh || enemyAI.guardSettings.wayPoints.Length == 0)   return;
+        
         enemyAI.navMeshAgent.SetDestination(enemyAI.guardSettings.wayPoints[wayPointIndex].destination.position);
         enemyAI.LookAtPosition(enemyAI.navMeshAgent.steeringTarget);
         
+        // 走到一个点，走向下一个点
         if (enemyAI.navMeshAgent.remainingDistance <= enemyAI.navMeshAgent.stoppingDistance)
         {
             enemyAI.walkingToDest =false;
-            enemyAI.forward = enemyAI.LerpSpeed(enemyAI.forward, 0, 15);
+            enemyAI.forward = enemyAI.LerpSpeed(enemyAI.forward, 0, 15);    //停下
             currentWaitTime -= Time.deltaTime;
             if (enemyAI.guardSettings.wayPoints[wayPointIndex].lookAtTarget != null)
             {
@@ -38,6 +41,7 @@ public class GuardState:EnemyAIState
             }
         }else
         {
+            // 走向目标点
             enemyAI.walkingToDest = true;
             enemyAI.forward = enemyAI.LerpSpeed(enemyAI.forward, 0.5f, 15);
             currentWaitTime = enemyAI.guardSettings.wayPoints[wayPointIndex].waitTime;

@@ -34,8 +34,10 @@ public class ChasingState : EnemyAIState
         enemyAI.navMeshAgent.SetDestination(enemyAI.target.position);
         enemyAI.LookAtPosition(enemyAI.navMeshAgent.steeringTarget);
 
+        
         if (enemyAI.navMeshAgent.remainingDistance <= enemyAI.attackSettings.attackRange - 1)
         {
+            Debug.Log("attack...");
             enemyAI.walkingToDest = false;
             enemyAI.forward = 0;
             Attacking();
@@ -53,6 +55,7 @@ public class ChasingState : EnemyAIState
     {
         if (attacked == false && enemyAI.target != null)
         {
+            // Debug.LogFormat("animator:{0}",animator);
             animator.SetBool("Attack", true);
             attacked = true;
 
