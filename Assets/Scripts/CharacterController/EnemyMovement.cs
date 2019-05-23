@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(Animator))]
 
-class EnemyMovement:MonoBehaviour{
+public class EnemyMovement:MonoBehaviour{
     Animator animator;
     CharacterController characterController;
 

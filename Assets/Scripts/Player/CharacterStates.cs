@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStates:MonoBehaviour{
+public class CharacterStates:MonoBehaviour{
     [Range(0, 100)]
     public float health = 100.0f;
     public int ID;

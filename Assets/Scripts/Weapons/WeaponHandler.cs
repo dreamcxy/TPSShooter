@@ -115,7 +115,7 @@ public class WeaponHandler : MonoBehaviour
                 }
             }
         }
-        Debug.LogFormat("currentWeapon.weaponType:{0}, currentWeapon.ammo.AmmoID:{1}, currentWeapon.ammo.clipAmmo:{2}, container.GetContainerItem(currentWeapon.ammo.AmmoID):{3}", currentWeapon.weaponType, currentWeapon.ammo.AmmoID, currentWeapon.ammo.clipAmmo, container.GetContainerItem(currentWeapon.ammo.AmmoID));
+        // Debug.LogFormat("currentWeapon.weaponType:{0}, currentWeapon.ammo.AmmoID:{1}, currentWeapon.ammo.clipAmmo:{2}, container.GetContainerItem(currentWeapon.ammo.AmmoID):{3}", currentWeapon.weaponType, currentWeapon.ammo.AmmoID, currentWeapon.ammo.clipAmmo, container.GetContainerItem(currentWeapon.ammo.AmmoID));
 
         Animate();
     }
