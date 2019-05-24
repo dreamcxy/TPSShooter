@@ -68,6 +68,9 @@ public class EnemyAI : MonoBehaviour
         public float attackCoolDown = 2f;
         public int attackType = 2;
 
+        public float attackForTime;
+        public float attackLatTime;
+
     }
     [SerializeField]
     public AttackSettings attackSettings;
@@ -113,6 +116,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Start()
     {
+        attackSettings.attackForTime = Time.time;
         navMeshAgent = GetComponentInChildren<NavMeshAgent>();
         if (navMeshAgent == null)
         {
@@ -137,6 +141,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
+        
         navMeshAgent.transform.position = transform.position;
         GetAllCharacters();
         LookForTarget();
@@ -167,7 +172,9 @@ public class EnemyAI : MonoBehaviour
             {
                 target = c.transform;
                 targetLastKnownPosition = Vector3.zero;
+                attackSettings.attackLatTime = Time.time;
                 SetEnemyState(chasingState);
+                animator.SetBool("Attack", false);
             }
             else{
                 if (target != null)

@@ -19,9 +19,9 @@ public class UserInput : MonoBehaviour
         public string reloadButton = "Reload";
         public string swtichWeaponButton = "SwitchWeapon";
         public string dropWeaponButton = "DropWeapon";
-        
+
         // 三连发模式
-        public string burstShootButton = "BurstShoot"; 
+        public string burstShootButton = "BurstShoot";
 
 
         // 移动类的button
@@ -57,7 +57,7 @@ public class UserInput : MonoBehaviour
     bool isReloadButtonDown;
     bool isDropButtonDown;
     bool isSwitchButtonDown;
-    
+
     Quaternion newRotation;
     Vector3 spineLookAt;
 
@@ -65,8 +65,8 @@ public class UserInput : MonoBehaviour
     float verticalAxis;
     float horizontalAxis;
     bool isRunButtonDown;
-    
-    
+
+
 
     [HideInInspector]
     public static bool isMouseOnUI = false;
@@ -128,7 +128,7 @@ public class UserInput : MonoBehaviour
         isReloadButtonDown = Input.GetButtonDown(inputSettings.reloadButton);
         isDropButtonDown = Input.GetButtonDown(inputSettings.dropWeaponButton);
         isSwitchButtonDown = Input.GetButtonDown(inputSettings.swtichWeaponButton);
-        
+
         isJumpButtonDown = Input.GetButtonDown(inputSettings.jumpButton);
         isRunButtonDown = Input.GetButton(inputSettings.runButton);
         verticalAxis = Input.GetAxis(inputSettings.verticalAxis);
@@ -218,13 +218,16 @@ public class UserInput : MonoBehaviour
         {
             weaponHandler.Aim(aiming);
             otherSettings.requireInputForTurn = !aiming;
-            
+
             weaponHandler.FingerOnTrigger(isFireButtonDown);
-            
+
             if (isReloadButtonDown) weaponHandler.Reload();
             // if(isDropButtonDown) weaponHandler.DropWeapon();
             if (isSwitchButtonDown) weaponHandler.SwitchWeapons();
             if (!weaponHandler.currentWeapon) return;
+            // 攻击射线
+            Vector2 v = new Vector2(Screen.width / 2, Screen.height / 2);
+            weaponHandler.currentWeapon.shootRay = Camera.main.ScreenPointToRay(v);
         }
     }
 

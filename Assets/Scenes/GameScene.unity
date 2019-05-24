@@ -765,6 +765,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: da2759fd30ab8054f9a3786f426b17ca, type: 2}
+    - target: {fileID: 655616597, guid: 79e1dc367b7dcdb4787ac55e4afb79c3, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 655616593, guid: 79e1dc367b7dcdb4787ac55e4afb79c3, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 79e1dc367b7dcdb4787ac55e4afb79c3, type: 3}
@@ -792,6 +796,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6aefeb8f84e78740bda9e0a6d65caf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  guardState: {fileID: 0}
+  chasingState: {fileID: 0}
   guardSettings:
     wayPoints:
     - destination: {fileID: 1527286627}
@@ -810,10 +816,12 @@ MonoBehaviour:
     eyeHeight: 2
   attackSettings:
     damge: 5
-    attackRange: 3
+    attackRange: 10
     attackDelay: 2
     attackCoolDown: 2
     attackType: 1
+    attackForTime: 0
+    attackLatTime: 0
   navMeshAgent: {fileID: 0}
   walkingToDest: 0
   forward: 0

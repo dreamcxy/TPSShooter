@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class ChasingState : EnemyAIState
 {
-    private EnemyAI enemyAI;
+    [HideInInspector]
+    public EnemyAI enemyAI;
     private EnemyMovement enemyMovement;
     private Animator animator;
 
@@ -38,6 +39,7 @@ public class ChasingState : EnemyAIState
 
         if (enemyAI.navMeshAgent.remainingDistance <= enemyAI.attackSettings.attackRange - 1)
         {
+            Debug.Log("prepare attack...");
             enemyAI.walkingToDest = false;
             enemyAI.forward = 0;
             Attacking();
@@ -52,23 +54,24 @@ public class ChasingState : EnemyAIState
         enemyMovement.JustAnimate(enemyAI.forward, 0);
     }
 
-    void Attacking()
+    public void Attacking()
     {
-        if (attacked == false && enemyAI.target != null)
+        Debug.LogFormat("attacked:{0}", attacked);
+        if (attacked == false && enemyAI.target != null && enemyAI.attackSettings.attackLatTime -  enemyAI.attackSettings.attackForTime > enemyAI.attackSettings.attackCoolDown)
         {
             // Debug.LogFormat("animator:{0}",animator);
             Debug.Log("attack....");
-            animator.SetBool("Attack", true);
+            Debug.Log(animator.name);
+            
             attacked = true;
-            timer.Add(() => { attacked = false; },
-            enemyAI.attackSettings.attackCoolDown);
+            animator.SetBool("Attack", attacked);
+            attacked = false;
+            // animator.SetBool("Attack", attacked);
+            enemyAI.attackSettings.attackForTime = enemyAI.attackSettings.attackLatTime;
+            // StartCoroutine(StopAttack());
+            // timer.Add(() => { attacked = false; },
+            // enemyAI.attackSettings.attackCoolDown);
         }
-    }
-
-    IEnumerator StopAttack()
-    {
-        yield return new WaitForSeconds(enemyAI.attackSettings.attackCoolDown);
-
     }
 
 }

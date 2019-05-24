@@ -20,13 +20,15 @@ public enum WeaponType
 }
 
 
-public class Weapon:MonoBehaviour{
+public class Weapon : MonoBehaviour
+{
 
 
     public WeaponType weaponType;
 
     [System.Serializable]
-    public class UserSettings{
+    public class UserSettings
+    {
         // public Transform leftHandIKTarget;
         public Vector3 spineRotation;
     }
@@ -34,20 +36,21 @@ public class Weapon:MonoBehaviour{
     public UserSettings userSettings;
 
     [System.Serializable]
-    public class WeaponSettings{
+    public class WeaponSettings
+    {
         [Header("Other")]
         public GameObject crossHairPrefeb;
         public float reloadDuration = 1.0f;
-        
+
         [Header("Bullet Options")]
         public float fireRate = 0.2f;
         public float damage = 20.0f;
         public Transform bulletSpawn;   //枪口位置
         public float bulletSpread = 2.0f;   //枪口晃动
-        public float range = 200.0f;    //射程
+        public float range = 2000.0f;    //射程
 
         public int burstShootBulletNums = 3;
-        
+
         [Header("AnimationClips")]
         public AnimationClip idleAnimation;
         public AnimationClip walkAnimation;
@@ -57,7 +60,7 @@ public class Weapon:MonoBehaviour{
         public AnimationClip runAnimation;
         public AnimationClip runBackAnimation;
         public AnimationClip runLeftAnimation;
-        public AnimationClip runRightAnimation; 
+        public AnimationClip runRightAnimation;
 
         [Header("Effects")]
         public GameObject muzzleFlash;  // 枪口火花
@@ -72,20 +75,21 @@ public class Weapon:MonoBehaviour{
     public WeaponSettings weaponSettings;
 
     [System.Serializable]
-    public class Ammunition{
+    public class Ammunition
+    {
         public int AmmoID;
         public int clipAmmo;
         public int maxClipAmmo;
     }
     [SerializeField]
     public Ammunition ammo;
-    public Ray shootRay{protected get; set;}
-    public bool ownerAiming{get; set;}
+    public Ray shootRay { protected get; set; }
+    public bool ownerAiming { get; set; }
     WeaponHandler owner;
     bool equipped;  // 武器是否在被装备
     bool pullingTrigger;
-    
-    
+
+
     bool resettingCartridge;  // 切换武器
 
     Collider colBox;
@@ -93,44 +97,54 @@ public class Weapon:MonoBehaviour{
     Rigidbody rgbody;
     Animator animator;
 
-    
+    LineRenderer lineRenderer;
 
-    private void Start() {
+    private void Start()
+    {
         colBox = GetComponent<BoxCollider>();
         colSphere = GetComponent<SphereCollider>();
         rgbody = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+        lineRenderer = GetComponent<LineRenderer>();
 
         if (weaponSettings.crossHairPrefeb != null)
         {
             weaponSettings.crossHairPrefeb = Instantiate(weaponSettings.crossHairPrefeb);
             ToglleCrosshair(false);
-        }    
+        }
     }
 
-    private void Update() {
+    private void Update()
+    {
         if (owner)
         {
-           if (equipped)
-           {
-               if(owner.userSettings.weaponContainer){
+            if (equipped)
+            {
+                if (owner.userSettings.weaponContainer)
+                {
                     Equiq();
                     if (pullingTrigger)
                     {
                         Fire(shootRay);
                     }
-                    
+
                     if (ownerAiming)
                     {
                         ToglleCrosshair(true);
-                    }else{
+                    }
+                    else
+                    {
                         ToglleCrosshair(false);
                     }
-               }
-           }else{
-               UnEquip(weaponType);
-           }
-        }else{
+                }
+            }
+            else
+            {
+                UnEquip(weaponType);
+            }
+        }
+        else
+        {
             ownerAiming = false;
             ToglleCrosshair(false);
         }
@@ -138,7 +152,9 @@ public class Weapon:MonoBehaviour{
 
 
     // 开枪 
-    void Fire(Ray ray){
+    void Fire(Ray ray)
+    {
+        Debug.Log(ray);
         if (ammo.clipAmmo <= 0 || resettingCartridge || owner.reload)
         {
             return;
@@ -148,15 +164,21 @@ public class Weapon:MonoBehaviour{
         Vector3 startPos = ray.origin;
         Vector3 aimDir = ray.direction;
         Physics.Raycast(startPos, aimDir, out aimHit);
+        // Debug.DrawLine(start:startPos, aimHit.point, Color.red);
+
         RaycastHit hit;
         Transform bSpawn = weaponSettings.bulletSpawn;
         Vector3 bSpawnPoint = bSpawn.position;
         Vector3 dir = aimHit.point - bSpawnPoint;
 
+        lineRenderer.SetPosition(0, bSpawnPoint);
+        lineRenderer.SetPosition(1, bSpawnPoint + (Camera.main.transform.forward * 2000));
+        StartCoroutine(StopShowLine());
+
         dir += (Vector3)Random.insideUnitCircle * weaponSettings.bulletSpread;
         if (Physics.Raycast(bSpawnPoint, dir, out hit, weaponSettings.range))
         {
-            
+            // lineRenderer.SetPosition(1, hit.point);
             // 伤害判定
             HitEffect(hit, weaponSettings.burstShootBulletNums);
         }
@@ -168,12 +190,20 @@ public class Weapon:MonoBehaviour{
         StartCoroutine(LoadNextBullet());
     }
 
-    IEnumerator LoadNextBullet(){
+    IEnumerator StopShowLine()
+    {
+        lineRenderer.enabled = true;
+        yield return new WaitForSeconds(0.05f);
+        lineRenderer.enabled = false;
+    }
+    IEnumerator LoadNextBullet()
+    {
         yield return new WaitForSeconds(weaponSettings.fireRate);
         resettingCartridge = false;
     }
 
-    void ToglleCrosshair(bool enabled){
+    void ToglleCrosshair(bool enabled)
+    {
         if (weaponSettings.crossHairPrefeb != null)
         {
             weaponSettings.crossHairPrefeb.SetActive(enabled);
@@ -181,21 +211,32 @@ public class Weapon:MonoBehaviour{
     }
 
     // 对敌人造成伤害
-    void HitEffect(RaycastHit hit, int bulletShootNums){
+    void HitEffect(RaycastHit hit, int bulletShootNums)
+    {
         Debug.LogFormat("hit.transform.gameObject.tag:{0}", hit.transform.gameObject.tag);
-        if (hit.transform.gameObject.tag == "Enemy")
+        if (hit.transform.gameObject.tag == "Ragdoll")
         {
-            Debug.Log("hit enemy...");
+            EnemyStates health = hit.collider.GetComponent<EnemyStates>();
+            if (health != null)
+            {   
+                health.ApplyDamage(weaponSettings.damage);
+                Debug.Log("hit enemy...");
+            }
+            else
+            {
+                Debug.Log("no enemy hit...");
+            }
         }
     }
 
     // 攻击的一些效果
-    void GunEffects(){
+    void GunEffects()
+    {
         #region muzzle flash
         if (weaponSettings.muzzleFlash)
         {
             Vector3 bulletSpawnPos = weaponSettings.bulletSpawn.position;
-            GameObject muzzleFlash = Instantiate(weaponSettings.muzzleFlash, 
+            GameObject muzzleFlash = Instantiate(weaponSettings.muzzleFlash,
             bulletSpawnPos, Quaternion.identity) as GameObject;
             Transform muzzleT = muzzleFlash.transform;
             muzzleT.SetParent(weaponSettings.bulletSpawn);
@@ -206,25 +247,29 @@ public class Weapon:MonoBehaviour{
 
 
 
-    void Equiq(){
+    void Equiq()
+    {
         if (!owner)
         {
             return;
         }
-        else if(!owner.userSettings.weaponContainer) return;
+        else if (!owner.userSettings.weaponContainer) return;
         transform.SetParent(owner.userSettings.weaponContainer);
         transform.localPosition = weaponSettings.equipPosition;
         Quaternion equipRot = Quaternion.Euler(weaponSettings.equipRotation);
         transform.localRotation = equipRot;
     }
 
-    void UnEquip(WeaponType weaponType){
-        if(!owner)  return;
+    void UnEquip(WeaponType weaponType)
+    {
+        if (!owner) return;
 
         if (weaponType == WeaponType.Glock || weaponType == WeaponType.Deserteagle)
         {
             transform.SetParent(owner.userSettings.handgunUnequipSpot);
-        }else if(weaponType == WeaponType.Fal || weaponType == WeaponType.AK47 || weaponType == WeaponType.AKsu || weaponType == WeaponType.G36){
+        }
+        else if (weaponType == WeaponType.Fal || weaponType == WeaponType.AK47 || weaponType == WeaponType.AKsu || weaponType == WeaponType.G36)
+        {
             transform.SetParent(owner.userSettings.infantryUnequipSpot);
         }
         transform.localPosition = weaponSettings.unequipPosition;
@@ -233,31 +278,36 @@ public class Weapon:MonoBehaviour{
         ToglleCrosshair(false);
     }
 
-    public void SetEquipped(bool equip){
+    public void SetEquipped(bool equip)
+    {
         equipped = equip;
     }
-    public void SetOwner(WeaponHandler wp){
+    public void SetOwner(WeaponHandler wp)
+    {
         owner = wp;
         if (owner == null)
         {
             StartCoroutine(CanBePickUp());
         }
     }
-    IEnumerator CanBePickUp(){
+    IEnumerator CanBePickUp()
+    {
         yield return new WaitForSeconds(2.0f);
         colSphere.enabled = true;
     }
 
-    public void LoadClip(){
+    public void LoadClip()
+    {
         var container = owner.container;
         int ammoNeeded = ammo.maxClipAmmo - ammo.clipAmmo;
         ammo.clipAmmo += container.TakeFromContainer(ammo.AmmoID, ammoNeeded);
     }
 
-    public void PullTrigger(bool isPulling){
+    public void PullTrigger(bool isPulling)
+    {
         pullingTrigger = isPulling;
-        
+
     }
 
-    
+
 }

@@ -31,7 +31,7 @@ public class EnemyStates:MonoBehaviour{
     }
 
     public void ApplyDamage(float number, int direction = 0){
-        if (!isAlive)
+        if (isAlive)
         {
             health -= number;
             if (health < 0)
@@ -58,7 +58,7 @@ public class EnemyStates:MonoBehaviour{
         Destroy(this.gameObject, 10f);
         if (thisRespawner)
         {
-            // thisRespawner
+            thisRespawner.AmountOne();
         }
 
     }
