@@ -9,7 +9,7 @@ AnimatorController:
   m_Name: EnemyController
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: Forwad
+  - m_Name: Forward
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -66,7 +66,7 @@ BlendTree:
     m_CycleOffset: 0
     m_DirectBlendParameter: Forwad
     m_Mirror: 0
-  m_BlendParameter: Forwad
+  m_BlendParameter: Forward
   m_BlendParameterY: Forwad
   m_MinThreshold: 0
   m_MaxThreshold: 1

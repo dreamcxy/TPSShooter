@@ -24,6 +24,7 @@ public class ChasingState : EnemyAIState
 
     public override void AIBehavior()
     {
+        // enemyAI.forward = 0;
         if (enemyAI.target == null)
         {
             enemyAI.SetEnemyState(enemyAI.guardState);
@@ -34,10 +35,9 @@ public class ChasingState : EnemyAIState
         enemyAI.navMeshAgent.SetDestination(enemyAI.target.position);
         enemyAI.LookAtPosition(enemyAI.navMeshAgent.steeringTarget);
 
-        
+
         if (enemyAI.navMeshAgent.remainingDistance <= enemyAI.attackSettings.attackRange - 1)
         {
-            Debug.Log("attack...");
             enemyAI.walkingToDest = false;
             enemyAI.forward = 0;
             Attacking();
@@ -46,6 +46,7 @@ public class ChasingState : EnemyAIState
         {
             enemyAI.walkingToDest = true;
             enemyAI.forward = enemyAI.LerpSpeed(enemyAI.forward, 1f, 15);
+            // enemyAI.forward = 1;
             animator.SetBool("Attack", false);
         }
         enemyMovement.JustAnimate(enemyAI.forward, 0);
@@ -56,12 +57,18 @@ public class ChasingState : EnemyAIState
         if (attacked == false && enemyAI.target != null)
         {
             // Debug.LogFormat("animator:{0}",animator);
+            Debug.Log("attack....");
             animator.SetBool("Attack", true);
             attacked = true;
-
             timer.Add(() => { attacked = false; },
             enemyAI.attackSettings.attackCoolDown);
         }
+    }
+
+    IEnumerator StopAttack()
+    {
+        yield return new WaitForSeconds(enemyAI.attackSettings.attackCoolDown);
+
     }
 
 }

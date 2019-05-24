@@ -29,6 +29,8 @@ public class GuardState:EnemyAIState
         {
             enemyAI.walkingToDest =false;
             enemyAI.forward = enemyAI.LerpSpeed(enemyAI.forward, 0, 15);    //停下
+            // enemyAI.forward = 0;
+
             currentWaitTime -= Time.deltaTime;
             if (enemyAI.guardSettings.wayPoints[wayPointIndex].lookAtTarget != null)
             {
@@ -44,6 +46,7 @@ public class GuardState:EnemyAIState
             // 走向目标点
             enemyAI.walkingToDest = true;
             enemyAI.forward = enemyAI.LerpSpeed(enemyAI.forward, 0.5f, 15);
+            // enemyAI.forward = 0.5f;
             currentWaitTime = enemyAI.guardSettings.wayPoints[wayPointIndex].waitTime;
         }
         enemyMovement.AnimateAndMove(enemyAI.forward, 0);

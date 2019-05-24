@@ -141,7 +141,7 @@ public class EnemyAI : MonoBehaviour
         GetAllCharacters();
         LookForTarget();
         enemyAIState.AIBehavior();
-        Debug.LogFormat("enemyAIState:{0}", enemyAIState);
+        Debug.LogFormat("enemyAIState:{0}", enemyAIState.GetType().Name);
     }
 
 
@@ -206,6 +206,7 @@ public class EnemyAI : MonoBehaviour
     public float LerpSpeed(float curSpeed, float destSpeed, float time)
     {
         return curSpeed = Mathf.Lerp(curSpeed, destSpeed, Time.deltaTime * time);
+        // return curSpeed = destSpeed;
     }
 
     // enemy 朝向调整

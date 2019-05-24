@@ -14,7 +14,9 @@ public class IdleState : EnemyAIState
     }
 
     public override void AIBehavior(){
-        
+        enemyAI.walkingToDest = false;
+        enemyAI.forward = enemyAI.LerpSpeed(enemyAI.forward, 0, 5);
+        // enemyAI.forward = 0;
     }
     #endregion
 }

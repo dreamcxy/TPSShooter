@@ -57,11 +57,12 @@ public class EnemyMovement:MonoBehaviour{
 
     private void Update() {
         ApplyGravity();
+        // Debug.LogFormat("enemy ground:{0}", characterController.isGrounded);
         isGrounded = characterController.isGrounded;
     }
 
     public void AnimateAndMove(float forward, float strafe){
-        Debug.LogFormat("forward:{0}", forward);
+        // Debug.LogFormat("forward:{0}", forward);
         animator.SetFloat(animationSettings.verticalVelocityFloat, forward);
         Vector3 direction = new Vector3(0, 0, forward);
         direction = transform.TransformDirection(direction);
@@ -71,10 +72,10 @@ public class EnemyMovement:MonoBehaviour{
 
     public void JustAnimate(float forward, float strafe){
         animator.SetFloat(animationSettings.verticalVelocityFloat, forward);
-        // Vector3 direction = new Vector3(0, 0, forward);
-        // direction = transform.TransformDirection(direction);
-        // direction *= movementSettings.runSpeed * Time.deltaTime;
-        // characterController.Move(direction);
+        Vector3 direction = new Vector3(0, 0, forward);
+        direction = transform.TransformDirection(direction);
+        direction *= movementSettings.runSpeed * Time.deltaTime;
+        characterController.Move(direction);
     }
 
     public void ApplyGravity(){
