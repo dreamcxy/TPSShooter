@@ -95,7 +95,6 @@
      <Compile Include="Assets\ProCore\ProGrids\Classes\pg_Util.cs" />
      <Compile Include="Assets\ProCore\ProGrids\MonoBehaviour\pg_IgnoreSnap.cs" />
      <Compile Include="Assets\Scripts\CamRig\CamRig.cs" />
-     <Compile Include="Assets\Scripts\CharacterController\CharacterBloodStrip.cs" />
      <Compile Include="Assets\Scripts\CharacterController\CharacterMovement.cs" />
      <Compile Include="Assets\Scripts\CharacterController\EnemyAI.cs" />
      <Compile Include="Assets\Scripts\CharacterController\EnemyAIState.cs" />
@@ -104,6 +103,7 @@
      <Compile Include="Assets\Scripts\CharacterController\States\ChasingState.cs" />
      <Compile Include="Assets\Scripts\CharacterController\States\GuardState.cs" />
      <Compile Include="Assets\Scripts\CharacterController\States\IdleState.cs" />
+     <Compile Include="Assets\Scripts\GameManagement\GameController.cs" />
      <Compile Include="Assets\Scripts\GameManagement\Respawner.cs" />
      <Compile Include="Assets\Scripts\GameManagement\Timer.cs" />
      <Compile Include="Assets\Scripts\Item\AmmoPickUp.cs" />
@@ -113,6 +113,10 @@
      <Compile Include="Assets\Scripts\Player\Container.cs" />
      <Compile Include="Assets\Scripts\Player\ContainerItem.cs" />
      <Compile Include="Assets\Scripts\Player\UserInput.cs" />
+     <Compile Include="Assets\Scripts\UIs\PlayerUI.cs" />
+     <Compile Include="Assets\Scripts\UIs\UIFadeIn.cs" />
+     <Compile Include="Assets\Scripts\Weapons\BulletController.cs" />
+     <Compile Include="Assets\Scripts\Weapons\EnemyWeapon.cs" />
      <Compile Include="Assets\Scripts\Weapons\Weapon.cs" />
      <Compile Include="Assets\Scripts\Weapons\WeaponHandler.cs" />
      <None Include="Assets\ProCore\ProGrids\Shader\pg_GridShader.shader" />

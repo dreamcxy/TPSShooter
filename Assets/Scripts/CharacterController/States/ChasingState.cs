@@ -13,14 +13,17 @@ public class ChasingState : EnemyAIState
 
     private bool attacked;
 
+    
 
     public ChasingState(EnemyAI new_enemyAI)
     {
+
         enemyAI = new_enemyAI;
         enemyMovement = enemyAI.GetComponent<EnemyMovement>();
         animator = enemyAI.GetComponent<Animator>();
         timer = GameObject.FindGameObjectWithTag("GameController").GetComponent<Timer>();
         attacked = false;
+        
     }
 
     public override void AIBehavior()
@@ -65,8 +68,10 @@ public class ChasingState : EnemyAIState
             
             attacked = true;
             animator.SetBool("Attack", attacked);
+            // curEnemyWeapon.Fire();
+            enemyAI.curEnemyWeapon.isFire = true;
             attacked = false;
-            // animator.SetBool("Attack", attacked);
+            
             enemyAI.attackSettings.attackForTime = enemyAI.attackSettings.attackLatTime;
             // StartCoroutine(StopAttack());
             // timer.Add(() => { attacked = false; },

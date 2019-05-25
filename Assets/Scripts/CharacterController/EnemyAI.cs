@@ -33,7 +33,7 @@ public class EnemyAI : MonoBehaviour
 
     #region public variable
 
-
+    public EnemyWeapon curEnemyWeapon;
 
     [HideInInspector]
     public GuardState guardState;
