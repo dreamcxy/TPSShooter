@@ -4,15 +4,17 @@ using UnityEngine;
 
 public enum WeaponType
 {
-    //Infantry, weaponType = 1
+    //  weaponType = 1
+    Infantry,
 
-    Fal,
-    AK47,
-    AKsu,
-    G36,
-    //Handgun, weaponType = 2
-    Deserteagle,
-    Glock,
+    // Fal,
+    // AK47,
+    // AKsu,
+    // G36,
+    //  weaponType = 2
+    Handgun,
+    // Deserteagle,
+    // Glock,
     //Knife, weaponType = 3
     Knife,
     //Heavy, weapontType = 4
@@ -264,13 +266,19 @@ public class Weapon : MonoBehaviour
     {
         if (!owner) return;
 
-        if (weaponType == WeaponType.Glock || weaponType == WeaponType.Deserteagle)
-        {
-            transform.SetParent(owner.userSettings.handgunUnequipSpot);
-        }
-        else if (weaponType == WeaponType.Fal || weaponType == WeaponType.AK47 || weaponType == WeaponType.AKsu || weaponType == WeaponType.G36)
+        // if (weaponType == WeaponType.Glock || weaponType == WeaponType.Deserteagle)
+        // {
+        //     transform.SetParent(owner.userSettings.handgunUnequipSpot);
+        // }
+        // else if (weaponType == WeaponType.Fal || weaponType == WeaponType.AK47 || weaponType == WeaponType.AKsu || weaponType == WeaponType.G36)
+        // {
+        //     transform.SetParent(owner.userSettings.infantryUnequipSpot);
+        // }
+        if (weaponType == WeaponType.Infantry)
         {
             transform.SetParent(owner.userSettings.infantryUnequipSpot);
+        }else if(weaponType == WeaponType.Handgun){
+            transform.SetParent(owner.userSettings.handgunUnequipSpot);
         }
         transform.localPosition = weaponSettings.unequipPosition;
         Quaternion unEquipRot = Quaternion.Euler(weaponSettings.unequipRotation);

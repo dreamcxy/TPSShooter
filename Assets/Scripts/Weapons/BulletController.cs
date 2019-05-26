@@ -18,7 +18,8 @@ public class BulletController : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             Destroy(this.gameObject);
-            other.gameObject.GetComponent<CharacterStates>().health -= bulletDamage;
+            // other.gameObject.GetComponent<CharacterStates>().health -= bulletDamage;
+            other.gameObject.GetComponent<CharacterStates>().ApplyDamage(bulletDamage);
         }
     }
 

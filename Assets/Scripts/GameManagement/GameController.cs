@@ -37,7 +37,10 @@ public class GameController : MonoBehaviour
         {
             if (playerUI)
             {
-                
+                if(playerUI.healthBar && playerUI.healthText){
+                    playerUI.healthBar.value = playerStates.health;
+                    playerUI.healthText.text = Mathf.Round(playerUI.healthBar.value).ToString();
+                }
             }
         }
     }

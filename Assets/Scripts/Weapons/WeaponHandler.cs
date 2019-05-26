@@ -131,10 +131,14 @@ public class WeaponHandler : MonoBehaviour
         {
             weaponTypeInt = 0;
         }
-        if (currentWeapon.weaponType == WeaponType.AK47 || currentWeapon.weaponType == WeaponType.AKsu ||
-            currentWeapon.weaponType == WeaponType.Fal || currentWeapon.weaponType == WeaponType.G36) weaponTypeInt = 1;
-        else if (currentWeapon.weaponType == WeaponType.Deserteagle || currentWeapon.weaponType == WeaponType.Glock) weaponTypeInt = 2;
-        else if (currentWeapon.weaponType == WeaponType.Knife) weaponTypeInt = 3;
+        // if (currentWeapon.weaponType == WeaponType.AK47 || currentWeapon.weaponType == WeaponType.AKsu ||
+        //     currentWeapon.weaponType == WeaponType.Fal || currentWeapon.weaponType == WeaponType.G36) weaponTypeInt = 1;
+        // else if (currentWeapon.weaponType == WeaponType.Deserteagle || currentWeapon.weaponType == WeaponType.Glock) weaponTypeInt = 2;
+        // else if (currentWeapon.weaponType == WeaponType.Knife) weaponTypeInt = 3;
+        // else weaponTypeInt = 4;
+        if (currentWeapon.weaponType == WeaponType.Infantry)    weaponTypeInt = 1;
+        else if(currentWeapon.weaponType == WeaponType.Handgun)     weaponTypeInt = 2;
+        else if(currentWeapon.weaponType == WeaponType.Knife)   weaponTypeInt = 3;
         else weaponTypeInt = 4;
         // Debug.LogFormat("weaponTypeInt:{0}", weaponTypeInt);
         clipOverrides["infantry_combat_idle"] = currentWeapon.weaponSettings.idleAnimation;
