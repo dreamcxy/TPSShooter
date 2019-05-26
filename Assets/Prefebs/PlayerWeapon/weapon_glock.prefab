@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69c363fbdbc4318478abed2eb34f7eaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponType: 0
+  weaponType: 1
   userSettings:
     spineRotation: {x: 0, y: 0, z: 0}
   weaponSettings:

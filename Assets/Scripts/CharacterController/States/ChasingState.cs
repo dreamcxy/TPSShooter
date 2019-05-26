@@ -9,7 +9,7 @@ public class ChasingState : EnemyAIState
     private EnemyMovement enemyMovement;
     private Animator animator;
 
-    private Timer timer;
+    // private Timer timer;
 
     private bool attacked;
 
@@ -21,7 +21,7 @@ public class ChasingState : EnemyAIState
         enemyAI = new_enemyAI;
         enemyMovement = enemyAI.GetComponent<EnemyMovement>();
         animator = enemyAI.GetComponent<Animator>();
-        timer = GameObject.FindGameObjectWithTag("GameController").GetComponent<Timer>();
+        // timer = GameObject.FindGameObjectWithTag("GameController").GetComponent<Timer>();
         attacked = false;
         
     }

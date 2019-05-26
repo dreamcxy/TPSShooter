@@ -13,34 +13,35 @@ public class WeaponPickUp : PickUpItems
             WeaponHandler weaponHandler = collider.gameObject.GetComponent<WeaponHandler>();
             Weapon weapon = weaponHandler.GetComponent<Weapon>();
             List<Weapon> currentWeaponList = weaponHandler.weaponList;
-            Debug.LogFormat("currentWeaponList:{0}", currentWeaponList);
             Weapon weaponGround = this.GetComponent<Weapon>();
 
             if (weaponHandler.currentWeapon.weaponType == WeaponType.Infantry || weaponHandler.currentWeapon.weaponType == WeaponType.Handgun)
             {
-                foreach (Weapon subWeapon in currentWeaponList)
+
+                List<Weapon> tempList = new List<Weapon>();
+                currentWeaponList.ForEach(i => tempList.Add(i));
+                int index = 0;
+                for (int i = 0; i < tempList.Count; i++)
                 {
+                    Weapon subWeapon = tempList[i];
                     if (subWeapon.weaponType == weaponGround.weaponType)
                     {
-                        Destroy(subWeapon);
-                        currentWeaponList.Remove(subWeapon);
-                        weaponGround.SetEquipped(true);
-                        weaponGround.SetOwner(collider.gameObject.transform.GetComponent<WeaponHandler>());
-                        currentWeaponList.Add(weaponGround);
+                        index = i;
+                        Destroy(subWeapon.gameObject);
                     }
                 }
+                currentWeaponList.RemoveAt(index);
+
+                weaponGround.SetOwner(collider.gameObject.transform.GetComponent<WeaponHandler>());
+                weaponGround.SetEquipped(true);
+                // collider.gameObject.transform.SetParent(GameObject.FindGameObjectWithTag("WeaponContainer").transform);
+                currentWeaponList.Add(weaponGround);
+                collider.GetComponent<WeaponHandler>().currentWeapon = weaponGround;
+
             }
 
             this.GetComponent<SphereCollider>().enabled = false;
         }
 
-        // WeaponHandler weaponHandler = collider.gameObject.GetComponent<WeaponHandler>();
-        // Weapon weapon = weaponHandler.GetComponent<Weapon>();
-        // if(weaponHandler && weapon){
-        //     if(weaponHandler.weaponList.Contains(weapon))   return;
-        //     gameObject.GetComponent<SphereCollider>().enabled =  false;
-        //     weaponHandler.AddWeaponToList(weapon);
-        //     if(weaponHandler.currentWeapon == null) weaponHandler.currentWeapon = weapon;
-        // }
     }
 }

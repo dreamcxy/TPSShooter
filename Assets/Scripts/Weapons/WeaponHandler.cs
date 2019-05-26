@@ -107,12 +107,13 @@ public class WeaponHandler : MonoBehaviour
         {
             for (int i = 0; i < weaponList.Count; i++)
             {
-                if (weaponList[i] != currentWeapon)
+
+                if (weaponList[i] != currentWeapon && weaponList[i])
                 {
                     weaponList[i].SetEquipped(false);
                     weaponList[i].SetOwner(this);
                     weaponList[i].gameObject.SetActive(true);
-                }
+                } 
             }
         }
         // Debug.LogFormat("currentWeapon.weaponType:{0}, currentWeapon.ammo.AmmoID:{1}, currentWeapon.ammo.clipAmmo:{2}, container.GetContainerItem(currentWeapon.ammo.AmmoID):{3}", currentWeapon.weaponType, currentWeapon.ammo.AmmoID, currentWeapon.ammo.clipAmmo, container.GetContainerItem(currentWeapon.ammo.AmmoID));
