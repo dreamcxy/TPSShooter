@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class EnemyStates:MonoBehaviour{
     [Range(0, 100f)]   
@@ -13,7 +14,7 @@ public class EnemyStates:MonoBehaviour{
     EnemyMovement enemyMovement;
     CharacterController characterController;
     private Rigidbody[] bodyParts;
-
+    private Slider bloodSlider;
     bool isAlive = true;
 
     private void Start() {
@@ -22,12 +23,13 @@ public class EnemyStates:MonoBehaviour{
         bodyParts = GetComponentsInChildren<Rigidbody>();
         enemyMovement = GetComponent<EnemyMovement>();
         characterController = GetComponent<CharacterController>();
-
+        bloodSlider = GetComponentInChildren<Slider>();
         isAlive = true;
         EnableRagdoll(false);
     }
     private void Update() {
         health = Mathf.Clamp(health, 0, 100);
+        bloodSlider.value = Mathf.Round(health);
     }
 
     public void ApplyDamage(float number, int direction = 0){
@@ -55,7 +57,7 @@ public class EnemyStates:MonoBehaviour{
 
         EnableRagdoll(true);
         animator.enabled = false;
-        Destroy(this.gameObject, 10f);
+        Destroy(this.gameObject, 3f);
         if (thisRespawner)
         {
             thisRespawner.AmountOne();
