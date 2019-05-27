@@ -6,7 +6,8 @@ public class CharacterStates:MonoBehaviour{
     [Range(0, 100)]
     public float health = 100.0f;
     public int ID;
-    public string playerName;
+    public string playerName{get;set;}
+    public string password{get; set;}
     public WeaponHandler weaponHandler;
 
 

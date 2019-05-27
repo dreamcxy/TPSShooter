@@ -48,8 +48,9 @@ public class Weapon : MonoBehaviour
         public float fireRate = 0.2f;
         public float damage = 20.0f;
         public Transform bulletSpawn;   //枪口位置
-        public float bulletSpread = 2.0f;   //枪口晃动
-        public float range = 2000.0f;    //射程
+        public GameObject bulletPrefeb;
+        public float bulletSpread = 0f;   //枪口晃动
+        public float range = 200.0f;    //射程
 
         public int burstShootBulletNums = 3;
 
@@ -72,9 +73,25 @@ public class Weapon : MonoBehaviour
         public Vector3 equipRotation;
         public Vector3 unequipPosition;
         public Vector3 unequipRotation;
+
     }
     [SerializeField]
     public WeaponSettings weaponSettings;
+
+    [System.Serializable]
+    public class SoundSettings
+    {
+        public AudioClip[] gunshotSounds;
+        public AudioClip reloadSound;
+        [Range(0, 3)]
+        public float pitchMin = 1f;
+        [Range(0, 3)]
+        public float pitchMax = 1.2f;
+        public AudioSource audioSource;
+    }
+    [SerializeField]
+    public SoundSettings soundSettings;
+
 
     [System.Serializable]
     public class Ammunition
@@ -85,7 +102,7 @@ public class Weapon : MonoBehaviour
     }
     [SerializeField]
     public Ammunition ammo;
-    public Ray shootRay { protected get; set; }
+    public Ray shootRay {get; set; }
     public bool ownerAiming { get; set; }
     WeaponHandler owner;
     bool equipped;  // 武器是否在被装备
@@ -98,7 +115,7 @@ public class Weapon : MonoBehaviour
     Collider colSphere;
     Rigidbody rgbody;
     Animator animator;
-
+    SoundController sc;
     LineRenderer lineRenderer;
 
     private void Start()
@@ -108,6 +125,7 @@ public class Weapon : MonoBehaviour
         rgbody = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         lineRenderer = GetComponent<LineRenderer>();
+        sc = GameObject.FindGameObjectWithTag("SoundController").GetComponent<SoundController>();
 
         if (weaponSettings.crossHairPrefeb != null)
         {
@@ -128,16 +146,21 @@ public class Weapon : MonoBehaviour
                     if (pullingTrigger)
                     {
                         Fire(shootRay);
+                        //发射子弹
+            //             Instantiate(weaponSettings.bulletPrefeb, weaponSettings.bulletSpawn.position,
+            // weaponSettings.bulletSpawn.rotation);
                     }
 
-                    if (ownerAiming)
-                    {
-                        ToglleCrosshair(true);
-                    }
-                    else
-                    {
-                        ToglleCrosshair(false);
-                    }
+                    // if (ownerAiming)
+                    // {
+                    //     ToglleCrosshair(true);
+                    // }
+                    
+                    // else
+                    // {
+                    //     ToglleCrosshair(false);
+                    // }
+                    ToglleCrosshair(true);
                 }
             }
             else
@@ -162,25 +185,32 @@ public class Weapon : MonoBehaviour
             return;
         }
         Debug.Log("weapon fire");
+        // 瞄准点
         RaycastHit aimHit;
         Vector3 startPos = ray.origin;
         Vector3 aimDir = ray.direction;
         Physics.Raycast(startPos, aimDir, out aimHit);
-        // Debug.DrawLine(start:startPos, aimHit.point, Color.red);
+        Debug.LogFormat("aimDir.point:{0},{1},{2}", aimDir.x, aimDir.y, aimDir.z);
 
+        // 向瞄准点射击
         RaycastHit hit;
         Transform bSpawn = weaponSettings.bulletSpawn;
         Vector3 bSpawnPoint = bSpawn.position;
         Vector3 dir = aimHit.point - bSpawnPoint;
 
+        // 子弹射线
         lineRenderer.SetPosition(0, bSpawnPoint);
-        lineRenderer.SetPosition(1, bSpawnPoint + (Camera.main.transform.forward * 2000));
-        StartCoroutine(StopShowLine());
+        // lineRenderer.SetPosition(1, bSpawnPoint + (Camera.main.transform.forward * 2000));
+        // StartCoroutine(StopShowLine());
 
-        dir += (Vector3)Random.insideUnitCircle * weaponSettings.bulletSpread;
+        // 子弹发射
+
+        // dir += (Vector3)Random.insideUnitCircle * weaponSettings.bulletSpread;
+        
         if (Physics.Raycast(bSpawnPoint, dir, out hit, weaponSettings.range))
         {
-            // lineRenderer.SetPosition(1, hit.point);
+            lineRenderer.SetPosition(1, hit.point);
+            StartCoroutine(StopShowLine());
             // 伤害判定
             HitEffect(hit, weaponSettings.burstShootBulletNums);
         }
@@ -220,8 +250,9 @@ public class Weapon : MonoBehaviour
         {
             EnemyStates health = hit.collider.GetComponent<EnemyStates>();
             if (health != null)
-            {   
+            {
                 health.ApplyDamage(weaponSettings.damage);
+                hit.transform.GetComponent<Animator>().ResetTrigger("TakeDamage");
                 Debug.Log("hit enemy...");
             }
             else
@@ -245,6 +276,20 @@ public class Weapon : MonoBehaviour
             Destroy(muzzleFlash, 1.0f);
         }
         #endregion
+
+        if (sc == null)
+        {
+            Debug.LogError("sc == null...");
+            return;
+        }
+        if (soundSettings.audioSource != null)
+        {
+            if (soundSettings.gunshotSounds.Length > 0)
+            {
+                sc.InstantiateClip(weaponSettings.bulletSpawn.position, soundSettings.gunshotSounds[Random.Range(0, soundSettings.gunshotSounds.Length)],
+                2, true, soundSettings.pitchMin, soundSettings.pitchMax);
+            }
+        }
     }
 
 
@@ -277,7 +322,9 @@ public class Weapon : MonoBehaviour
         if (weaponType == WeaponType.Infantry)
         {
             transform.SetParent(owner.userSettings.infantryUnequipSpot);
-        }else if(weaponType == WeaponType.Handgun){
+        }
+        else if (weaponType == WeaponType.Handgun)
+        {
             transform.SetParent(owner.userSettings.handgunUnequipSpot);
         }
         transform.localPosition = weaponSettings.unequipPosition;

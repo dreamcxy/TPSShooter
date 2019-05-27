@@ -66,6 +66,8 @@ public class WeaponHandler : MonoBehaviour
     int weaponTypeInt;
     bool isSwitchingWeapon; //是否正在切换武器
 
+    SoundController sc;
+
     private void Start()
     {
         currentWeapon = userSettings.weaponContainer.GetComponentInChildren<Weapon>();
@@ -75,6 +77,7 @@ public class WeaponHandler : MonoBehaviour
         animator.runtimeAnimatorController = animatorOverrideController;
         clipOverrides = new AnimationClipOverrides(animatorOverrideController.overridesCount);
         animatorOverrideController.GetOverrides(clipOverrides);
+        sc = GameObject.FindGameObjectWithTag("SoundController").GetComponent<SoundController>();
         if(!container){
             Debug.LogError("<Color=Red><a>Missing Container</a></Color>");
         }
@@ -164,6 +167,14 @@ public class WeaponHandler : MonoBehaviour
     {
         if (reload || !currentWeapon) return;
         if(container.GetAmountRemaining(currentWeapon.ammo.AmmoID) <= 0 || currentWeapon.ammo.clipAmmo == currentWeapon.ammo.maxClipAmmo)   return;
+        if (sc != null)
+        {
+            if (currentWeapon.soundSettings.reloadSound != null && currentWeapon.soundSettings.audioSource != null)
+            {
+                sc.PlaySound(currentWeapon.soundSettings.audioSource, currentWeapon.soundSettings.reloadSound, true, currentWeapon.soundSettings.pitchMin, currentWeapon.soundSettings.pitchMax);
+            }
+        }
+        
         reload = true;
         StartCoroutine(StopReload());
     }
@@ -221,9 +232,11 @@ public class WeaponHandler : MonoBehaviour
         {
             return;
         }
-        currentWeapon.PullTrigger(!isSwitchingWeapon && pulling && aim && !reload);
-
-        if (!isSwitchingWeapon && pulling && aim && !reload)
+        // currentWeapon.PullTrigger(!isSwitchingWeapon && pulling && aim && !reload);
+        currentWeapon.PullTrigger(!isSwitchingWeapon && pulling && !reload);
+        // if (!isSwitchingWeapon && pulling && aim && !reload)
+        if (!isSwitchingWeapon && pulling && !reload)
+        
         {
             shootSingle = true;
             StartCoroutine(StopShoot());

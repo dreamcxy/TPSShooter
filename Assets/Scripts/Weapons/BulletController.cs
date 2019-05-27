@@ -8,6 +8,7 @@ public class BulletController : MonoBehaviour
 {
     public float bulletDamage = 10f;
     public float bulletSpeed = 2f;
+    public float bulletTime = 5;
     /// <summary>
     /// OnTriggerEnter is called when the Collider other enters the trigger.
     /// </summary>
@@ -20,7 +21,12 @@ public class BulletController : MonoBehaviour
             Destroy(this.gameObject);
             // other.gameObject.GetComponent<CharacterStates>().health -= bulletDamage;
             other.gameObject.GetComponent<CharacterStates>().ApplyDamage(bulletDamage);
+        }else if (other.gameObject.tag == "Ragdoll")
+        {
+            Destroy(this.gameObject);
+            other.gameObject.GetComponent<EnemyStates>().ApplyDamage(bulletDamage);
         }
+        
     }
 
     /// <summary>
@@ -29,5 +35,6 @@ public class BulletController : MonoBehaviour
     void Update()
     {
         this.transform.Translate(Vector3.right * bulletSpeed * Time.deltaTime);
+        Destroy(this.gameObject, bulletTime);
     }
 }

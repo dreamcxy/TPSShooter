@@ -9,7 +9,7 @@ public class Respawner : MonoBehaviour
     {
         public WayPointBase[] wanpoints;
         public Transform respawnPlace;
-        public GameObject enemyPrefeb;
+        public GameObject[] enemyPrefeb;
         public int maxEnemyAmount = 10;
         public float respawnRate = 15.0f;
     }
@@ -39,7 +39,7 @@ public class Respawner : MonoBehaviour
     {
         if (enemyCurrentAmount <= respawnSettings.maxEnemyAmount)
         {
-            GameObject newEnemy = Instantiate<GameObject>(respawnSettings.enemyPrefeb, respawnSettings.respawnPlace.position, respawnSettings.respawnPlace.rotation, transform);
+            GameObject newEnemy = Instantiate<GameObject>(respawnSettings.enemyPrefeb[zoffets % respawnSettings.enemyPrefeb.Length], respawnSettings.respawnPlace.position, respawnSettings.respawnPlace.rotation, transform);
             EnemyAI enemyAI = newEnemy.GetComponent<EnemyAI>();
             for (int i = 0; i < enemyAI.guardSettings.wayPoints.Length; i++)
             {

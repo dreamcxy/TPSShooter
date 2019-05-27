@@ -24,17 +24,23 @@ public class EnemyStates:MonoBehaviour{
         enemyMovement = GetComponent<EnemyMovement>();
         characterController = GetComponent<CharacterController>();
         bloodSlider = GetComponentInChildren<Slider>();
+        Debug.Log(bloodSlider);
         isAlive = true;
         EnableRagdoll(false);
     }
     private void Update() {
         health = Mathf.Clamp(health, 0, 100);
-        bloodSlider.value = Mathf.Round(health);
+        if (bloodSlider)
+        {
+            bloodSlider.value = Mathf.Round(health);    
+        }
+        
     }
 
     public void ApplyDamage(float number, int direction = 0){
         if (isAlive)
         {
+            animator.SetTrigger("TakeDamage");
             health -= number;
             if (health < 0)
             {
@@ -45,18 +51,21 @@ public class EnemyStates:MonoBehaviour{
             {
                 health = 100;
             }
+        }else{
+            
         }
         return;
     }
 
-    void EnemyDie(){
+    public void EnemyDie(){
+        animator.SetBool("die", true);
         isAlive = false;
         enemyAI.enabled = false;
         enemyMovement.enabled = false;
         characterController.enabled = false;
 
         EnableRagdoll(true);
-        animator.enabled = false;
+        // animator.enabled = false;
         Destroy(this.gameObject, 3f);
         if (thisRespawner)
         {

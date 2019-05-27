@@ -22,7 +22,7 @@ public class EnemyWeapon : MonoBehaviour
         public Transform bulletSpawn;
         public GameObject bulletPrefeb;
 
-        public float bulletSpeed = 2f;
+        
 
         [Header("Effects")]
         public GameObject muzzleFlash;
@@ -54,7 +54,7 @@ public class EnemyWeapon : MonoBehaviour
             Fire();
             var bullet = Instantiate(enemyWeaponSettings.bulletPrefeb, enemyWeaponSettings.bulletSpawn.position,
             enemyWeaponSettings.bulletSpawn.rotation) as GameObject;
-            bullets.Add(bullet);
+            // bullets.Add(bullet);
             Destroy(bullet, 5);
         }
     }

@@ -19,6 +19,8 @@
         "health":90,
         "experience":90,
         "currentLevel":3
-    }
+    },
+    "sign":1
+    
 
 }

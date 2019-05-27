@@ -34,7 +34,7 @@ public class ContainerItem{
             return toMuch;
         }
         currentNum -= value;
-        return currentNum;
+        return value;
     }
 
     public void Set(int amount){

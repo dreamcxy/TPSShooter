@@ -23,7 +23,7 @@ public class UserInput : MonoBehaviour
         // 三连发模式
         public string burstShootButton = "BurstShoot";
 
-
+        public string cancelButton = "Cancel";
         // 移动类的button
         public string verticalAxis = "Vertical";
         public string horizontalAxis = "Horizontal";
@@ -196,7 +196,7 @@ public class UserInput : MonoBehaviour
         Vector3 mainCamPos = mainCamT.position;
         Vector3 dir = mainCamT.forward;
         Ray ray = new Ray(mainCamPos, dir);
-        spineLookAt = ray.GetPoint(100f);
+        spineLookAt = ray.GetPoint(400f);
     }
 
     void PositionSpine(Vector3 spineLookAt)
@@ -227,7 +227,10 @@ public class UserInput : MonoBehaviour
             if (!weaponHandler.currentWeapon) return;
             // 攻击射线
             Vector2 v = new Vector2(Screen.width / 2, Screen.height / 2);
+            Debug.LogFormat("V:{0}", v);
             weaponHandler.currentWeapon.shootRay = Camera.main.ScreenPointToRay(v);
+ 
+            // weaponHandler.currentWeapon.shootRay = new Ray(tpsCamera.transform.position, tpsCamera.transform.forward);
         }
     }
 

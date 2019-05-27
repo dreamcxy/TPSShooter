@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CamRig : MonoBehaviour
@@ -8,6 +6,7 @@ public class CamRig : MonoBehaviour
     public class CameraSettings
     {
         [Header("Position")]
+        // public Camera uICamera;
         public Vector3 camPositionOffsetLeft;
         public Vector3 camPositionOffsetRight;
         public Vector3 camAimPositionOffsetLeft;
@@ -59,6 +58,7 @@ public class CamRig : MonoBehaviour
     }
     public Shoulder shoulder;
 
+
     public Transform target;
     UserInput userInput;
     float newCamX = 0.0f;
@@ -77,29 +77,44 @@ public class CamRig : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GameObject player = GameObject.FindWithTag("Player");
-        
-        userInput = player.GetComponent<UserInput>();
-        if (target)
-        {
-            if (!UserInput.isMouseOnUI)
-            {
-                RotateCamera();
-                Zoom(userInput.aiming);
-            }
 
-            if (Input.GetButtonDown(inputSettings.switchShoulderButton))
+
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player)
+        {
+            userInput = player.GetComponent<UserInput>();
+            if (target)
             {
-                SwitchShoulder();
+                if (!UserInput.isMouseOnUI)
+                {
+                    RotateCamera();
+                    Zoom(userInput.aiming);
+                }
+
+                if (Input.GetButtonDown(inputSettings.switchShoulderButton))
+                {
+                    SwitchShoulder();
+                }
+            }
+            else
+            {
+                Transform playerT = player.transform;
+                target = playerT;
             }
         }
+
+
     }
 
     void LateUpdate()
     {
-        Vector3 targetPosition = target.position;
-        Quaternion targetRotation = target.rotation;
-        FollowTarget(targetPosition, targetRotation);
+        if (target)
+        {
+            Vector3 targetPosition = target.position;
+            Quaternion targetRotation = target.rotation;
+            FollowTarget(targetPosition, targetRotation);
+        }
+
     }
 
 
@@ -129,7 +144,8 @@ public class CamRig : MonoBehaviour
         pivot.localRotation = newRotation;
     }
 
-    void PositionCamera(Vector3 cameraPos){
+    void PositionCamera(Vector3 cameraPos)
+    {
         if (!mainCamera)
         {
             return;
@@ -149,7 +165,10 @@ public class CamRig : MonoBehaviour
             float newFieldOfView = Mathf.Lerp(mainCamera.fieldOfView, cameraSettings.zoomFiledOfView, Time.deltaTime * cameraSettings.zoomSpeed);
             mainCamera.fieldOfView = newFieldOfView;
             // UICamera之后调整
-
+            // if(cameraSettings.uICamera != null)
+            // {
+            //     cameraSettings.uICamera.fieldOfView = newFieldOfView;
+            // }
             switch (shoulder)
             {
                 case Shoulder.Left:
@@ -166,7 +185,10 @@ public class CamRig : MonoBehaviour
             float originalFieldOfView = Mathf.Lerp(mainCamera.fieldOfView, cameraSettings.fieldOfView, Time.deltaTime * cameraSettings.zoomSpeed);
             mainCamera.fieldOfView = originalFieldOfView;
             // UICamera之后调整
-
+            // if (cameraSettings.uICamera != null)
+            // {
+            //     cameraSettings.uICamera.fieldOfView = originalFieldOfView;
+            // }
             switch (shoulder)
             {
                 case Shoulder.Left:
@@ -189,6 +211,6 @@ public class CamRig : MonoBehaviour
             case Shoulder.Right:
                 shoulder = Shoulder.Left;
                 break;
-        } 
+        }
     }
 }
