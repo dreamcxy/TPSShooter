@@ -252,7 +252,7 @@ public class Weapon : MonoBehaviour
             if (health != null)
             {
                 health.ApplyDamage(weaponSettings.damage);
-                hit.transform.GetComponent<Animator>().ResetTrigger("TakeDamage");
+                hit.transform.GetComponent<Animator>().SetBool("takeDamage" ,false);
                 Debug.Log("hit enemy...");
             }
             else

@@ -123,10 +123,17 @@ MonoBehaviour:
     equipRotation: {x: 0, y: 0, z: 0}
     unequipPosition: {x: 0.02, y: 0.32, z: 1.28}
     unequipRotation: {x: 90, y: -45, z: 0}
+  soundSettings:
+    gunshotSounds:
+    - {fileID: 8300000, guid: d22add9310406466492fea0d086ee95a, type: 3}
+    reloadSound: {fileID: 8300000, guid: 16ff2e58000faa74abc082b136188b8a, type: 3}
+    pitchMin: 1
+    pitchMax: 1.51
+    audioSource: {fileID: 0}
   ammo:
     AmmoID: 101
-    clipAmmo: 0
-    maxClipAmmo: 30
+    clipAmmo: 20
+    maxClipAmmo: 40
 --- !u!120 &2710385623169031443
 LineRenderer:
   m_ObjectHideFlags: 0

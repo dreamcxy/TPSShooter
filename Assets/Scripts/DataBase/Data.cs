@@ -18,6 +18,7 @@ public class Data
     }
 }
 
+
 public class WeaponInfo
 {
     public string gunName { get; set; }
@@ -29,4 +30,10 @@ public class WeaponInfo
         clipAmmos = new_clipAmmos;
         clipAll = new_clipAll;
     }
+}
+
+public class LogInInfo{
+    public string playerName;
+    public string password;
+    public string signal = "2";
 }

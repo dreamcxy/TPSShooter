@@ -40,7 +40,7 @@ public class EnemyStates:MonoBehaviour{
     public void ApplyDamage(float number, int direction = 0){
         if (isAlive)
         {
-            animator.SetTrigger("TakeDamage");
+            animator.SetBool("takeDamage", true);
             health -= number;
             if (health < 0)
             {
