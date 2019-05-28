@@ -28,7 +28,7 @@ public class LogIn: MonoBehaviour
         byte[] result = new byte[1024];
         int receiveLength = clientSocket.Receive(result);
         string result_string = Encoding.ASCII.GetString(result, 0, receiveLength);
-        Debug.LogFormat("接收服务器消息：{0}", result_string);
+        // Debug.LogFormat("接收服务器消息：{0}", result_string);
         switch(result_string){
              case "-1":
                     Console.WriteLine("注册失败，服务器中已经有该用户名数据。");

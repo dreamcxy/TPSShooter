@@ -46,7 +46,7 @@ public class PlayerUI:MonoBehaviour{
             int clipAll = player.GetComponentInChildren<Container>().GetAmountRemaining(weapon.ammo.AmmoID);
             weaponInfos.Add(new WeaponInfo(weaponName, clipAmmos, clipAll));
         }
-        Data data = new Data(playerName, "&&&", health, weaponInfos);
+        // Data data = new Data(playerName, "&&&", health, weaponInfos);
         
         // SceneManager.LoadScene(0);
     }

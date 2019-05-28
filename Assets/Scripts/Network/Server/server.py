@@ -114,7 +114,7 @@ while True:
         elif(result == 3):
             print("Login successful!")
             # server_msg=="3"
-            data_file = "Users\\"+text["playerName"]
+            data_file = "Users/"+text["playerName"]
             f_read = open(data_file, "r")
             server_msg = f_read.read()
             tcpCliSock.send(server_msg.encode('utf-8'))

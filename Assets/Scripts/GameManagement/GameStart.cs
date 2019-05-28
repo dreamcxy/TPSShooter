@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 public class GameStart : MonoBehaviour
 {
     public Canvas startCanvas;
@@ -40,11 +41,27 @@ public class GameStart : MonoBehaviour
         startCanvas.gameObject.SetActive(false);
         Vector3 pos = GameObject.Find("bornPosition").transform.position;
         Quaternion rot = Quaternion.Euler(0, 0, 0);
+        // 根据返回的数据生成人物，人物的name和pass可以根据输入获得
         GameObject player = Instantiate(playerPrefeb, pos, rot) as GameObject;
         player.GetComponent<CharacterStates>().playerName = playerName;
         player.GetComponent<CharacterStates>().password = password;
-        List<Weapon> curWeaponList = player.GetComponent<WeaponHandler>().weaponList;
-        JsonConvert.DeserializeObject<>(result);
+        // 解析json数据，获得武器信息
+        // Newtonsoft.Json.Linq.JObject jobject = (Newtonsoft.Json.Linq.JObject)
+        RootObject rb = JsonConvert.DeserializeObject<RootObject>(result);
+        player.GetComponent<CharacterStates>().health = float.Parse(rb.playerState.health);
+        List<WeaponInfo> weaponInfos = rb.weapons;
+        foreach (WeaponInfo weaponInfo in weaponInfos)
+        {
+            Debug.Log(weaponInfo.gunName + "//" + weaponInfo.clipAmmos + "//" + weaponInfo.clipAll);
+        }
+
+        
+
+
+        // List<Weapon> curWeaponList = player.GetComponent<WeaponHandler>().weaponList;
+        // foreach(Weapon weapon in curWeaponList){
+        //     WeaponInfo tempWeaponInfo = new WeaponInfo(weapon.name, weapon.ammo.clipAmmo, player.GetComponent<Container>().GetAmountRemaining(weapon.ammo.AmmoID));
+        // }
     }
 
 
