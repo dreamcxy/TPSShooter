@@ -70,7 +70,8 @@ public class WeaponHandler : MonoBehaviour
 
     private void Start()
     {
-        currentWeapon = userSettings.weaponContainer.GetComponentInChildren<Weapon>();
+        // currentWeapon = userSettings.weaponContainer.GetComponentInChildren<Weapon>();
+        currentWeapon = weaponList[0];
         container = GetComponentInChildren<Container>();
         animator = GetComponent<Animator>();
         animatorOverrideController = new AnimatorOverrideController(animator.runtimeAnimatorController);

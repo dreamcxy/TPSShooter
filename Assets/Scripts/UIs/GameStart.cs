@@ -48,20 +48,42 @@ public class GameStart : MonoBehaviour
         // 解析json数据，获得武器信息
         // Newtonsoft.Json.Linq.JObject jobject = (Newtonsoft.Json.Linq.JObject)
         RootObject rb = JsonConvert.DeserializeObject<RootObject>(result);
-        player.GetComponent<CharacterStates>().health = float.Parse(rb.playerState.health);
-        List<WeaponInfo> weaponInfos = rb.weapons;
-        foreach (WeaponInfo weaponInfo in weaponInfos)
+        // player.GetComponent<CharacterStates>().health = float.Parse(rb.playerState.health);
+        player.GetComponent<CharacterStates>().health = rb.playerState.health;
+        List<WeaponInfo> weaponInfos = rb.weaponInfos;
+
+        Container container = player.GetComponentInChildren<Container>();
+        List<Weapon> curWeaponList = player.GetComponent<WeaponHandler>().weaponList;
+
+        Weapon[] weaponsInWeaponContainer = player.GetComponent<WeaponHandler>().userSettings.weaponContainer.GetComponentsInChildren<Weapon>();
+
+        foreach (Weapon weapon in weaponsInWeaponContainer)
         {
-            Debug.Log(weaponInfo.gunName + "//" + weaponInfo.clipAmmos + "//" + weaponInfo.clipAll);
+            foreach (WeaponInfo weaponInfo in weaponInfos)
+            {
+                if (weapon.weaponSettings.weaponName == weaponInfo.gunName.ToLower())
+                {
+                    curWeaponList.Add(weapon);
+                    weapon.ammo.clipAmmo = weaponInfo.clipAmmos;
+                    if (weaponInfo.clipLeft > container.GetAmountRemaining(weapon.ammo.AmmoID))
+                    {
+                        container.Put(weapon.ammo.AmmoID, weaponInfo.clipLeft - container.GetAmountRemaining(weapon.ammo.AmmoID));
+                    }
+                    else
+                    {
+                        container.TakeFromContainer(weapon.ammo.AmmoID, container.GetAmountRemaining(weapon.ammo.AmmoID) - weaponInfo.clipLeft);
+                    }
+                }
+                else
+                {
+                    weapon.gameObject.SetActive(false);
+                }
+            }
         }
 
-        
+        player.GetComponent<WeaponHandler>().currentWeapon = curWeaponList[0];
 
-
-        // List<Weapon> curWeaponList = player.GetComponent<WeaponHandler>().weaponList;
-        // foreach(Weapon weapon in curWeaponList){
-        //     WeaponInfo tempWeaponInfo = new WeaponInfo(weapon.name, weapon.ammo.clipAmmo, player.GetComponent<Container>().GetAmountRemaining(weapon.ammo.AmmoID));
-        // }
+        // Debug.Log(player.GetComponent<WeaponHandler>().weaponList);
     }
 
 
@@ -84,6 +106,19 @@ public class GameStart : MonoBehaviour
         startCanvas.gameObject.SetActive(false);
         playerInfoCanvas.enabled = true;
 
+        List<Weapon> weaponList = player.GetComponent<WeaponHandler>().weaponList;
+        Weapon[] weaponsInWeaponContainer = player.GetComponent<WeaponHandler>().userSettings.weaponContainer.GetComponentsInChildren<Weapon>();
+        foreach (Weapon weapon in weaponsInWeaponContainer)
+        {
+            if (weapon.weaponSettings.weaponName == "glock" || weapon.weaponSettings.weaponName == "fal")
+            {
+                weaponList.Add(weapon);
+            }
+            else
+            {
+                weapon.gameObject.SetActive(false);
+            }
+        }
 
     }
 

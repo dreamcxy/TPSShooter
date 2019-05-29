@@ -17,7 +17,7 @@ public class ContainerItem{
     public int id;
     public string name;
     public int maximum;
-    public int currentNum;
+    public int currentNum{get; set;}
 
     public ContainerItem(int id, string name, int maximum, int currentNum){
         this.id = id;

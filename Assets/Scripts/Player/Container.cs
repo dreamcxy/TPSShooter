@@ -14,6 +14,7 @@ public class Container:MonoBehaviour{
         items.Add(new ContainerItem(102, "Ammo_Handgun", 120, 0));
     }
 
+    
 
     public void Add(ContainerItem item){
         var containerItem = GetContainerItem(item.id);
@@ -43,6 +44,8 @@ public class Container:MonoBehaviour{
         if(containerItem == null) return -1;
         return containerItem.currentNum;
     }
+
+
 
 
     // 从items中寻找第一个为id的ContainerItem对象

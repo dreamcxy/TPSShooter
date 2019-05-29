@@ -41,6 +41,7 @@ public class Weapon : MonoBehaviour
     public class WeaponSettings
     {
         [Header("Other")]
+        public string weaponName;
         public GameObject crossHairPrefeb;
         public float reloadDuration = 1.0f;
 

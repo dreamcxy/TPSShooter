@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using Newtonsoft.Json;
 public class PlayerUI:MonoBehaviour{
 
     public Text infantryAmmoText;
@@ -18,11 +18,10 @@ public class PlayerUI:MonoBehaviour{
     private void Start() {
         quitCanvas.enabled = false;
         
-        
     }
 
-
-    
+    LogIn logInOption = new LogIn();    
+    // 按了no，也就是不离开游戏
     public void  QuitButtonPress()
     {
         quitCanvas.enabled = !quitCanvas.enabled;
@@ -37,8 +36,9 @@ public class PlayerUI:MonoBehaviour{
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         List<Weapon> currentWeaponList = player.GetComponent<WeaponHandler>().weaponList;
-        string playerName = player.GetComponent<CharacterStates>().playerName;
-        float health = player.GetComponent<CharacterStates>().health;
+        Container container = player.GetComponentInChildren<Container>();
+
+        
         List<WeaponInfo> weaponInfos = new List<WeaponInfo>();
         foreach(Weapon weapon in currentWeaponList){
             string weaponName = weapon.name;
@@ -46,6 +46,23 @@ public class PlayerUI:MonoBehaviour{
             int clipAll = player.GetComponentInChildren<Container>().GetAmountRemaining(weapon.ammo.AmmoID);
             weaponInfos.Add(new WeaponInfo(weaponName, clipAmmos, clipAll));
         }
+        // 构造需要上传的参数
+
+        RootObject rb = new RootObject();
+        rb.playerName = player.GetComponent<CharacterStates>().playerName;
+        rb.password = player.GetComponent<CharacterStates>().password;
+        rb.playerState = new PlayerState(player.GetComponent<CharacterStates>().health);
+        rb.weaponInfos = new List<WeaponInfo>();
+        foreach(Weapon weapon in currentWeaponList){
+            WeaponInfo weaponInfo = new WeaponInfo(weapon.weaponSettings.weaponName, weapon.ammo.clipAmmo, container.GetAmountRemaining(weapon.ammo.AmmoID));
+            rb.weaponInfos.Add(weaponInfo);
+        }
+
+        rb.signal = "0";
+        string jsonStr = JsonConvert.SerializeObject(rb);
+        logInOption.SendText(jsonStr);
+        Debug.Log("push data over....");
+        
         // Data data = new Data(playerName, "&&&", health, weaponInfos);
         
         // SceneManager.LoadScene(0);

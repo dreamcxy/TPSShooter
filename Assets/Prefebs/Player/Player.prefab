@@ -162,9 +162,7 @@ MonoBehaviour:
     singleShootBool: isShoot
     burstShootBool: isShootBurst
   currentWeapon: {fileID: 0}
-  weaponList:
-  - {fileID: 6073957475927993323}
-  - {fileID: 3577837476813856541}
+  weaponList: []
   container: {fileID: 0}
 --- !u!114 &4976495099244476503
 MonoBehaviour:
@@ -341,11 +339,9 @@ MonoBehaviour:
   - id: 101
     name: Ammo_Infantry
     maximum: 180
-    currentNum: 0
   - id: 102
     name: Ammo_Handgun
     maximum: 120
-    currentNum: 0
 --- !u!54 &4976495100050747908
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -369,6 +365,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4980802879199612220}
     m_Modifications:
+    - target: {fileID: 8410199451798716237, guid: 091b826ab82bf4de3b1a8c7bc1cfe0c6,
+        type: 3}
+      propertyPath: userSettings.spineRotation.x
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8410199451798716237, guid: 091b826ab82bf4de3b1a8c7bc1cfe0c6,
+        type: 3}
+      propertyPath: weaponSettings.weaponName
+      value: glock
+      objectReference: {fileID: 0}
     - target: {fileID: 8460401670627684294, guid: 091b826ab82bf4de3b1a8c7bc1cfe0c6,
         type: 3}
       propertyPath: m_Name
@@ -378,11 +384,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8410199451798716237, guid: 091b826ab82bf4de3b1a8c7bc1cfe0c6,
-        type: 3}
-      propertyPath: userSettings.spineRotation.x
-      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 9087865280370839588, guid: 091b826ab82bf4de3b1a8c7bc1cfe0c6,
         type: 3}
@@ -446,18 +447,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 091b826ab82bf4de3b1a8c7bc1cfe0c6, type: 3}
---- !u!114 &3577837476813856541 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8410199451798716237, guid: 091b826ab82bf4de3b1a8c7bc1cfe0c6,
-    type: 3}
-  m_PrefabInstance: {fileID: 4976495098879828048}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69c363fbdbc4318478abed2eb34f7eaa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &4976495099532968972
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -473,7 +462,7 @@ PrefabInstance:
     - target: {fileID: 4360033676904407741, guid: 9c13337297ef0d44a9f603fdd267ee0e,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1250601883805331431, guid: 9c13337297ef0d44a9f603fdd267ee0e,
         type: 3}
@@ -511,6 +500,11 @@ PrefabInstance:
       propertyPath: weaponSettings.walkLeftAnimation
       value: 
       objectReference: {fileID: 7400000, guid: 8262ddf2833ab0046b88596de95515e0, type: 3}
+    - target: {fileID: 1250601883805331431, guid: 9c13337297ef0d44a9f603fdd267ee0e,
+        type: 3}
+      propertyPath: weaponSettings.weaponName
+      value: fal
+      objectReference: {fileID: 0}
     - target: {fileID: 3656840362528646031, guid: 9c13337297ef0d44a9f603fdd267ee0e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -579,18 +573,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 4976495099532968972}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6073957475927993323 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1250601883805331431, guid: 9c13337297ef0d44a9f603fdd267ee0e,
-    type: 3}
-  m_PrefabInstance: {fileID: 4976495099532968972}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8760060284330190513}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69c363fbdbc4318478abed2eb34f7eaa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &4976495099738742208
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -598,14 +580,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4976495099244476590}
     m_Modifications:
-    - target: {fileID: 1827042255920816, guid: 20936ffd6c7c4cc41abaa454e872da81, type: 3}
-      propertyPath: m_Name
-      value: soldier
-      objectReference: {fileID: 0}
-    - target: {fileID: 1827042255920816, guid: 20936ffd6c7c4cc41abaa454e872da81, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
     - target: {fileID: 4851175630109414, guid: 20936ffd6c7c4cc41abaa454e872da81, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -649,6 +623,14 @@ PrefabInstance:
     - target: {fileID: 4851175630109414, guid: 20936ffd6c7c4cc41abaa454e872da81, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1827042255920816, guid: 20936ffd6c7c4cc41abaa454e872da81, type: 3}
+      propertyPath: m_Name
+      value: soldier
+      objectReference: {fileID: 0}
+    - target: {fileID: 1827042255920816, guid: 20936ffd6c7c4cc41abaa454e872da81, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4950416419099530, guid: 20936ffd6c7c4cc41abaa454e872da81, type: 3}
       propertyPath: m_LocalRotation.x
@@ -728,7 +710,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1064233783, guid: 12e3d1743a8804f4f8d27a3a3584eeac, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1064233786, guid: 12e3d1743a8804f4f8d27a3a3584eeac, type: 3}
       propertyPath: m_LocalPosition.x
@@ -773,6 +755,11 @@ PrefabInstance:
     - target: {fileID: 1064233786, guid: 12e3d1743a8804f4f8d27a3a3584eeac, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1999606377497352905, guid: 12e3d1743a8804f4f8d27a3a3584eeac,
+        type: 3}
+      propertyPath: weaponSettings.weaponName
+      value: aksu
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 12e3d1743a8804f4f8d27a3a3584eeac, type: 3}
