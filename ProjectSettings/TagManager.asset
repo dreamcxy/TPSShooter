@@ -9,6 +9,7 @@ TagManager:
   - Ragdoll
   - SoundController
   - Desert
+  - Ammo
   layers:
   - Default
   - TransparentFX

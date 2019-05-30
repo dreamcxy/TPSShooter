@@ -754,12 +754,12 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 0
     sightRange: 30
-    fieldOfView: 80
+    fieldOfView: 100
     senseRange: 10
-    eyeHeight: 2
+    eyeHeight: 3
   attackSettings:
     damge: 5
-    attackRange: 10
+    attackRange: 20
     attackDelay: 2
     attackCoolDown: 2
     attackType: 2
@@ -784,8 +784,8 @@ MonoBehaviour:
   animationSettings:
     verticalVelocityFloat: Forward
   movementSettings:
-    moveSpeed: 1
-    runSpeed: 2
+    moveSpeed: 3
+    runSpeed: 5
   physicsSettings:
     gravityModfier: 9.8
     resetDownSpeed: 1.2

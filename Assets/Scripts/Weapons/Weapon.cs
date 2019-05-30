@@ -56,6 +56,7 @@ public class Weapon : MonoBehaviour
         public int burstShootBulletNums = 3;
 
         [Header("AnimationClips")]
+        public AnimationClip dieAnimation;
         public AnimationClip idleAnimation;
         public AnimationClip walkAnimation;
         public AnimationClip walkBackAnimation;
@@ -191,7 +192,7 @@ public class Weapon : MonoBehaviour
         Vector3 startPos = ray.origin;
         Vector3 aimDir = ray.direction;
         Physics.Raycast(startPos, aimDir, out aimHit);
-        Debug.LogFormat("aimDir.point:{0},{1},{2}", aimDir.x, aimDir.y, aimDir.z);
+        // Debug.LogFormat("aimDir.point:{0},{1},{2}", aimDir.x, aimDir.y, aimDir.z);
 
         // 向瞄准点射击
         RaycastHit hit;

@@ -9,7 +9,7 @@ public class CharacterStates:MonoBehaviour{
     public string playerName{get;set;}
     public string password{get; set;}
     public WeaponHandler weaponHandler;
-
+    Animator animator;
 
     private PlayerUI playerUI;
 
@@ -20,14 +20,18 @@ public class CharacterStates:MonoBehaviour{
     void Start()
     {
         playerUI = FindObjectOfType<PlayerUI>();
+        animator = GetComponent<Animator>();
     }
 
     public void ApplyDamage(float number){
         health -= number;
         playerUI.damgeReact.GetComponent<CanvasGroup>().alpha = 1;
-        if (health < 0)
+        if (health <= 0)
         {
+            animator.SetBool("die",true);
+            Destroy(this.gameObject, 3);
             Debug.Log("You are dead...");
+            GameObject.FindGameObjectWithTag("Finish").GetComponent<GameOver>().LeftGame();
         }
         if (health > 100)
         {

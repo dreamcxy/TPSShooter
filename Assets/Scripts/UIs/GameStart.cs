@@ -9,6 +9,7 @@ public class GameStart : MonoBehaviour
     public Canvas startCanvas;
     public Canvas playerInfoCanvas;
     public Canvas cancelCanvas;
+    public Canvas overCanvas;
     public GameObject playerPrefeb;
 
     LogIn logInOption = new LogIn();
@@ -22,6 +23,7 @@ public class GameStart : MonoBehaviour
         startCanvas.enabled = true;
         playerInfoCanvas.enabled = false;
         cancelCanvas.enabled = false;
+        overCanvas.enabled = false;
     }
 
     public void LoginButton()

@@ -158,6 +158,7 @@ MonoBehaviour:
   userSettings:
     spineRotation: {x: 0, y: 0, z: 0}
   weaponSettings:
+    weaponName: 
     crossHairPrefeb: {fileID: 1124590980948992, guid: c7cde4a59c593fa4c8f95407faae6622,
       type: 3}
     reloadDuration: 1
@@ -169,6 +170,7 @@ MonoBehaviour:
     bulletSpread: 2
     range: 200
     burstShootBulletNums: 3
+    dieAnimation: {fileID: 7400000, guid: 260a6916ed63d2c4dbde45ed402423fe, type: 3}
     idleAnimation: {fileID: 7400000, guid: 61ee5c52da19edb4b8051f8edd051e7b, type: 3}
     walkAnimation: {fileID: 7400000, guid: 4fcd0b8397034604b829e8d17a787f50, type: 3}
     walkBackAnimation: {fileID: 7400000, guid: 9e22f044c5760424eb7079e7e0c8b3c9, type: 3}

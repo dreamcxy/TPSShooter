@@ -146,7 +146,7 @@ public class EnemyAI : MonoBehaviour
         GetAllCharacters();
         LookForTarget();
         enemyAIState.AIBehavior();
-        Debug.LogFormat("enemyAIState:{0}", enemyAIState.GetType().Name);
+        // Debug.LogFormat("enemyAIState:{0}", enemyAIState.GetType().Name);
     }
 
 

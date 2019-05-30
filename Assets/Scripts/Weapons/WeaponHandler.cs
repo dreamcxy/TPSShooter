@@ -155,6 +155,7 @@ public class WeaponHandler : MonoBehaviour
         clipOverrides["infantry_combat_run_back"] = currentWeapon.weaponSettings.runBackAnimation;
         clipOverrides["infantry_combat_run_left"] = currentWeapon.weaponSettings.runLeftAnimation;
         clipOverrides["infantry_combat_run_right"] = currentWeapon.weaponSettings.runRightAnimation;
+        clipOverrides["infantry_death_A"] = currentWeapon.weaponSettings.dieAnimation;
         animatorOverrideController.ApplyOverrides(clipOverrides);
         animator.SetInteger(animations.weaponTypeInt, weaponTypeInt);
         animator.SetBool(animations.reloadingBool, reload);
@@ -233,10 +234,10 @@ public class WeaponHandler : MonoBehaviour
         {
             return;
         }
-        // currentWeapon.PullTrigger(!isSwitchingWeapon && pulling && aim && !reload);
-        currentWeapon.PullTrigger(!isSwitchingWeapon && pulling && !reload);
-        // if (!isSwitchingWeapon && pulling && aim && !reload)
-        if (!isSwitchingWeapon && pulling && !reload)
+        currentWeapon.PullTrigger(!isSwitchingWeapon && pulling && aim && !reload);
+        // currentWeapon.PullTrigger(!isSwitchingWeapon && pulling && !reload);
+        if (!isSwitchingWeapon && pulling && aim && !reload)
+        // if (!isSwitchingWeapon && pulling && !reload)
         
         {
             shootSingle = true;

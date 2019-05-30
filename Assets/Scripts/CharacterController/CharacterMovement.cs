@@ -21,10 +21,16 @@ public class CharacterMovement : MonoBehaviour
 
         public string groudedBool = "isGrounded";
         public string runBool = "Run";
+
+        // 开始跳跃
         public string jumpBool = "isJumping";
 
-        // 跳跃过程中在空中
+        // 跳跃过程空中最高点
         public string airBool = "isAir";
+
+        // 跳跃下降过程
+        public string landBool = "isLand";
+
     }
 
     [SerializeField]
@@ -37,8 +43,8 @@ public class CharacterMovement : MonoBehaviour
     [System.Serializable]
     public class MovementSettings
     {
-        public float jumpSpeed = 4.0f;
-        public float jumpTime = 1.0f;
+        public float jumpSpeed = 1f;
+        public float jumpTime = 1f;
         public float margin = 0.1f;
         public float walkSpeed = 2f;
         public float runSpeed = 4f;
@@ -55,7 +61,7 @@ public class CharacterMovement : MonoBehaviour
     public class PhysicsSettings
     {
         public float gravityModfier = 9.8f;
-        public float resetDownSpeed = 1.2f;
+        public float resetDownSpeed = 0.1f;
     }
     [SerializeField]
     public PhysicsSettings physicsSettings;
@@ -64,6 +70,10 @@ public class CharacterMovement : MonoBehaviour
     public bool isRun { get; set; }
     bool isGrounded;
     bool jumping;
+    bool airing;
+    bool landing;
+
+
     bool resetGravity;
     float downSpeed;    //下落速度
 
@@ -153,14 +163,38 @@ public class CharacterMovement : MonoBehaviour
         // 起跳时间和高度控制
         if (isGrounded)
         {
-            jumping = true;
+            // Debug.LogFormat("起跳前，isGrounded:{0}, jumping:{1}, airing:{2}, landing:{3}", isGrounded, jumping, airing, landing);
+
+            // jumping = true;
+            // animator.SetBool(animationSettings.jumpBool, jumping);
+            // animator.SetBool("isGrounded", false);
+            // StartCoroutine(JumpToAir());
+            // Debug.LogFormat("起跳后，isGrounded:{0}, jumping:{1}, airing:{2}, landing:{3}", isGrounded, jumping, airing, landing);
+            // StartCoroutine(StopJump());
+            animator.SetTrigger("up");
+            StartCoroutine(JumpToAir());
+            animator.SetTrigger("down");
             StartCoroutine(StopJump());
+        }   
+
+        else
+        {
+            landing = false;
         }
+    }
+
+    IEnumerator JumpToAir()
+    {
+        yield return new WaitForSeconds(1f);
+        airing = true;
+        animator.SetBool(animationSettings.airBool, airing);
     }
     IEnumerator StopJump()
     {
         yield return new WaitForSeconds(movementSettings.jumpTime);
         jumping = false;
+        // landing = true;
+        // animator.SetBool(animationSettings.landBool, landing);
     }
 
 
@@ -169,7 +203,9 @@ public class CharacterMovement : MonoBehaviour
         animator.SetFloat(animationSettings.verticalVelocityFloat, forward);
         animator.SetFloat(animationSettings.horizontalVelocityFloat, strafe);
         animator.SetBool(animationSettings.groudedBool, isGrounded);
-        animator.SetBool(animationSettings.jumpBool, jumping);
+
         animator.SetBool(animationSettings.runBool, isRun);
+        // animator.SetBool(animationSettings.jumpBool, jumping);
+
     }
 }

@@ -14,6 +14,7 @@ public class PlayerUI:MonoBehaviour{
 
 
     public Canvas quitCanvas;
+    public Canvas overCanvas;
     public Canvas startCanvas;
     private void Start() {
         quitCanvas.enabled = false;
@@ -61,10 +62,10 @@ public class PlayerUI:MonoBehaviour{
         rb.signal = "0";
         string jsonStr = JsonConvert.SerializeObject(rb);
         logInOption.SendText(jsonStr);
+        
         Debug.Log("push data over....");
-        
-        // Data data = new Data(playerName, "&&&", health, weaponInfos);
-        
+        overCanvas.enabled = true;
+        Time.timeScale = 0;
         // SceneManager.LoadScene(0);
     }
 }

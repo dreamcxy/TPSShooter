@@ -138,9 +138,10 @@ public class UserInput : MonoBehaviour
     void CharacterLogic()
     {
         if (!characterMovement) return;
+        // 跳跃逻辑和其他逻辑分开写
         if (isJumpButtonDown && canJump)
         {
-
+            
             characterMovement.Jump();
             canJump = false;
             StartCoroutine(CanJump());
@@ -150,6 +151,16 @@ public class UserInput : MonoBehaviour
         characterMovement.AnimateAndMove(verticalAxis, horizontalAxis);
         characterMovement.Animate(verticalAxis, horizontalAxis);
     }
+
+    
+    IEnumerator CanJump()
+    {
+        // yield return new WaitForSeconds(characterMovement.movementSettings.jumpTime + 0.1f);
+        yield return new WaitForSeconds(0.2f);
+        canJump = true;
+    }
+
+
 
     void CharacterLook()
     {
@@ -183,11 +194,6 @@ public class UserInput : MonoBehaviour
     }
 
 
-    IEnumerator CanJump()
-    {
-        yield return new WaitForSeconds(characterMovement.movementSettings.jumpTime + 0.1f);
-        canJump = true;
-    }
 
     void GetSpineTransform()
     {
@@ -227,7 +233,7 @@ public class UserInput : MonoBehaviour
             if (!weaponHandler.currentWeapon) return;
             // 攻击射线
             Vector2 v = new Vector2(Screen.width / 2, Screen.height / 2);
-            Debug.LogFormat("V:{0}", v);
+            // Debug.LogFormat("V:{0}", v);
             weaponHandler.currentWeapon.shootRay = Camera.main.ScreenPointToRay(v);
  
             // weaponHandler.currentWeapon.shootRay = new Ray(tpsCamera.transform.position, tpsCamera.transform.forward);
