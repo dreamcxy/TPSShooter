@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+// 根据游戏条件释放敌人
 public class Respawner : MonoBehaviour
 {
     [System.Serializable]
@@ -64,4 +66,9 @@ public class Respawner : MonoBehaviour
             enemyCurrentAmount = 0;
         }
     }
+
+
+
+
+
 }

@@ -13,7 +13,7 @@ public class ChasingState : EnemyAIState
 
     private bool attacked;
 
-    
+
 
     public ChasingState(EnemyAI new_enemyAI)
     {
@@ -23,7 +23,7 @@ public class ChasingState : EnemyAIState
         animator = enemyAI.GetComponent<Animator>();
         // timer = GameObject.FindGameObjectWithTag("GameController").GetComponent<Timer>();
         attacked = false;
-        
+
     }
 
     public override void AIBehavior()
@@ -60,23 +60,55 @@ public class ChasingState : EnemyAIState
     public void Attacking()
     {
         Debug.LogFormat("attacked:{0}", attacked);
-        if (attacked == false && enemyAI.target != null && enemyAI.attackSettings.attackLatTime -  enemyAI.attackSettings.attackForTime > enemyAI.attackSettings.attackCoolDown)
+        if (attacked == false && enemyAI.target != null && enemyAI.attackSettings.attackLatTime - enemyAI.attackSettings.attackForTime > enemyAI.attackSettings.attackCoolDown)
         {
             // Debug.LogFormat("animator:{0}",animator);
-            Debug.Log("attack....");
-            Debug.Log(animator.name);
-            
-            attacked = true;
-            animator.SetBool("Attack", attacked);
-            // curEnemyWeapon.Fire();
-            enemyAI.curEnemyWeapon.isFire = true;
-            attacked = false;
-            
-            enemyAI.attackSettings.attackForTime = enemyAI.attackSettings.attackLatTime;
+            if (enemyAI.enemyType == 1)
+            {
+
+                Debug.Log("attack....");
+                Debug.Log(animator.name);
+
+                attacked = true;
+                animator.SetBool("Attack", attacked);
+                // curEnemyWeapon.Fire();
+                enemyAI.curEnemyWeapon.isFire = true;
+                attacked = false;
+
+                enemyAI.attackSettings.attackForTime = enemyAI.attackSettings.attackLatTime;
+            }
             // StartCoroutine(StopAttack());
             // timer.Add(() => { attacked = false; },
             // enemyAI.attackSettings.attackCoolDown);
+            else
+            {
+                Debug.Log("bomb, suicide attack...");
+                ParticleSystem suicideEffect = enemyAI.GetComponent<ParticleSystem>();
+                if (suicideEffect)
+                {
+                    // Collider[] colliders = Physics.OverlapSphere(this.transform.position,
+                    // 100);
+                    // if (colliders.Length > 0)
+                    // {
+
+                    //     foreach (Collider hit in colliders)
+                    //     {
+                    //         if (hit.transform.tag == "Player")
+                    //         {
+                    //             enemyAI.GetComponent<EnemyStates>().ApplyDamage(100);
+
+                    //             hit.GetComponent<Rigidbody>().AddExplosionForce(1, this.transform.position,
+                    //             30);
+                    //             hit.GetComponent<CharacterStates>().ApplyDamage(30);
+                    //         }
+                    //     }
+
+                    enemyAI.GetComponent<EnemyStates>().ApplyDamage(100);
+                    
+                    suicideEffect.Play();
+                }
+
+            }
         }
     }
-
 }

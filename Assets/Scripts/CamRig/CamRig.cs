@@ -67,16 +67,22 @@ public class CamRig : MonoBehaviour
     Transform pivot;
 
     Camera mainCamera;
+    GameObject tankCamera;
+
     // Start is called before the first frame update
     void Start()
     {
         mainCamera = Camera.main;
+
         pivot = this.transform.GetChild(0);
+        tankCamera = GameObject.Find("TankCamera");
+        tankCamera.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
+
 
 
         GameObject player = GameObject.FindWithTag("Player");
@@ -100,8 +106,24 @@ public class CamRig : MonoBehaviour
             {
                 Transform playerT = player.transform;
                 target = playerT;
+
             }
+
+            if (player.GetComponent<CharacterStates>().isInTank == true)
+            {
+                tankCamera.SetActive(true);
+                mainCamera.enabled = false;
+
+            }
+            else
+            {
+                tankCamera.SetActive(false);
+                mainCamera.enabled = true;
+            }
+
         }
+
+
 
 
     }

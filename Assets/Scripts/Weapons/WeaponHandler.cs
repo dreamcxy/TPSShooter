@@ -19,6 +19,11 @@ public class AnimationClipOverrides : List<KeyValuePair<AnimationClip, Animation
 }
 public class WeaponHandler : MonoBehaviour
 {
+
+    public GameObject grenadePrefeb;
+    public Transform equipDPos;
+
+
     Animator animator;
     AnimatorOverrideController animatorOverrideController;
     AnimationClipOverrides clipOverrides;
@@ -55,11 +60,13 @@ public class WeaponHandler : MonoBehaviour
     public Weapon currentWeapon;
     public List<Weapon> weaponList;
     public Container container;
-    
+
 
     bool aim;
     bool shootSingle;
 
+    bool isThrowGrenadeButtonDown = false;
+    bool isGrenadeOut;
 
     public bool reload { get; private set; }
 
@@ -67,6 +74,7 @@ public class WeaponHandler : MonoBehaviour
     bool isSwitchingWeapon; //是否正在切换武器
 
     SoundController sc;
+    GameObject grenade;
 
     private void Start()
     {
@@ -79,17 +87,16 @@ public class WeaponHandler : MonoBehaviour
         clipOverrides = new AnimationClipOverrides(animatorOverrideController.overridesCount);
         animatorOverrideController.GetOverrides(clipOverrides);
         sc = GameObject.FindGameObjectWithTag("SoundController").GetComponent<SoundController>();
-        if(!container){
+        if (!container)
+        {
             Debug.LogError("<Color=Red><a>Missing Container</a></Color>");
         }
     }
-
     // 初始的时候是两把武器，一把手枪，一把步枪
     private void Update()
     {
         if (currentWeapon)
         {
-
             currentWeapon.SetEquipped(true);
             currentWeapon.SetOwner(this.GetComponent<WeaponHandler>());
 
@@ -106,6 +113,8 @@ public class WeaponHandler : MonoBehaviour
                     reload = false;
                 }
             }
+            // 扔炸弹
+            ThrowGrenade();
         }
         if (weaponList.Count > 0)
         {
@@ -117,7 +126,7 @@ public class WeaponHandler : MonoBehaviour
                     weaponList[i].SetEquipped(false);
                     weaponList[i].SetOwner(this);
                     weaponList[i].gameObject.SetActive(true);
-                } 
+                }
             }
         }
         // Debug.LogFormat("currentWeapon.weaponType:{0}, currentWeapon.ammo.AmmoID:{1}, currentWeapon.ammo.clipAmmo:{2}, container.GetContainerItem(currentWeapon.ammo.AmmoID):{3}", currentWeapon.weaponType, currentWeapon.ammo.AmmoID, currentWeapon.ammo.clipAmmo, container.GetContainerItem(currentWeapon.ammo.AmmoID));
@@ -141,9 +150,9 @@ public class WeaponHandler : MonoBehaviour
         // else if (currentWeapon.weaponType == WeaponType.Deserteagle || currentWeapon.weaponType == WeaponType.Glock) weaponTypeInt = 2;
         // else if (currentWeapon.weaponType == WeaponType.Knife) weaponTypeInt = 3;
         // else weaponTypeInt = 4;
-        if (currentWeapon.weaponType == WeaponType.Infantry)    weaponTypeInt = 1;
-        else if(currentWeapon.weaponType == WeaponType.Handgun)     weaponTypeInt = 2;
-        else if(currentWeapon.weaponType == WeaponType.Knife)   weaponTypeInt = 3;
+        if (currentWeapon.weaponType == WeaponType.Infantry) weaponTypeInt = 1;
+        else if (currentWeapon.weaponType == WeaponType.Handgun) weaponTypeInt = 2;
+        else if (currentWeapon.weaponType == WeaponType.Knife) weaponTypeInt = 3;
         else weaponTypeInt = 4;
         // Debug.LogFormat("weaponTypeInt:{0}", weaponTypeInt);
         clipOverrides["infantry_combat_idle"] = currentWeapon.weaponSettings.idleAnimation;
@@ -156,19 +165,22 @@ public class WeaponHandler : MonoBehaviour
         clipOverrides["infantry_combat_run_left"] = currentWeapon.weaponSettings.runLeftAnimation;
         clipOverrides["infantry_combat_run_right"] = currentWeapon.weaponSettings.runRightAnimation;
         clipOverrides["infantry_death_A"] = currentWeapon.weaponSettings.dieAnimation;
+        clipOverrides["throw_grenade"] = currentWeapon.weaponSettings.throwGrenadeAnimation;
+
+
         animatorOverrideController.ApplyOverrides(clipOverrides);
         animator.SetInteger(animations.weaponTypeInt, weaponTypeInt);
         animator.SetBool(animations.reloadingBool, reload);
         animator.SetBool(animations.aimingBool, aim);
         animator.SetBool(animations.singleShootBool, shootSingle);
-        
+
     }
 
 
     public void Reload()
     {
         if (reload || !currentWeapon) return;
-        if(container.GetAmountRemaining(currentWeapon.ammo.AmmoID) <= 0 || currentWeapon.ammo.clipAmmo == currentWeapon.ammo.maxClipAmmo)   return;
+        if (container.GetAmountRemaining(currentWeapon.ammo.AmmoID) <= 0 || currentWeapon.ammo.clipAmmo == currentWeapon.ammo.maxClipAmmo) return;
         if (sc != null)
         {
             if (currentWeapon.soundSettings.reloadSound != null && currentWeapon.soundSettings.audioSource != null)
@@ -176,7 +188,7 @@ public class WeaponHandler : MonoBehaviour
                 sc.PlaySound(currentWeapon.soundSettings.audioSource, currentWeapon.soundSettings.reloadSound, true, currentWeapon.soundSettings.pitchMin, currentWeapon.soundSettings.pitchMax);
             }
         }
-        
+
         reload = true;
         StartCoroutine(StopReload());
     }
@@ -238,7 +250,7 @@ public class WeaponHandler : MonoBehaviour
         // currentWeapon.PullTrigger(!isSwitchingWeapon && pulling && !reload);
         if (!isSwitchingWeapon && pulling && aim && !reload)
         // if (!isSwitchingWeapon && pulling && !reload)
-        
+
         {
             shootSingle = true;
             StartCoroutine(StopShoot());
@@ -255,8 +267,51 @@ public class WeaponHandler : MonoBehaviour
         shootSingle = false;
     }
 
-    public void AddWeaponToList(Weapon weapon){
-        if(weaponList.Contains(weapon)) return;
+    public void AddWeaponToList(Weapon weapon)
+    {
+        if (weaponList.Contains(weapon)) return;
         weaponList.Add(weapon);
     }
+
+
+    // 扔炸弹
+    public void ThrowGrenade()
+    {
+        if (Input.GetButton("Grenade"))
+        {
+            if (!isThrowGrenadeButtonDown)
+            {
+                grenade = Instantiate(grenadePrefeb, equipDPos.transform.position, equipDPos.transform.rotation) as GameObject;
+                grenade.transform.position = new Vector3(grenade.transform.position.x,
+                grenade.transform.position.y + 1.1f, grenade.transform.position.z);
+                grenade.GetComponent<GrenadeController>().enabled = false;
+                isThrowGrenadeButtonDown = true;
+            }
+            else
+            {
+                Debug.Log("炸弹在手上");
+                // 显示炸弹扔出去的抛物线
+            }
+        }
+        else
+        {
+            if (Input.GetButtonUp("Grenade") && grenade)
+            {
+                animator.SetTrigger("throwGrenade");
+                StartCoroutine(ThrowWait(grenade));
+                Debug.Log("松开");
+                isThrowGrenadeButtonDown = false;
+                // 炸弹沿着抛物线运动                    
+            }
+        }
+
+    }
+
+    IEnumerator ThrowWait(GameObject grenade)
+    {
+        yield return new WaitForSeconds(0.5f);
+        grenade.GetComponent<GrenadeController>().enabled = true;
+
+    }
+
 }

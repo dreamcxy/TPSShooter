@@ -67,6 +67,9 @@ public class Weapon : MonoBehaviour
         public AnimationClip runLeftAnimation;
         public AnimationClip runRightAnimation;
 
+        public AnimationClip throwGrenadeAnimation;
+
+
         [Header("Effects")]
         public GameObject muzzleFlash;  // 枪口火花
 
@@ -104,7 +107,7 @@ public class Weapon : MonoBehaviour
     }
     [SerializeField]
     public Ammunition ammo;
-    public Ray shootRay {get; set; }
+    public Ray shootRay { get; set; }
     public bool ownerAiming { get; set; }
     WeaponHandler owner;
     bool equipped;  // 武器是否在被装备
@@ -131,6 +134,8 @@ public class Weapon : MonoBehaviour
 
         if (weaponSettings.crossHairPrefeb != null)
         {
+
+
             weaponSettings.crossHairPrefeb = Instantiate(weaponSettings.crossHairPrefeb);
             ToglleCrosshair(false);
         }
@@ -149,15 +154,15 @@ public class Weapon : MonoBehaviour
                     {
                         Fire(shootRay);
                         //发射子弹
-            //             Instantiate(weaponSettings.bulletPrefeb, weaponSettings.bulletSpawn.position,
-            // weaponSettings.bulletSpawn.rotation);
+                        //             Instantiate(weaponSettings.bulletPrefeb, weaponSettings.bulletSpawn.position,
+                        // weaponSettings.bulletSpawn.rotation);
                     }
 
                     // if (ownerAiming)
                     // {
                     //     ToglleCrosshair(true);
                     // }
-                    
+
                     // else
                     // {
                     //     ToglleCrosshair(false);
@@ -208,7 +213,7 @@ public class Weapon : MonoBehaviour
         // 子弹发射
 
         // dir += (Vector3)Random.insideUnitCircle * weaponSettings.bulletSpread;
-        
+
         if (Physics.Raycast(bSpawnPoint, dir, out hit, weaponSettings.range))
         {
             lineRenderer.SetPosition(1, hit.point);
@@ -254,7 +259,7 @@ public class Weapon : MonoBehaviour
             if (health != null)
             {
                 health.ApplyDamage(weaponSettings.damage);
-                hit.transform.GetComponent<Animator>().SetBool("takeDamage" ,false);
+                hit.transform.GetComponent<Animator>().SetBool("takeDamage", false);
                 Debug.Log("hit enemy...");
             }
             else

@@ -22,10 +22,17 @@ public class EnemyWeapon : MonoBehaviour
         public Transform bulletSpawn;
         public GameObject bulletPrefeb;
 
-        
-
         [Header("Effects")]
         public GameObject muzzleFlash;
+
+        [Header("GunAnimation")]
+        public AnimationClip enemyCombatIdle;
+        public AnimationClip enemyCombatRun;
+        public AnimationClip enemyCombatShoot;
+        public AnimationClip ememyCombatWalk;
+        public AnimationClip enemyDeath;
+        public AnimationClip enemyTakeDamage;
+
 
     }
 

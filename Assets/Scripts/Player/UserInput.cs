@@ -30,6 +30,9 @@ public class UserInput : MonoBehaviour
         public string jumpButton = "Jump";
         public string runButton = "Fire3";
         // public string crouchButton  = "Fire1";
+
+        // 扔炸弹
+        public string throwGrenadeButton = "Grenade";
     }
     [SerializeField]
     public InputSettings inputSettings;
@@ -60,7 +63,7 @@ public class UserInput : MonoBehaviour
 
     Quaternion newRotation;
     Vector3 spineLookAt;
-
+    // public bool isThrowGrenadeButtonDown;
     bool isJumpButtonDown;
     float verticalAxis;
     float horizontalAxis;
@@ -133,6 +136,9 @@ public class UserInput : MonoBehaviour
         isRunButtonDown = Input.GetButton(inputSettings.runButton);
         verticalAxis = Input.GetAxis(inputSettings.verticalAxis);
         horizontalAxis = Input.GetAxis(inputSettings.horizontalAxis);
+
+        // isThrowGrenadeButtonDown = Input.GetButtonDown(inputSettings.throwGrenadeButton);
+
     }
 
     void CharacterLogic()
@@ -237,7 +243,13 @@ public class UserInput : MonoBehaviour
             weaponHandler.currentWeapon.shootRay = Camera.main.ScreenPointToRay(v);
  
             // weaponHandler.currentWeapon.shootRay = new Ray(tpsCamera.transform.position, tpsCamera.transform.forward);
+
+            // if(isThrowGrenadeButtonDown){
+            //     weaponHandler.ThrowGrenade();
+            // }
         }
+        
+
     }
 
 }

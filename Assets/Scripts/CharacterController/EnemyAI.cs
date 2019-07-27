@@ -14,6 +14,25 @@ public class WayPointBase
     public float waitTime;
     public Transform lookAtTarget;
 }
+
+public class EnemyAnimationClipOverrides:List<KeyValuePair<AnimationClip, AnimationClip>>{
+    public EnemyAnimationClipOverrides(int capacity):base(capacity){
+
+    }
+    public AnimationClip this[string name]{
+        get { return this.Find(x => x.Key.name.Equals(name)).Value; }
+        set{
+            int index = this.FindIndex(x => x.Key.name.Equals(name));
+            if (index != -1)
+            {
+                this[index] = new KeyValuePair<AnimationClip, AnimationClip>(this[index].Key, value);
+            }
+        }
+    }
+
+}
+
+
 public class EnemyAI : MonoBehaviour
 {
     //     private NavMeshAgent m_navMeshAgent;
@@ -32,6 +51,9 @@ public class EnemyAI : MonoBehaviour
     //     }
 
     #region public variable
+
+    [Header("EnemyType")]
+    public int enemyType = 1;
 
     public EnemyWeapon curEnemyWeapon;
 
@@ -112,10 +134,23 @@ public class EnemyAI : MonoBehaviour
 
     private EnemyAIState enemyAIState;
 
+    EnemyAnimationClipOverrides enemyAnimationClipOverrides;
+    AnimatorOverrideController animatorOverrideController;
+
+
     #endregion
 
     private void Start()
     {
+        animatorOverrideController = new AnimatorOverrideController(
+            animator.runtimeAnimatorController
+        );
+        animator.runtimeAnimatorController = animatorOverrideController;
+        enemyAnimationClipOverrides = new EnemyAnimationClipOverrides(
+            animatorOverrideController.overridesCount
+        );
+
+
         attackSettings.attackForTime = Time.time;
         navMeshAgent = GetComponentInChildren<NavMeshAgent>();
         if (navMeshAgent == null)
@@ -125,7 +160,7 @@ public class EnemyAI : MonoBehaviour
         }
         if (navMeshAgent.transform == this.transform)
         {
-            Debug.LogError("navmesh agent should be a child of the character");
+            Debug.LogError("navmesh agent should be a child of the character....");
             enabled = false;
         }
         navMeshAgent.speed = 0;
@@ -141,12 +176,32 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
-        
+
         navMeshAgent.transform.position = transform.position;
         GetAllCharacters();
         LookForTarget();
         enemyAIState.AIBehavior();
         // Debug.LogFormat("enemyAIState:{0}", enemyAIState.GetType().Name);
+
+        AdjustAnimationClip();
+    }
+
+    // 调整拿不同的枪的enemy的动画
+    void AdjustAnimationClip(){
+        enemyAnimationClipOverrides["infantry_combat_idle"] =
+        curEnemyWeapon.enemyWeaponSettings.enemyCombatIdle;
+        enemyAnimationClipOverrides["infantry_combat_walk"] =
+        curEnemyWeapon.enemyWeaponSettings.ememyCombatWalk;
+        enemyAnimationClipOverrides["infantry_combat_run"] =
+        curEnemyWeapon.enemyWeaponSettings.enemyCombatRun;
+        enemyAnimationClipOverrides["infantry_combat_shoot"] =
+        curEnemyWeapon.enemyWeaponSettings.enemyCombatShoot;
+        enemyAnimationClipOverrides["infantry_death_A"] =
+        curEnemyWeapon.enemyWeaponSettings.enemyDeath;
+        enemyAnimationClipOverrides["infantry_take_damage"] =
+        curEnemyWeapon.enemyWeaponSettings.enemyTakeDamage;
+        
+        animatorOverrideController.ApplyOverrides(enemyAnimationClipOverrides);
     }
 
 
@@ -176,7 +231,8 @@ public class EnemyAI : MonoBehaviour
                 SetEnemyState(chasingState);
                 animator.SetBool("Attack", false);
             }
-            else{
+            else
+            {
                 if (target != null)
                 {
                     targetLastKnownPosition = target.position;
@@ -217,19 +273,22 @@ public class EnemyAI : MonoBehaviour
     }
 
     // enemy 朝向调整
-    public void LookAtPosition(Vector3 pos){
+    public void LookAtPosition(Vector3 pos)
+    {
         Vector3 dir = pos - transform.position;
         Quaternion lookRot = Quaternion.LookRotation(dir);
         lookRot.x = 0;
         lookRot.z = 0;
         transform.rotation = Quaternion.Lerp(transform.rotation, lookRot, Time.deltaTime * 5);
-    }   
+    }
 
-    public void SetLookAtTransform(Transform transform){
+    public void SetLookAtTransform(Transform transform)
+    {
         currentLookTransform = transform;
     }
 
-    void InitializeAIState(){
+    void InitializeAIState()
+    {
         guardState = new GuardState(this);
         chasingState = new ChasingState(this);
         enemyAIState = guardState;

@@ -10,6 +10,8 @@ TagManager:
   - SoundController
   - Desert
   - Ammo
+  - Soldier
+  - TankCamera
   layers:
   - Default
   - TransparentFX

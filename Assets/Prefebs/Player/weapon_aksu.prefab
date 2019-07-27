@@ -119,6 +119,8 @@ MonoBehaviour:
     runBackAnimation: {fileID: 7400000, guid: 9e1cb1c7f62d5d44192efdb58cf83152, type: 3}
     runLeftAnimation: {fileID: 7400000, guid: 6660bc9151d060743bdcc101625a1132, type: 3}
     runRightAnimation: {fileID: 7400000, guid: 77855e4d6b6df6a4dac9e178c481108a, type: 3}
+    throwGrenadeAnimation: {fileID: 7400000, guid: 3cbdc2c5787ca4549ad273093d30af59,
+      type: 3}
     muzzleFlash: {fileID: 7445403133407206845, guid: 8126bd5bba5ee394a8cbc7b60a9388a8,
       type: 3}
     equipPosition: {x: 0, y: 0, z: 0}

@@ -1,1 +1,21 @@
-{"playerName": "name", "weapons": [{"clipAmmos": 25, "gunName": "Aksu", "clipAll": 60}, {"clipAll": 20, "clipAmmos": 8, "gunName": "Glock"}], "password": "pass", "playerState": {"currentLevel": 3, "health": 10, "experience": 90}}
+{
+    "playerName": "name",
+    "weapons": [
+        {
+            "clipAmmos": 25,
+            "gunName": "Aksu",
+            "clipAll": 60
+        },
+        {
+            "clipAll": 20,
+            "clipAmmos": 8,
+            "gunName": "Glock"
+        }
+    ],
+    "password": "pass",
+    "playerState": {
+        "currentLevel": 3,
+        "health": 10,
+        "experience": 90
+    }
+}

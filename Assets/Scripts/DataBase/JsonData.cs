@@ -58,9 +58,30 @@ public class PlayerState {
 
 // 上传的Json数据格式
 public class RootObject {
-	public string playerName  { get; set; }
+
+    public string playerName  { get; set; }
 	public string password  { get; set; }
 	public List<WeaponInfo> weaponInfos { get; set; }
 	public PlayerState playerState { get; set; }
 	public string signal  { get; set; }
+}
+
+
+
+[System.Serializable]
+public class RoomInfo{
+    public string roomName { get; set; }
+    public string playerName { get; set; }
+    public string password{ get; set; }
+
+    // create , attend, search 
+    public string signal { get; set; }
+
+    public RoomInfo(string r, string pN, string p, string s){
+        roomName = r;
+        playerName = pN;
+        password = p;
+        signal = s;
+    }
+
 }

@@ -97,9 +97,14 @@ MonoBehaviour:
     bulletSpawn: {fileID: 4774196226873112342}
     bulletPrefeb: {fileID: 8908912921318038187, guid: 32e60256eb1f146c58d96ccb5457c59e,
       type: 3}
-    damge: 20
     muzzleFlash: {fileID: 7445403133407206845, guid: 8126bd5bba5ee394a8cbc7b60a9388a8,
       type: 3}
+    enemyCombatIdle: {fileID: 7400000, guid: 0b9c2e3885c637e46b6910aa579c85ab, type: 3}
+    enemyCombatRun: {fileID: 7400000, guid: b2a3e32322d0a264ab42b0b9f01e4ea6, type: 3}
+    enemyCombatShoot: {fileID: 7400000, guid: 792583a1c52c5c646bab43bf0303a176, type: 3}
+    ememyCombatWalk: {fileID: 7400000, guid: 501728c30c145c24fb454579be7b318d, type: 3}
+    enemyDeath: {fileID: 7400000, guid: d0340173bb932b248b1488edb2282b1a, type: 3}
+    enemyTakeDamage: {fileID: 7400000, guid: 61e5f67539dfc4640969e03626aa75a2, type: 3}
 --- !u!1 &1325849719128863808
 GameObject:
   m_ObjectHideFlags: 0

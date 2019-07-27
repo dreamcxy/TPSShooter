@@ -1,0 +1,17 @@
+{
+    "playerName": "test1",
+    "playerPos": "",
+    "playerIp":"",
+    "weapons": [
+        {
+            "clipAmmos": 25,
+            "gunName": "Aksu",
+            "clipAll": 60
+        },
+        {
+            "clipAll": 20,
+            "clipAmmos": 8,
+            "gunName": "Glock"
+        }
+    ]
+}

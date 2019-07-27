@@ -79,9 +79,13 @@ public class GameController : MonoBehaviour
         }
     }
 
+
+    // 获取游戏对象
     public void GetPlayer()
     {
+        
         player = GameObject.FindGameObjectWithTag("Player");
+
     }
 
     public Container PlayerContainer()

@@ -9,6 +9,8 @@ public class CharacterStates:MonoBehaviour{
     public string playerName{get;set;}
     public string password{get; set;}
     public WeaponHandler weaponHandler;
+    public bool isInTank;
+
     Animator animator;
 
     private PlayerUI playerUI;

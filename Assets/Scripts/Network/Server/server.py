@@ -20,7 +20,6 @@ def init_Net():
     print("Serer Information:")
     print("IP:127.0.0.1")
     print("Port:21567")
-
     tcpSerSock0 = socket(AF_INET, SOCK_STREAM)
     tcpSerSock0.bind(ADDR)
     tcpSerSock0.listen(5)

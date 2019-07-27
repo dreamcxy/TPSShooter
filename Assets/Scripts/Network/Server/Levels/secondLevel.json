@@ -1,0 +1,22 @@
+{
+    "level": 2,
+    "monsterNum": 4,
+    "monsters": [
+        {
+            "monsterId": 1,
+            "monsterType": 1
+        },
+        {
+            "monsterId": 2,
+            "monsterType": 0
+        },
+        {
+            "monsterId": 3,
+            "monsterType": 1
+        },
+        {
+            "monsterId": 4,
+            "monsterType": 0
+        }
+    ]
+}
