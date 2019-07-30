@@ -130,7 +130,7 @@ public class Weapon : MonoBehaviour
         rgbody = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         lineRenderer = GetComponent<LineRenderer>();
-        sc = GameObject.FindGameObjectWithTag("SoundController").GetComponent<SoundController>();
+        //sc = GameObject.FindGameObjectWithTag("SoundController").GetComponent<SoundController>();
 
         if (weaponSettings.crossHairPrefeb != null)
         {

@@ -1,118 +1,94 @@
 # coding=utf-8
+
+import conf
 import json
 import threading
+import Queue
 from socketserver import BaseRequestHandler, ThreadingTCPServer
-import os
-import Exchange
+from collections import defaultdict
 
+client_sockets = defaultdict()
 
-# 记录每个房间里面的玩家, 每个玩家的id也应该是独一无二的
-Rooms = {
-    "now1": ["test1", "test3"],
-    "now2": ["test2"],
-}
-publisher = Exchange.Publisher()
-roomPublisher = Exchange.RoomPublisher()
-playerPublisher = Exchange.PlayerPosUpdate()
-Playes = {
-    "127.0.0.1:1223": ["test1", "163"],
-}
+recv_queue = defaultdict()  # 收到的数据的字典
+send_queue = defaultdict()  # 发送的数据的字典
 
 
 class Handler(BaseRequestHandler):
     def handle(self):
-        address, pid = self.client_address
-        print('{0}:{1} connected!'.format(address, pid))
-        clientId = "{0}:{1}".format(address, pid)
-        while True:
-            roomPublisher.addObserver(clientId)
-            data = self.request.recv(1024)
-            if len(data) > 0:
-                print('receive=', data.decode('utf-8'))
-                cur_thread = threading.current_thread()
-                signal = json.loads(data)["signal"]
-                if signal == "search":
-                    # 搜寻房间
-                    playerName = json.loads(data)["playerName"]
-                    threading.Thread(target=deal_search_room_thread, args=(
-                        "", self.request)).start()
-                    
-                elif signal == "create":
-                    # 创建房间
-                    roomName = json.loads(data)["roomName"]
-                    playerName = json.loads(data)["playerName"]
-                    password = json.loads(data)["password"]
-                    threading.Thread(target=deal_create_room_thread, args=(
-                        roomName, playerName, password, self.request)).start()
-                    break
-                elif signal == "attend":
-                    # 加入房间
-                    roomName = json.loads(data)["roomName"]
-                    playerName = json.loads(data)["playerName"]
-                    password = json.loads(data)["password"]
-                    threading.Thread(target=deal_attend_room_thread, args=(
-                        roomName, playerName, password, self.request)).start()
+        if client_sockets.__len__() < conf.MAX_CONNECT_CLIENTS:
+            clientID = self.client_address[1]
+            client_sockets[clientID] = self.request
+            recv_queue[clientID] = Queue.Queue()
+            client_connect = True
+            while client_connect:
+                try:
+                    data = self.request.recv(conf.MAX_DATA_LENGTH)
+                    # recv_queue放入数据
+                    if len(data) > 0:
+                        recv_queue[clientID].put(data)
 
-                elif signal == "query":
-                    # 定时查询房间
-                    roomName = json.loads(data)["roomName"]
-                    threading.Thread(target=deal_query_room_thread, args=(
-                        roomName, self.request)).start()
-
-                elif signal == "player":
-                    # 更新玩家信息，并下放到所有主机上去
-                    pass
-                elif signal == "register":
-                    pass
-                elif signal == "log":
-                    pass
-
-            else:
-                print('close')
-                break
+                except BaseException as e:
+                    print e
 
 
-def deal_query_room_thread(roomName, request):
-    request.sendall(json.dumps(Rooms))
-    return Rooms[roomName]
+        else:
+            return
 
 
+def deal_recv_thread(connection):
+    while connection:
+        if len(recv_queue) > 0:
+            for client in recv_queue.keys():
+                data_queue = recv_queue[client]
+                recv_queue[client] = Queue.Queue()
+                # 分别处理每个客户端发送过来的消息
+                while not data_queue.empty():
+                    data = data_queue.get()
 
-def deal_attend_room_thread(roomName, playerName, password, request):
-    if roomName not in Rooms.keys():
-        return - 1
-    else:
-        Rooms[roomName].append(playerName)
-        request.sendall(json.dumps(Rooms))
-        return 1 
+                    try:
+                        text = json.loads(data)
+                    except ValueError:
+                        print 'server value error data:{0}'.format(data)
+                    # print "[receive]client:{0} text:{1}".format(client, text)
+                    if text["signal"] == "sync":
+                        # 同步消息，发送给其他客户端
+                        # print 'sync '
+                        for other_client in client_sockets:
+                            send_queue[other_client] = Queue.Queue()
+                            if other_client != client:
+                                print '[send]:{0}'.format(data)
+                                send_queue[other_client].put(data)
+                        pass
+                    elif text["signal"] == "start":
+
+                        pass
+                    elif text["signal"] == "login":
+
+                        pass
+                    elif text["singal"] == "exit":
+                        pass
 
 
-def deal_create_room_thread(roomName, playerName, password, request):
-    playerInRoom = list()
-    if roomName in Rooms.keys():
-        request.sendall()
-    else:
-        playerInRoom.append(playerName)
-        Rooms[roomName] = playerInRoom
-        request.sendall(json.dumps(Rooms))
+def deal_send_thread(connection):
+    while connection:
+        if len(send_queue) > 0:
+            for client in send_queue.keys():
+                while not send_queue[client].empty():
+                    data = send_queue[client].get()
+                    client_sockets[client].sendall(data)
 
-
-def deal_search_room_thread(playerName, request):
-    print('response=', json.dumps(Rooms))
-    try:
-        request.sendall(json.dumps(Rooms))
-    except Exception as e:
-        print e 
-    finally:
-        print "close"
 
 def main():
-    HOST = "localhost"
-    PORT = 21567
-    ADDR = (HOST, PORT)
-    server = ThreadingTCPServer(ADDR, Handler)
-    print 'listening....'
-
+    connection = True
+    threading.Thread(target=deal_recv_thread,
+                     args=(connection,)).start()
+    threading.Thread(target=deal_send_thread,
+                     args=(connection,)).start()
+    host = "127.0.0.1"
+    port = 2000
+    addr = (host, port)
+    server = ThreadingTCPServer(addr, Handler)
+    print 'server start listening...'
     server.serve_forever()
 
 

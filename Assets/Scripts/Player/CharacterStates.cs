@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterStates:MonoBehaviour{
+public class CharacterStates:BaseStates{
     [Range(0, 100)]
     public float health = 100.0f;
-    public int ID;
-    public string playerName{get;set;}
-    public string password{get; set;}
+    public string ID;
+    public string playerName { get; set; }
+    public string password { get; set; }
     public WeaponHandler weaponHandler;
     public bool isInTank;
+    public bool isLocal = false;
 
     Animator animator;
 

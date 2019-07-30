@@ -61,11 +61,25 @@
 # exchage = get_exchange("message")
 # with exchage.subscribe(task1, task2):
 #     exchage.send("hello world")
+#
+# import Exchange
+#
+# publisher = Exchange.Publisher()
+# roomPublisher = Exchange.RoomPublisher()
+#
+# roomPublisher.addObserver("123234")
+# roomPublisher.notifyObserver()
 
-import Exchange
-
-publisher = Exchange.Publisher()
-roomPublisher = Exchange.RoomPublisher()
-
-roomPublisher.addObserver("123234")
-roomPublisher.notifyObserver()
+# import Queue
+# a = {
+#     "1": Queue.Queue()
+# }
+# a["1"].put("jell")
+# b = Queue.Queue()
+# b.put("h")
+# b.put("ee")
+# while not b.empty():
+#     a["1"].put(b.get())
+# while not a["1"].empty():
+#
+#     print a["1"].get()

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public class EnemyStates:MonoBehaviour{
+public class EnemyStates:BaseStates{
     [Range(0, 100f)]   
     public float health = 100f;
 

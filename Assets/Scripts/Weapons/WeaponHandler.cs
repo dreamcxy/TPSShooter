@@ -63,7 +63,7 @@ public class WeaponHandler : MonoBehaviour
 
 
     bool aim;
-    bool shootSingle;
+    public bool shootSingle { get; set; }
 
     bool isThrowGrenadeButtonDown = false;
     bool isGrenadeOut;
@@ -86,7 +86,7 @@ public class WeaponHandler : MonoBehaviour
         animator.runtimeAnimatorController = animatorOverrideController;
         clipOverrides = new AnimationClipOverrides(animatorOverrideController.overridesCount);
         animatorOverrideController.GetOverrides(clipOverrides);
-        sc = GameObject.FindGameObjectWithTag("SoundController").GetComponent<SoundController>();
+        //sc = GameObject.FindGameObjectWithTag("SoundController").GetComponent<SoundController>();
         if (!container)
         {
             Debug.LogError("<Color=Red><a>Missing Container</a></Color>");
