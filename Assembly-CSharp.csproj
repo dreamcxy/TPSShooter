@@ -60,7 +60,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\GrenadeController.cs" />
     <Compile Include="Assets\Scripts\CamRig\CamRig.cs" />
     <Compile Include="Assets\Scripts\CharacterController\BaseStates.cs" />
     <Compile Include="Assets\Scripts\CharacterController\CharacterMovement.cs" />
@@ -72,9 +71,9 @@
     <Compile Include="Assets\Scripts\CharacterController\States\ChasingState.cs" />
     <Compile Include="Assets\Scripts\CharacterController\States\GuardState.cs" />
     <Compile Include="Assets\Scripts\CharacterController\States\IdleState.cs" />
-    <Compile Include="Assets\Scripts\DataBase\JsonData.cs" />
     <Compile Include="Assets\Scripts\GameManagement\GameController.cs" />
     <Compile Include="Assets\Scripts\GameManagement\GameOver.cs" />
+    <Compile Include="Assets\Scripts\GameManagement\LevelManager.cs" />
     <Compile Include="Assets\Scripts\GameManagement\LevelRespawner.cs" />
     <Compile Include="Assets\Scripts\GameManagement\Respawner.cs" />
     <Compile Include="Assets\Scripts\GameManagement\SoundController.cs" />
@@ -86,6 +85,7 @@
     <Compile Include="Assets\Scripts\Network\Client\LogIn.cs" />
     <Compile Include="Assets\Scripts\Network\Client\NetWorkProcess.cs" />
     <Compile Include="Assets\Scripts\Network\Conf.cs" />
+    <Compile Include="Assets\Scripts\Network\JsonData.cs" />
     <Compile Include="Assets\Scripts\Network\NetworkSocket.cs" />
     <Compile Include="Assets\Scripts\Network\Pickle.cs" />
     <Compile Include="Assets\Scripts\Network\SyncStates.cs" />
@@ -94,15 +94,17 @@
     <Compile Include="Assets\Scripts\Player\ContainerItem.cs" />
     <Compile Include="Assets\Scripts\Player\UserInput.cs" />
     <Compile Include="Assets\Scripts\Sound\FootStepSounds.cs" />
-    <Compile Include="Assets\Scripts\UIs\GameStart.cs" />
+    <Compile Include="Assets\Scripts\UIs\GameStartBak.cs" />
+    <Compile Include="Assets\Scripts\UIs\GameUIController.cs" />
     <Compile Include="Assets\Scripts\UIs\PlayerUI.cs" />
     <Compile Include="Assets\Scripts\UIs\UIFadeIn.cs" />
     <Compile Include="Assets\Scripts\Weapons\BulletController.cs" />
     <Compile Include="Assets\Scripts\Weapons\EnemyWeapon.cs" />
+    <Compile Include="Assets\Scripts\Weapons\GrenadeController.cs" />
+    <Compile Include="Assets\Scripts\Weapons\TankBulletController.cs" />
+    <Compile Include="Assets\Scripts\Weapons\TankController.cs" />
     <Compile Include="Assets\Scripts\Weapons\Weapon.cs" />
     <Compile Include="Assets\Scripts\Weapons\WeaponHandler.cs" />
-    <Compile Include="Assets\TankBulletController.cs" />
-    <Compile Include="Assets\TankController.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>D:/GameL/TPSShooter/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

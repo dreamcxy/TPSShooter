@@ -91,13 +91,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 3700078154330330386}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1d24c9d4c9b82941a2ea7685b489478, type: 3}
+  m_Script: {fileID: 11500000, guid: e20f3306777ab6b41bb343a9908e7a3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   power: 10
-  angle: 30
+  angle: 25
   gravity: -10
-  radius: 10
+  radius: 5
   bombDamage: 30
 --- !u!135 &5028093272707968077
 SphereCollider:

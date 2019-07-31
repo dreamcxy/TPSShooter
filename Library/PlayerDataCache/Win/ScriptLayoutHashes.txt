@@ -4,7 +4,6 @@ D:/GameL/TPSShooter/build/TPSShooter.exe
 SceneListBegin?
 Assets/Scenes/SampleScene.unity
 SceneListEnd?
-d2ca4f8fcca152150e2f719464ee857b Assembly-CSharp.dll:.TankController
 71bb6a6b6c8f052f948db64c7dd3ca4f Assembly-CSharp.dll:.SoundController
 0f8c5b5fe84d41ac9733281be6ed39f9 Assembly-CSharp.dll:.UIFadeIn
 984dcc0ba3707b7691fbdca8ff508d28 Unity.TextMeshPro.dll:TMPro.TMP_SelectionCaret
@@ -60,7 +59,7 @@ fc108ce7d98c40ac0907e8ca7f500c76 UnityEngine.UI.dll:UnityEngine.UI.Text
 abf1930d8126d0b2e00e9449129a0190 UnityEngine.UI.dll:UnityEngine.EventSystems.TouchInputModule
 64e54c0cbb0177c5ea26f340efb9ff85 UnityEngine.UI.dll:UnityEngine.UI.VerticalLayoutGroup
 98ad81e9f689a492509f07e75b810aaa Unity.TextMeshPro.dll:TMPro.TMP_InputField
-0030b3809727bd8e1fe101273ad51a5d Assembly-CSharp.dll:.GameStart
+8f0c43a0da7738290678c13991465dd4 Assembly-CSharp.dll:.GameUIController
 cf9f5cf2c3145a37ac07f00e50e460f9 UnityEngine.UI.dll:UnityEngine.UI.AspectRatioFitter
 71bb6a6b6c8f052f948db64c7dd3ca4f UnityEngine.UI.dll:UnityEngine.EventSystems.BaseInput
 5fc094978ce3e3591a7500ed380d854a UnityEngine.UI.dll:UnityEngine.UI.Button
@@ -156,7 +155,6 @@ ad9173d3a69d99153f38ed4b62226129 UnityEngine.Networking.dll:UnityEngine.Networki
 9b895dcabbc1faf095c000c32d471fd0 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransformChild
 5887ef1bc706b22b773d253fd443ceef UnityEngine.Networking.dll:UnityEngine.Networking.NetworkTransformVisualizer
 71bb6a6b6c8f052f948db64c7dd3ca4f Assembly-CSharp.dll:.LogIn
-6487608a27eea92a8137a13a83313a07 Assembly-CSharp.dll:.TankBulletController
 510fefd6a544e16a3ffefa557ddcba39 Unity.TextMeshPro.dll:TMPro.PackageResourceImporterWindow
 aa82b3ce4c0c9b227036c0337315c5d3 Unity.TextMeshPro.dll:TMPro.TMP_FontAsset
 e51c09a4cc447f11db225afcd8e3e490 Unity.TextMeshPro.dll:TMPro.TMP_Settings
@@ -186,11 +184,15 @@ d251bf88db6c95a6b1aa0b69298da9ef UnityEngine.SpatialTracking.dll:UnityEngine.Spa
 71bb6a6b6c8f052f948db64c7dd3ca4f Assembly-CSharp.dll:.SyncStates
 71bb6a6b6c8f052f948db64c7dd3ca4f Assembly-CSharp.dll:.EnemyBloodStrip
 3ebabcb48c79b44c1020867d7d89aaac Assembly-CSharp.dll:.PickUpItems
-2ade7a8882e3e3cdc5c3e6d200a92d36 Assembly-CSharp.dll:.GrenadeController
 d791aa6007fa3640be1164ea75bb087d Unity.TextMeshPro.dll:TMPro.TMP_StyleSheet
 c6666661329916e218bee7f5e79e60f5 Unity.TextMeshPro.dll:TMPro.TextMeshPro
 45c13ed6a0985c0e07fab1ff47f15bf6 Assembly-CSharp.dll:.ChasingState
 3165968ba45c74472d279ba04455fccb Unity.TextMeshPro.dll:TMPro.TMP_ColorGradient
 10fd22c408bcaa0565360ed14401cb91 Assembly-CSharp.dll:.CharacterMovement
 8649814970b42d345b89944b862453cc Unity.TextMeshPro.dll:TMPro.TMP_SubMesh
-af201f3451b3e133b36e1834229490b3 Assembly-CSharp.dll:.NetWorkProcess
+363a7fdf89296d34e30cd588b710836e Assembly-CSharp.dll:.NetWorkProcess
+0030b3809727bd8e1fe101273ad51a5d Assembly-CSharp.dll:.GameStartBak
+d2ca4f8fcca152150e2f719464ee857b Assembly-CSharp.dll:.TankController
+6487608a27eea92a8137a13a83313a07 Assembly-CSharp.dll:.TankBulletController
+2ade7a8882e3e3cdc5c3e6d200a92d36 Assembly-CSharp.dll:.GrenadeController
+d6e73e0039a1eb4785741e4ef6fbd594 Assembly-CSharp.dll:.LevelManager

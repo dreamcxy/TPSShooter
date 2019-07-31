@@ -74,13 +74,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1565801890406791610}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 913ba410a3134dd43ae2ec8472c345e6, type: 3}
+  m_Script: {fileID: 11500000, guid: 83b5142207f4b4248aee4576ad856213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   tankSetttings:
     crossHairPrefeb: {fileID: 1124590980948992, guid: c7cde4a59c593fa4c8f95407faae6622,
       type: 3}
-    tankAttackRange: 100
+    tankAttackRange: 1000
     bulletSpawnSpeed: 5
     bulletPrefeb: {fileID: 4906991617463801077, guid: 385fcc65368165b4d94e7237bfe18ed6,
       type: 3}

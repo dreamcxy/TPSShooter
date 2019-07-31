@@ -11,6 +11,11 @@ using UnityEngine.AI;
 public class WayPointBase
 {
     public Transform destination;
+
+    public WayPointBase(Transform des)
+    {
+        destination = des;
+    }
     public float waitTime;
     public Transform lookAtTarget;
 }
@@ -176,12 +181,14 @@ public class EnemyAI : MonoBehaviour
 
     private void Update()
     {
-
+        Debug.LogFormat("navMeshAgent.transform.position:{0}", navMeshAgent.transform.position);
+        Debug.LogFormat("transform.position:{0}", transform.position);
         navMeshAgent.transform.position = transform.position;
+        navMeshAgent.nextPosition = transform.position;
         GetAllCharacters();
         LookForTarget();
         enemyAIState.AIBehavior();
-        // Debug.LogFormat("enemyAIState:{0}", enemyAIState.GetType().Name);
+        Debug.LogFormat("enemyAIState:{0}", enemyAIState.GetType().Name);
 
         AdjustAnimationClip();
     }
@@ -208,7 +215,8 @@ public class EnemyAI : MonoBehaviour
     void GetAllCharacters()
     {
         allPlayers = GameObject.FindObjectsOfType<CharacterStates>();
-        // Debug.LogFormat("allPlayers:{0}", allPlayers[0].gameObject.name);
+
+        //Debug.LogFormat("allPlayers:{0}", allPlayers[0].gameObject.name);
 
     }
 

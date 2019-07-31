@@ -1,0 +1,54 @@
+{
+  "level": 1,
+  "monsterNum": 3,
+  "monsters": [
+    {
+      "monsterId": 1,
+      "monsterType": 1,
+      "monsterHealth": 100,
+      "monsterGuardPoints": [
+        [
+          51,
+          61
+        ],
+        [
+          61,
+          61
+        ]
+      ]
+    },
+    {
+      "monsterId": 2,
+      "monsterType": 0,
+      "monsterHealth": 100,
+      "monsterGuardPoints": [
+        [
+          69,
+          53
+        ],
+        [
+          79,
+          53
+        ]
+
+      ]
+    },
+    {
+      "monsterId": 3,
+      "monsterType": 1,
+      "monsterHealth": 100,
+      "monsterGuardPoints": [
+        [
+          55,
+          38
+        ],
+        [
+          31,
+          41
+        ]
+
+      ]
+    }
+
+  ]
+}

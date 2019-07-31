@@ -18,7 +18,7 @@ public class FootStepSounds : MonoBehaviour
 
     private void Start()
     {
-        sc = GameObject.FindGameObjectWithTag("SoundController").GetComponent<SoundController>();
+        //sc = GameObject.FindGameObjectWithTag("SoundController").GetComponent<SoundController>();
         audioSource = this.gameObject.GetComponent<AudioSource>(); 
     }
 

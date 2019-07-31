@@ -167,8 +167,9 @@ MonoBehaviour:
     aimingBool: aiming
     singleShootBool: isShoot
     burstShootBool: isShootBurst
-  currentWeapon: {fileID: 0}
-  weaponList: []
+  currentWeapon: {fileID: 6073957475927993323}
+  weaponList:
+  - {fileID: 1250601883805331431, guid: 9c13337297ef0d44a9f603fdd267ee0e, type: 3}
   container: {fileID: 0}
 --- !u!114 &4976495099244476503
 MonoBehaviour:
@@ -186,6 +187,7 @@ MonoBehaviour:
   ID: 0
   weaponHandler: {fileID: 0}
   isInTank: 0
+  isLocal: 0
 --- !u!82 &4976495099244476496
 AudioSource:
   m_ObjectHideFlags: 0
@@ -613,6 +615,31 @@ PrefabInstance:
       propertyPath: m_RootBone
       value: 
       objectReference: {fileID: 4972180292206813554}
+    - target: {fileID: 137846032399149736, guid: 20936ffd6c7c4cc41abaa454e872da81,
+        type: 3}
+      propertyPath: m_Bones.Array.data[0]
+      value: 
+      objectReference: {fileID: 4972265671232278660}
+    - target: {fileID: 137846032399149736, guid: 20936ffd6c7c4cc41abaa454e872da81,
+        type: 3}
+      propertyPath: m_Bones.Array.data[1]
+      value: 
+      objectReference: {fileID: 4972180292206813554}
+    - target: {fileID: 137846032399149736, guid: 20936ffd6c7c4cc41abaa454e872da81,
+        type: 3}
+      propertyPath: m_RootBone
+      value: 
+      objectReference: {fileID: 4972180292206813554}
+    - target: {fileID: 8410199452022178525, guid: 20936ffd6c7c4cc41abaa454e872da81,
+        type: 3}
+      propertyPath: weaponSettings.bulletSpawn
+      value: 
+      objectReference: {fileID: 4104442076024221794}
+    - target: {fileID: 8410199452022178525, guid: 20936ffd6c7c4cc41abaa454e872da81,
+        type: 3}
+      propertyPath: soundSettings.audioSource
+      value: 
+      objectReference: {fileID: 5711834272102775645}
     - target: {fileID: 137300317821283864, guid: 20936ffd6c7c4cc41abaa454e872da81,
         type: 3}
       propertyPath: m_Bones.Array.data[0]
@@ -638,21 +665,6 @@ PrefabInstance:
       propertyPath: m_RootBone
       value: 
       objectReference: {fileID: 4972265671232278660}
-    - target: {fileID: 137846032399149736, guid: 20936ffd6c7c4cc41abaa454e872da81,
-        type: 3}
-      propertyPath: m_Bones.Array.data[0]
-      value: 
-      objectReference: {fileID: 4972265671232278660}
-    - target: {fileID: 137846032399149736, guid: 20936ffd6c7c4cc41abaa454e872da81,
-        type: 3}
-      propertyPath: m_Bones.Array.data[1]
-      value: 
-      objectReference: {fileID: 4972180292206813554}
-    - target: {fileID: 137846032399149736, guid: 20936ffd6c7c4cc41abaa454e872da81,
-        type: 3}
-      propertyPath: m_RootBone
-      value: 
-      objectReference: {fileID: 4972180292206813554}
     - target: {fileID: 1250601883876357675, guid: 20936ffd6c7c4cc41abaa454e872da81,
         type: 3}
       propertyPath: weaponSettings.bulletSpawn
@@ -663,16 +675,6 @@ PrefabInstance:
       propertyPath: soundSettings.audioSource
       value: 
       objectReference: {fileID: 8388386678257595748}
-    - target: {fileID: 8410199452022178525, guid: 20936ffd6c7c4cc41abaa454e872da81,
-        type: 3}
-      propertyPath: weaponSettings.bulletSpawn
-      value: 
-      objectReference: {fileID: 4104442076024221794}
-    - target: {fileID: 8410199452022178525, guid: 20936ffd6c7c4cc41abaa454e872da81,
-        type: 3}
-      propertyPath: soundSettings.audioSource
-      value: 
-      objectReference: {fileID: 5711834272102775645}
     - target: {fileID: 3409646671623272160, guid: 20936ffd6c7c4cc41abaa454e872da81,
         type: 3}
       propertyPath: weaponSettings.bulletSpawn
@@ -752,6 +754,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 4976495099738742208}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6073957475927993323 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1250601883876357675, guid: 20936ffd6c7c4cc41abaa454e872da81,
+    type: 3}
+  m_PrefabInstance: {fileID: 4976495099738742208}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69c363fbdbc4318478abed2eb34f7eaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!82 &8388386678257595748 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 3565028810943359140, guid: 20936ffd6c7c4cc41abaa454e872da81,

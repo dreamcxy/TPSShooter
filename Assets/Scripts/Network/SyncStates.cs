@@ -52,8 +52,7 @@ public class AvatarStates:Message
     public bool avatarId;
     public bool isLocal;
 
-    public string playerID
-        ;
+    public string playerID;
     public string signal = "sync";
 }
 

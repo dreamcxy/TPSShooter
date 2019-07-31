@@ -1,4 +1,4 @@
-# #coding = utf-8
+#coding=utf-8
 # from collections import defaultdict
 # from contextlib import contextmanager
 
@@ -83,3 +83,22 @@
 # while not a["1"].empty():
 #
 #     print a["1"].get()
+
+import socket
+sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM) # 生成socket对象
+sock.bind(('localhost', 2000))                          #绑定主机ip和端口号
+sock.listen(5)
+while True:
+    connection,addr = sock.accept()                     #接受客户端的连接
+    try:
+        connection.settimeout(5)
+        buf = connection.recv(1024)
+        print buf
+        connection.send("hello")
+        # if buf == 1:
+        #     connection.send('welcome to server!')      #向客户端发送一个字符串信息
+        # else:
+        #     connection.send("Failed")
+    except socket.timeout:                             #如果出现超时
+        print 'time out'
+    connection.close()

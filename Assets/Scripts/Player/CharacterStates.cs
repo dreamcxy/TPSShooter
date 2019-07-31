@@ -24,6 +24,8 @@ public class CharacterStates:BaseStates{
     {
         playerUI = FindObjectOfType<PlayerUI>();
         animator = GetComponent<Animator>();
+        weaponHandler = GetComponent<WeaponHandler>();
+
     }
 
     public void ApplyDamage(float number){

@@ -1,0 +1,21 @@
+{
+  "playerName": "",
+  "password": "",
+  "weaponInfos": [
+    {
+      "clipAmmos": 25,
+      "gunName": "Aksu",
+      "clipAll": 30
+    },
+    {
+      "clipAmmos": 8,
+      "gunName": "Glock",
+      "clipAll": 10
+    }
+  ],
+  "playerState": {
+    "health": 100,
+    "currentLevel": 1,
+    "experience": 90
+  }
+}
